@@ -8,7 +8,7 @@ import { X, Clock, MapPin, Calendar, ArrowUpRight, ChevronLeft, ChevronRight, Ey
 // --- DATA (Reordered: Most Recent First | Rewritten: Professional & Concise) ---
 const eventsData = [
   {
-    id: 17,
+    id: 16,
     category: 'Competitions',
     title: 'Circuit-O-Poly',
     image: '/events/event-16-1.jpg',
@@ -19,7 +19,7 @@ const eventsData = [
     venue: 'PG Lab, BME'
   },
   {
-    id: 16,
+    id: 15,
     category: 'Talks',
     title: 'Mapping Neuromuscular Pathways',
     image: '/events/event-15-1.png',
@@ -31,7 +31,7 @@ const eventsData = [
     speaker: 'Supraja Vaidhyanathan'
   },
   {
-    id: 15,
+    id: 14,
     category: 'Workshops',
     title: 'Optimization Techniques with MathWorks',
     image: '/events/event-14-1.png',
@@ -43,7 +43,7 @@ const eventsData = [
     speaker: 'Mr. Afsal S.'
   },
   {
-    id: 14,
+    id: 13,
     category: 'Workshops',
     title: 'Student Outreach Program',
     image: '/events/event-13-1.jpeg',
@@ -53,7 +53,7 @@ const eventsData = [
     venue: 'SSN Campus'
   },
   {
-    id: 13,
+    id: 12,
     category: 'Talks',
     title: '"From Pixels to Insights": Computer Vision',
     image: '/events/event-12-1.png',
@@ -65,7 +65,7 @@ const eventsData = [
     speaker: 'Dr. Sainarayanan Gopalakrishnan'
   },
   {
-    id: 12,
+    id: 11,
     category: 'Talks',
     title: 'Intelligent Spectrum Utilization in 5G/B5G',
     image: '/events/event-11-1.png',
@@ -77,7 +77,7 @@ const eventsData = [
     speaker: 'S. Chris Prema'
   },
   {
-    id: 11,
+    id: 10,
     category: 'Talks',
     title: 'Brain Computer Interface (BCI)',
     image: '/events/event-10-1.png',
@@ -89,7 +89,7 @@ const eventsData = [
     speaker: 'Dr. Chandra Prakash'
   },
   {
-    id: 10,
+    id: 9,
     category: 'Talks',
     title: 'Alumni Talk Series: Ask Us Anything',
     image: '/events/event-9-1.png',
@@ -99,17 +99,6 @@ const eventsData = [
     time: '9:00 AM - 12:00 PM',
     venue: 'MSDM Lab, BME',
     speaker: 'Gurucharan M, Chetana K, Supraja V'
-  },
-  {
-    id: 9,
-    category: 'Competitions',
-    title: 'Circuitry Tycoon',
-    image: '/events/event-8-1.png',
-    description: 'A board game simulation where tech entrepreneurship meets circuit design. Players managed resources to build electronic empires.',
-    fullDescription: 'In this tech-business simulation, participants acted as CEOs of electronics companies. The game required balancing technical decisions—like component selection and circuit efficiency—with economic strategy. It highlighted the often-overlooked connection between engineering viability and market feasibility, forcing teams to think like product developers rather than just students.',
-    date: 'FEB 04, 2025',
-    time: '1:00 PM - 3:00 PM',
-    venue: 'Central Seminar Hall'
   },
   {
     id: 8,
@@ -217,8 +206,8 @@ export default function PastEventsPage() {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const filteredEvents = activeTab === 'All' 
-    ? eventsData 
+  const filteredEvents = activeTab === 'All'
+    ? eventsData
     : eventsData.filter(item => item.category === activeTab);
 
   useEffect(() => {
@@ -255,12 +244,12 @@ export default function PastEventsPage() {
 
   return (
     <section style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
-      
+
       <style>{`
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(120, 190, 32, 0.5); border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #78BE20; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #7bd112ff; }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -299,7 +288,7 @@ export default function PastEventsPage() {
         transition={{ duration: 0.8 }}
         style={{ textAlign: 'center', marginBottom: '2rem' }}
       >
-        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '800', marginBottom: '1rem', color: '#78BE20', letterSpacing: '-0.025em' }}>
+        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '800', marginBottom: '1rem', color: '#7bd112ff', letterSpacing: '-0.025em' }}>
           <span style={{ color: 'white' }}>PAST </span> EVENTS
         </h1>
         <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'inherit', maxWidth: '600px', margin: '0 auto', lineHeight: 1.6 }}>
@@ -309,7 +298,7 @@ export default function PastEventsPage() {
 
       {/* --- FILTER TABS --- */}
       <div style={{ position: 'relative', marginBottom: '3rem', maxWidth: '800px', margin: '0 auto 3rem auto', display: 'flex', justifyContent: 'center' }}>
-        
+
         <AnimatePresence>
           {canScrollLeft && (
             <motion.button
@@ -317,7 +306,7 @@ export default function PastEventsPage() {
               onClick={() => scrollTabs('left')}
               style={{
                 position: 'absolute', left: -20, top: '50%', transform: 'translateY(-50%)', zIndex: 10,
-                background: '#0F5156', border: '1px solid rgba(120, 190, 32, 0.5)', color: '#78BE20',
+                background: '#0F5156', border: '1px solid rgba(120, 190, 32, 0.5)', color: '#7bd112ff',
                 borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
               }}
             >
@@ -326,13 +315,13 @@ export default function PastEventsPage() {
           )}
         </AnimatePresence>
 
-        <div 
+        <div
           ref={tabsRef}
           onScroll={checkScrollButtons}
           className="no-scrollbar"
-          style={{ 
-            overflowX: 'auto', 
-            whiteSpace: 'nowrap', 
+          style={{
+            overflowX: 'auto',
+            whiteSpace: 'nowrap',
             padding: '0.5rem',
             display: 'flex',
             maskImage: 'linear-gradient(to right, transparent, black 10px, black calc(100% - 10px), transparent)'
@@ -346,9 +335,9 @@ export default function PastEventsPage() {
                 style={{
                   position: 'relative',
                   padding: '0.6rem 1.4rem',
-                  borderRadius: '2rem',
+                  borderRadius: '10px',
                   border: activeTab === tab ? 'none' : '1px solid rgba(255,255,255,0.1)',
-                  background: activeTab === tab ? '#78BE20' : 'rgba(255,255,255,0.05)',
+                  background: activeTab === tab ? '#7bd112ff' : 'rgba(255,255,255,0.05)',
                   color: activeTab === tab ? '#0F5156' : '#ffffff',
                   fontWeight: '700',
                   fontSize: '0.9rem',
@@ -361,7 +350,7 @@ export default function PastEventsPage() {
                 {activeTab === tab && (
                   <motion.div
                     layoutId="activeTab"
-                    style={{ position: 'absolute', inset: 0, borderRadius: '2rem', background: 'transparent', zIndex: -1 }}
+                    style={{ position: 'absolute', inset: 0, borderRadius: '10px', background: 'transparent', zIndex: -1 }}
                   />
                 )}
               </button>
@@ -376,7 +365,7 @@ export default function PastEventsPage() {
               onClick={() => scrollTabs('right')}
               style={{
                 position: 'absolute', right: -20, top: '50%', transform: 'translateY(-50%)', zIndex: 10,
-                background: '#0F5156', border: '1px solid rgba(120, 190, 32, 0.5)', color: '#78BE20',
+                background: '#0F5156', border: '1px solid rgba(120, 190, 32, 0.5)', color: '#7bd112ff',
                 borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
               }}
             >
@@ -387,7 +376,7 @@ export default function PastEventsPage() {
       </div>
 
       {/* EVENTS GRID */}
-      <motion.div 
+      <motion.div
         layout
         style={{
           display: 'flex',
@@ -400,9 +389,9 @@ export default function PastEventsPage() {
         <AnimatePresence mode="popLayout">
           {filteredEvents.map((event) => (
             <div key={event.id} className="event-card-wrapper">
-              <EventCard 
-                event={event} 
-                onClick={() => setSelectedEvent(event)} 
+              <EventCard
+                event={event}
+                onClick={() => setSelectedEvent(event)}
               />
             </div>
           ))}
@@ -413,9 +402,9 @@ export default function PastEventsPage() {
       {mounted && createPortal(
         <AnimatePresence>
           {selectedEvent && (
-            <EventModal 
-              event={selectedEvent} 
-              onClose={() => setSelectedEvent(null)} 
+            <EventModal
+              event={selectedEvent}
+              onClose={() => setSelectedEvent(null)}
             />
           )}
         </AnimatePresence>,
@@ -441,7 +430,7 @@ function EventCard({ event, onClick }: { event: any, onClick: () => void }) {
       onMouseLeave={() => setIsHovered(false)}
       style={{
         backgroundColor: '#05191a',
-        borderRadius: '1.5rem',
+        borderRadius: '10px',
         border: '1px solid rgba(120, 190, 32, 0.2)',
         boxShadow: isHovered ? '0 20px 40px rgba(0,0,0,0.4)' : '0 10px 30px rgba(0,0,0,0.2)',
         height: '100%',
@@ -453,83 +442,83 @@ function EventCard({ event, onClick }: { event: any, onClick: () => void }) {
       }}
     >
       {/* Image Section - CLICKABLE */}
-      <div 
+      <div
         onClick={onClick}
-        style={{ 
-          height: '220px', width: '100%', position: 'relative', overflow: 'hidden', cursor: 'pointer' 
+        style={{
+          height: '220px', width: '100%', position: 'relative', overflow: 'hidden', cursor: 'pointer'
         }}
       >
-          <div style={{ 
-            width: '100%', height: '100%', 
-            transition: 'filter 0.3s ease, transform 0.5s ease',
-            filter: isHovered ? 'blur(2px) brightness(0.7)' : 'none',
-            transform: isHovered ? 'scale(1.05)' : 'scale(1)'
-          }}>
-            <img 
-                src={event.image} 
-                alt={event.title}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-          </div>
-          
-          {/* Overlay "View Details" */}
+        <div style={{
+          width: '100%', height: '100%',
+          transition: 'filter 0.3s ease, transform 0.5s ease',
+          filter: isHovered ? 'blur(2px) brightness(0.7)' : 'none',
+          transform: isHovered ? 'scale(1.05)' : 'scale(1)'
+        }}>
+          <img
+            src={event.image}
+            alt={event.title}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+
+        {/* Overlay "View Details" */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          opacity: isHovered ? 1 : 0,
+          transition: 'opacity 0.3s ease',
+        }}>
           <div style={{
-            position: 'absolute', inset: 0,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            opacity: isHovered ? 1 : 0,
-            transition: 'opacity 0.3s ease',
+            background: '#7bd112ff', color: '#092C2E',
+            padding: '0.6rem 1.2rem', borderRadius: '5px',
+            fontWeight: '700', display: 'flex', alignItems: 'center', gap: '0.5rem',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
           }}>
-            <div style={{ 
-                background: '#78BE20', color: '#092C2E', 
-                padding: '0.6rem 1.2rem', borderRadius: '2rem', 
-                fontWeight: '700', display: 'flex', alignItems: 'center', gap: '0.5rem',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
-            }}>
-                <Eye size={18} />
-                <span>View Details</span>
-            </div>
+            <Eye size={18} />
+            <span>View Details</span>
           </div>
+        </div>
       </div>
 
       {/* Content Section - NOT CLICKABLE */}
       <div style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', flexGrow: 1, cursor: 'default' }}>
-        
+
         {/* Meta Row: Date & Tag */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#78BE20', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                <Calendar size={14} />
-                <span>{event.date.split('-')[0].trim()}</span> 
-             </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#7bd112ff', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <Calendar size={14} />
+            <span>{event.date.split('-')[0].trim()}</span>
+          </div>
 
-             <span style={{ 
-                backgroundColor: 'rgba(120, 190, 32, 0.1)', 
-                color: '#78BE20', padding: '0.3rem 0.6rem', borderRadius: '0.4rem', 
-                fontSize: '0.65rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em'
-            }}>
-                {event.category}
-            </span>
+          <span style={{
+            backgroundColor: 'rgba(120, 190, 32, 0.1)',
+            color: '#7bd112ff', padding: '0.3rem 0.6rem', borderRadius: '10px',
+            fontSize: '0.65rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em'
+          }}>
+            {event.category}
+          </span>
         </div>
 
         {/* Title */}
         <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: 'white', marginBottom: '1rem', lineHeight: 1.2, textTransform: 'uppercase' }}>
-            {event.title}
+          {event.title}
         </h3>
 
         {/* Description Excerpt */}
         <p style={{ fontSize: '0.9rem', color: '#94a3b8', lineHeight: 1.5, marginBottom: '1.5rem', flexGrow: 1 }}>
-            {event.description}
+          {event.description}
         </p>
 
         {/* Footer - View More - CLICKABLE */}
-        <div 
+        <div
           onClick={onClick}
-          style={{ 
+          style={{
             borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem',
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            color: '#78BE20', fontWeight: '700', fontSize: '0.9rem', cursor: 'pointer'
-        }}>
-            <span>VIEW MORE</span>
-            <ArrowUpRight size={18} />
+            color: '#7bd112ff', fontWeight: '700', fontSize: '0.9rem', cursor: 'pointer'
+          }}>
+          <span>VIEW MORE</span>
+          <ArrowUpRight size={18} />
         </div>
       </div>
     </motion.div>
@@ -585,100 +574,100 @@ function EventModal({ event, onClose }: { event: any, onClose: () => void }) {
 
         {/* MODAL GRID LAYOUT */}
         <div className="modal-content-grid">
-            
-            {/* LEFT SIDE: POSTER IMAGE (Scrollable if too long) */}
-            <div className="custom-scrollbar" style={{ position: 'relative', width: '100%', height: '100%', backgroundColor: '#000', overflowY: 'auto' }}>
-                <img 
-                    src={event.image} 
-                    alt={event.title}
-                    style={{ 
-                        width: '100%', 
-                        minHeight: '100%', 
-                        objectFit: 'contain', // Ensures full poster is seen, or use 'cover' if you prefer filling space
-                        display: 'block'
-                    }}
-                />
+
+          {/* LEFT SIDE: POSTER IMAGE (Scrollable if too long) */}
+          <div className="custom-scrollbar" style={{ position: 'relative', width: '100%', height: '100%', backgroundColor: '#000', overflowY: 'auto' }}>
+            <img
+              src={event.image}
+              alt={event.title}
+              style={{
+                width: '100%',
+                minHeight: '100%',
+                objectFit: 'contain', // Ensures full poster is seen, or use 'cover' if you prefer filling space
+                display: 'block'
+              }}
+            />
+          </div>
+
+          {/* RIGHT SIDE: SCROLLABLE CONTENT */}
+          <div className="custom-scrollbar" style={{ padding: '2.5rem', overflowY: 'auto' }}>
+
+            {/* Header Section */}
+            <div style={{ marginBottom: '2rem' }}>
+              <span style={{
+                color: '#7bd112ff', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '0.8rem',
+                display: 'inline-block', marginBottom: '0.5rem', background: 'rgba(120, 190, 32, 0.1)', padding: '0.3rem 0.8rem', borderRadius: '10px'
+              }}>
+                {event.category}
+              </span>
+
+              <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: '800', color: 'white', lineHeight: 1.1, marginTop: '0.5rem', textTransform: 'uppercase' }}>
+                {event.title}
+              </h2>
             </div>
 
-            {/* RIGHT SIDE: SCROLLABLE CONTENT */}
-            <div className="custom-scrollbar" style={{ padding: '2.5rem', overflowY: 'auto' }}>
-                
-                {/* Header Section */}
-                <div style={{ marginBottom: '2rem' }}>
-                    <span style={{ 
-                        color: '#78BE20', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '0.8rem',
-                        display: 'inline-block', marginBottom: '0.5rem', background: 'rgba(120, 190, 32, 0.1)', padding: '0.3rem 0.8rem', borderRadius: '1rem'
-                    }}>
-                        {event.category}
-                    </span>
-
-                    <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: '800', color: 'white', lineHeight: 1.1, marginTop: '0.5rem', textTransform: 'uppercase' }}>
-                        {event.title}
-                    </h2>
+            {/* Info Grid (Date, Time, Location) - Conditional Rendering */}
+            <div style={{
+              display: 'flex', flexDirection: 'column', gap: '1.2rem',
+              background: 'rgba(0,0,0,0.2)', padding: '1.5rem', borderRadius: '10px', marginBottom: '2rem'
+            }}>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div style={{ background: 'rgba(120, 190, 32, 0.1)', padding: '0.6rem', borderRadius: '50%' }}>
+                  <Calendar size={20} color="#7bd112ff" />
                 </div>
+                <div>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', fontWeight: '700' }}>DATE</div>
+                  <div style={{ color: 'white', fontWeight: '600', fontSize: '1rem', textTransform: 'uppercase' }}>{event.date}</div>
+                </div>
+              </div>
 
-                {/* Info Grid (Date, Time, Location) - Conditional Rendering */}
-                <div style={{ 
-                    display: 'flex', flexDirection: 'column', gap: '1.2rem',
-                    background: 'rgba(0,0,0,0.2)', padding: '1.5rem', borderRadius: '1rem', marginBottom: '2rem' 
-                }}>
-                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                        <div style={{ background: 'rgba(120, 190, 32, 0.1)', padding: '0.6rem', borderRadius: '50%' }}>
-                           <Calendar size={20} color="#78BE20" />
-                        </div>
-                        <div>
-                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', fontWeight: '700' }}>DATE</div>
-                            <div style={{ color: 'white', fontWeight: '600', fontSize: '1rem', textTransform: 'uppercase' }}>{event.date}</div>
-                        </div>
+              {event.time && (
+                <>
+                  <div style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.05)' }} />
+                  <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    <div style={{ background: 'rgba(120, 190, 32, 0.1)', padding: '0.6rem', borderRadius: '50%' }}>
+                      <Clock size={20} color="#7bd112ff" />
                     </div>
-                    
-                    {event.time && (
-                        <>
-                            <div style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.05)' }} />
-                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                                <div style={{ background: 'rgba(120, 190, 32, 0.1)', padding: '0.6rem', borderRadius: '50%' }}>
-                                    <Clock size={20} color="#78BE20" />
-                                </div>
-                                <div>
-                                    <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', fontWeight: '700' }}>TIME</div>
-                                    <div style={{ color: 'white', fontWeight: '600', fontSize: '1rem' }}>{event.time}</div>
-                                </div>
-                            </div>
-                        </>
-                    )}
-
-                    {event.venue && (
-                        <>
-                            <div style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.05)' }} />
-                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                                <div style={{ background: 'rgba(120, 190, 32, 0.1)', padding: '0.6rem', borderRadius: '50%' }}>
-                                    <MapPin size={20} color="#78BE20" />
-                                </div>
-                                <div>
-                                    <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', fontWeight: '700' }}>LOCATION</div>
-                                    <div style={{ color: 'white', fontWeight: '600', fontSize: '1rem' }}>{event.venue}</div>
-                                </div>
-                            </div>
-                        </>
-                    )}
-                </div>
-
-                {/* About the Event */}
-                <div style={{ marginBottom: '2rem' }}>
-                    <h3 style={{ color: 'white', fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.75rem' }}>ABOUT THE EVENT</h3>
-                    <p style={{ color: '#cbd5e1', lineHeight: 1.7, fontSize: '1rem' }}>
-                        {event.fullDescription}
-                    </p>
-                </div>
-
-                {/* Speaker (Conditional) */}
-                {event.speaker && (
-                    <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-                          <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', fontWeight: '700', marginBottom: '0.25rem' }}>HOST / SPEAKER</div>
-                          <div style={{ color: '#78BE20', fontWeight: '700', fontSize: '1.1rem' }}>{event.speaker}</div>
+                    <div>
+                      <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', fontWeight: '700' }}>TIME</div>
+                      <div style={{ color: 'white', fontWeight: '600', fontSize: '1rem' }}>{event.time}</div>
                     </div>
-                )}
+                  </div>
+                </>
+              )}
+
+              {event.venue && (
+                <>
+                  <div style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.05)' }} />
+                  <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    <div style={{ background: 'rgba(120, 190, 32, 0.1)', padding: '0.6rem', borderRadius: '50%' }}>
+                      <MapPin size={20} color="#7bd112ff" />
+                    </div>
+                    <div>
+                      <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', fontWeight: '700' }}>LOCATION</div>
+                      <div style={{ color: 'white', fontWeight: '600', fontSize: '1rem' }}>{event.venue}</div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
+
+            {/* About the Event */}
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: 'white', fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.75rem' }}>ABOUT THE EVENT</h3>
+              <p style={{ color: '#cbd5e1', lineHeight: 1.7, fontSize: '1rem' }}>
+                {event.fullDescription}
+              </p>
+            </div>
+
+            {/* Speaker (Conditional) */}
+            {event.speaker && (
+              <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', fontWeight: '700', marginBottom: '0.25rem' }}>HOST / SPEAKER</div>
+                <div style={{ color: '#7bd112ff', fontWeight: '700', fontSize: '1.1rem' }}>{event.speaker}</div>
+              </div>
+            )}
+          </div>
         </div>
       </motion.div>
     </motion.div>

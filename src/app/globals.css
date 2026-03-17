@@ -1,9 +1,4 @@
 /* globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-}
 
 /* Root color variables for consistent usage */
 :root {
@@ -17,7 +12,6 @@ body {
 /* Reset margin and set base styles */
 body {
   margin: 0;
-  font-family: 'Inter', Arial, sans-serif;
   color: var(--text);
   background: #ffffff; /* clean background */
 }

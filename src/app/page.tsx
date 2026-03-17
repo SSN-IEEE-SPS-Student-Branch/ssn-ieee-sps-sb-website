@@ -8,7 +8,7 @@ const ScrambleText = ({ children, className, style }: { children: string, classN
   const [displayText, setDisplayText] = useState(children);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  
+
   const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const ScrambleText = ({ children, className, style }: { children: string, classN
     const startScramble = () => {
       clearInterval(interval);
       interval = setInterval(() => {
-        setDisplayText(prev => 
+        setDisplayText(prev =>
           children
             .split("")
             .map((letter, index) => {
@@ -33,11 +33,11 @@ const ScrambleText = ({ children, className, style }: { children: string, classN
             .join("")
         );
 
-        if (iteration >= children.length) { 
+        if (iteration >= children.length) {
           clearInterval(interval);
         }
-        
-        iteration += 1 / 3; 
+
+        iteration += 1 / 3;
       }, 30);
     };
 
@@ -80,7 +80,7 @@ const SignalWaveSeparator = () => (
         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
           {/* Made the center color more vibrant */}
-          <stop offset="50%" stopColor="#78BE20" /> 
+          <stop offset="50%" stopColor="#78BE20" />
           <stop offset="100%" stopColor="rgba(255, 255, 255, 0)" />
         </linearGradient>
       </defs>
@@ -124,23 +124,23 @@ const HeroLogo = () => {
         justifyContent: 'center',
         minHeight: '400px',
         minWidth: '300px',
-        perspective: 1000, 
+        perspective: 1000,
       }}
     >
       <motion.div
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{
-          width: '100%', 
-          maxWidth: '500px', 
+          width: '100%',
+          maxWidth: '500px',
           height: '400px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: 'transparent',
           cursor: 'pointer',
-          rotateX, 
-          rotateY, 
+          rotateX,
+          rotateY,
           transformStyle: 'preserve-3d',
         }}
       >
@@ -148,11 +148,12 @@ const HeroLogo = () => {
           src="/SSN_SPS_LOGO.jpg"
           alt="SSN SPS Logo"
           style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain', 
-            transform: 'translateZ(50px)', 
-            filter: 'drop-shadow(0px 15px 30px rgba(0,0,0,0.4))'
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: 'contain',
+            transform: 'translateZ(50px)',
+            filter: 'drop-shadow(0px 15px 30px rgba(0,0,0,0.4))',
+            borderRadius: '8px',
           }}
           draggable={false}
         />
@@ -174,9 +175,9 @@ const ImageCarousel = () => {
   };
 
   useEffect(() => {
-    const slideTimer = setInterval(() => paginate(1), 3000);
+    const slideTimer = setInterval(() => paginate(1), 5000);
     return () => clearInterval(slideTimer);
-  }, [page]); 
+  }, [page]);
 
   const variants: Variants = {
     enter: (direction: number) => ({ x: direction > 0 ? 1000 : -1000, opacity: 0 }),
@@ -189,10 +190,10 @@ const ImageCarousel = () => {
       position: 'relative',
       width: '100%',
       height: '100%',
-      borderRadius: '20px',
+      borderRadius: '8px',
       overflow: 'hidden',
-      backgroundColor: 'rgba(255, 255, 255, 0.05)', 
-      border: '1px solid rgba(120, 190, 32, 0.5)', 
+      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+      border: '1px solid rgba(120, 190, 32, 0.5)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center'
@@ -206,7 +207,7 @@ const ImageCarousel = () => {
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
+          transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 1 } }}
           style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover' }}
           draggable={false}
         />
@@ -235,37 +236,37 @@ export default function AboutPage() {
 
   return (
     <main style={{ width: '100%', overflowX: 'hidden', background: 'transparent', color: '#ffffff', minHeight: '100vh' }}>
-      
+
       {/* --- HERO SECTION --- */}
       {/* UPDATE 1: Changed alignItems to flex-start and added significant paddingTop (180px) to push content down away from navbar */}
-      <section style={{ 
+      <section style={{
         minHeight: '100vh', // Changed to 100vh to ensure full coverage
-        width: '100%', 
-        display: 'flex', 
+        width: '100%',
+        display: 'flex',
         alignItems: 'flex-start', // Changed from center to flex-start to respect top padding
-        justifyContent: 'center', 
-        position: 'relative', 
+        justifyContent: 'center',
+        position: 'relative',
         padding: '110px 1rem 4rem 1rem', // Added 180px top padding
-        boxSizing: 'border-box' 
+        boxSizing: 'border-box'
       }}>
         <div style={{ maxWidth: '1200px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '3rem', margin: '0 auto', flexWrap: 'wrap' }}>
-          
+
           {/* LEFT COLUMN: Text & Buttons */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minWidth: '300px' }}>
             <motion.span variants={fadeInUp} style={{ color: '#78BE20', fontWeight: '700', fontSize: '0.9rem', marginBottom: '1rem', letterSpacing: '1px', textTransform: 'uppercase' }}>
               <ScrambleText>Founded 2023</ScrambleText>
             </motion.span>
 
-            <motion.h1 
+            <motion.h1
               variants={fadeInUp}
               animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', background: 'linear-gradient(90deg, #ffffff, #2ecc71, #ffffff)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+              style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', background: 'linear-gradient(90deg, #ffffffff, #2ecc71, #ffffff)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
             >
               <ScrambleText>IEEE SPS SSN</ScrambleText>
             </motion.h1>
 
-            <motion.p variants={fadeInUp} style={{ fontSize: 'clamp(1.1rem, 2vw, 1.25rem)', color: 'inherit', opacity: 0.9, marginBottom: '2.5rem', lineHeight: 1.6, fontWeight: 500, maxWidth: '600px' }}>
+            <motion.p variants={fadeInUp} style={{ fontSize: 'clamp(1.1rem, 2vw, 1.25rem)', color: 'inherit', marginBottom: '2.5rem', lineHeight: 1.6, fontWeight: 500, maxWidth: '600px' }}>
               Get ready for an exciting journey where we uncover the secrets behind signal processing. Join a smart community that turns theories into real things that matter.
             </motion.p>
 
@@ -291,21 +292,21 @@ export default function AboutPage() {
       <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} style={{ width: '100%', padding: '6rem 1rem', maxWidth: '1200px', margin: '0 auto' }}>
         {/* UPDATE 2: Added justifyContent: 'center' and ensured alignItems: 'center' is active to align the image to the middle of the text */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5rem', flexWrap: 'wrap-reverse' }}>
-          
+
           <motion.div whileHover={{ y: -5 }} style={{ flex: '1 1 400px', height: '400px', alignSelf: 'center' }}>
-             <ImageCarousel />
+            <ImageCarousel />
           </motion.div>
 
           <div style={{ flex: '1 1 450px' }}>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, color: 'inherit', marginBottom: '1.5rem' }}>
-              <ScrambleText>MORE THAN JUST</ScrambleText> <br/>
-              <span style={{ color: '#78BE20' }}><ScrambleText>A TECH GROUP</ScrambleText></span>
+              <ScrambleText>MORE THAN JUST</ScrambleText> <br />
+              <span style={{ color: '#7bd112ff' }}><ScrambleText>A TECH GROUP</ScrambleText></span>
             </h2>
-            <p style={{ fontSize: '1.15rem', lineHeight: 1.8, opacity: 0.9, marginBottom: '1.5rem' }}>
-              <strong>Being a member of the SSN IEEE SPS Student Chapter means you are becoming part of a community of curious minds. We don't just read about technology; we dive into how sounds, pictures, and data get transformed.</strong>
+            <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.25rem)', color: 'inherit', marginBottom: '2.5rem', lineHeight: 1.6, fontWeight: 500, }}>
+              Being a member of the SSN IEEE SPS Student Chapter means you are becoming part of a community of curious minds. We don't just read about technology; we dive into how sounds, pictures, and data get transformed.
             </p>
-            <p style={{ fontSize: '1.15rem', lineHeight: 1.8, opacity: 0.9 }}>
-              <strong>Whether you're into tech, love figuring things out, or just want to be part of cool projects, this is your ticket to a place where ideas turn into real actions.</strong>
+            <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.25rem)', color: 'inherit', marginBottom: '2.5rem', lineHeight: 1.6, fontWeight: 500, }}>
+              Whether you're into tech, love figuring things out, or just want to be part of cool projects, this is your ticket to a place where ideas turn into real actions.
             </p>
           </div>
         </div>
@@ -317,15 +318,15 @@ export default function AboutPage() {
       {/* --- MISSION & VISION SECTION --- */}
       <section style={{ width: '100%', padding: '6rem 1rem', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem' }}>
-          
+
           {/* MISSION */}
           <motion.div initial="hidden" whileInView="visible" whileHover="hover" viewport={{ once: true }} variants={fadeInUp} style={{ height: '100%' }}>
             <motion.div variants={hoverLift} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <h3 style={{ fontSize: '2rem', fontWeight: 800, color: 'inherit', marginBottom: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+              <h3 style={{ fontSize: '2rem', fontWeight: 800, color: '#7bd112ff', marginBottom: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                 <ScrambleText>MISSION</ScrambleText>
               </h3>
               <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '2rem', textAlign: 'center', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <p style={{ fontSize: '1.1rem', lineHeight: 1.7, opacity: 0.9, fontWeight: 'bold' }}>
+                <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.25rem)', color: 'inherit', marginBottom: '2.5rem', lineHeight: 1.6, fontWeight: 500 }}>
                   To move beyond reading and get hands-on. We aim to do projects where you make cool stuff using clever ideas and tools. Our mission is to show you how technologies work.
                 </p>
               </div>
@@ -335,11 +336,11 @@ export default function AboutPage() {
           {/* VISION */}
           <motion.div initial="hidden" whileInView="visible" whileHover="hover" viewport={{ once: true }} variants={fadeInUp} style={{ height: '100%' }}>
             <motion.div variants={hoverLift} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <h3 style={{ fontSize: '2rem', fontWeight: 800, color: '#78BE20', marginBottom: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-                 <ScrambleText>VISION</ScrambleText>
+              <h3 style={{ fontSize: '2rem', fontWeight: 800, color: 'inherit', marginBottom: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                <ScrambleText>VISION</ScrambleText>
               </h3>
               <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '2rem', textAlign: 'center', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <p style={{ fontSize: '1.1rem', lineHeight: 1.7, opacity: 0.9, fontWeight: 'bold' }}>
+                <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.25rem)', color: 'inherit', marginBottom: '2.5rem', lineHeight: 1.6, fontWeight: 500 }}>
                   To shape the future of technology by bringing cool ideas to life. We envision a smart community where curious minds share what they know and learn from each other.
                 </p>
               </div>
