@@ -23,11 +23,11 @@ const dropdowns = [
 ];
 
 const navLinks = [
-  { name: 'HOME', path: '/'},
-  { name: 'TEAM', path: '/team'},
-  { name: 'MAGAZINE', path: '/magazine'},
-  { name: 'GALLERY', path: '/gallery'},
-  { name: 'CONTACT', path: '/contact'}
+  { name: 'HOME', path: '/' },
+  { name: 'TEAM', path: '/team' },
+  { name: 'MAGAZINE', path: '/magazine' },
+  { name: 'GALLERY', path: '/gallery' },
+  { name: 'CONTACT', path: '/contact' }
 ];
 
 export default function Navbar() {
@@ -61,7 +61,7 @@ export default function Navbar() {
           }
 
           const navListWidth = navListRef.current.scrollWidth;
-          const padding = 150; 
+          const padding = 150;
 
           if (wasHidden) {
             navListRef.current.style.display = 'none';
@@ -83,12 +83,12 @@ export default function Navbar() {
 
     debouncedCheck();
     const resizeObserver = new ResizeObserver(() => requestAnimationFrame(debouncedCheck));
-    
+
     if (navRef.current) resizeObserver.observe(navRef.current);
     if (navListRef.current) resizeObserver.observe(navListRef.current);
 
     window.addEventListener('resize', debouncedCheck);
-    
+
     return () => {
       resizeObserver.disconnect();
       window.removeEventListener('resize', debouncedCheck);
@@ -126,7 +126,7 @@ export default function Navbar() {
               position: 'relative',
               color: isLinkActive('/') || hoveredItem === 'home' ? '#78BE20' : '#ffffff',
               fontWeight: 600,
-              fontSize: isMobile ? '1.1rem' : '0.9rem', 
+              fontSize: isMobile ? '1.1rem' : '0.9rem',
               letterSpacing: '0.5px',
               transition: 'color 0.3s ease',
               cursor: 'pointer',
@@ -139,7 +139,7 @@ export default function Navbar() {
           >
             HOME
             {!isMobile && (isLinkActive('/') || hoveredItem === 'home') && (
-               <span style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px', background: '#78BE20', borderRadius: '2px', boxShadow: '0 0 8px #78BE20' }} />
+              <span style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px', background: '#78BE20', borderRadius: '2px', boxShadow: '0 0 8px #78BE20' }} />
             )}
           </span>
         </Link>
@@ -149,7 +149,7 @@ export default function Navbar() {
       {dropdowns.map((dropdown) => {
         const isOpen = openDropdown === dropdown.label;
         const isActive = isDropdownActive(dropdown.items);
-        
+
         return (
           <li key={dropdown.label} style={{ position: 'relative' }}>
             <button
@@ -175,22 +175,22 @@ export default function Navbar() {
               onMouseLeave={() => setHoveredItem(null)}
             >
               {dropdown.label}
-              <ChevronDown 
-                size={14} 
-                style={{ 
-                  transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', 
-                  transition: 'transform 0.3s ease' 
-                }} 
+              <ChevronDown
+                size={14}
+                style={{
+                  transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.3s ease'
+                }}
               />
             </button>
-            
+
             {/* Dropdown Menu */}
             {isOpen && (
               <ul
                 style={{
                   listStyle: 'none',
                   position: isMobile ? 'static' : 'absolute',
-                  top: isMobile ? '0' : '140%', 
+                  top: isMobile ? '0' : '140%',
                   left: isMobile ? '0' : '-1rem',
                   minWidth: '220px',
                   background: 'rgba(10, 25, 40, 0.95)',
@@ -284,13 +284,13 @@ export default function Navbar() {
       <nav
         ref={navRef}
         style={{
-          background: 'rgba(0, 30, 50, 0.6)', 
+          background: 'rgba(0, 30, 50, 0.6)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
           borderBottom: '1px solid rgba(120, 190, 32, 0.3)',
-          
+
           // --- CHANGE 1: Reduced Vertical Padding here (was 0.8rem) ---
-          padding: '0.5rem 2rem', 
+          padding: '0.5rem 2rem',
           // ------------------------------------------------------------
 
           boxSizing: 'border-box',
@@ -309,8 +309,8 @@ export default function Navbar() {
         {/* LEFT: LOGO + TITLE */}
         <div ref={logoRef} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
           <Link href="/" passHref>
-             <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-               <img
+            <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <img
                 src="/SSN_SPS_LOGO.jpg"
                 alt="SPS Logo"
                 style={{
@@ -337,9 +337,9 @@ export default function Navbar() {
               lineHeight: 1,
             }}
           >
-            <span style={{ color: '#ffffff' }}>IEEE</span>
+            <span style={{ color: '#ffffff' }}>SSN IEEE</span>
             &nbsp;
-            <span style={{ color: '#78BE20' }}>SPS SSN</span>
+            <span style={{ color: '#78BE20' }}>SPS SB</span>
           </div>
         </div>
 
@@ -352,7 +352,7 @@ export default function Navbar() {
             alignItems: 'center',
             margin: 0,
             padding: 0,
-            gap: 'clamp(1rem, 2vw, 2.5rem)', 
+            gap: 'clamp(1rem, 2vw, 2.5rem)',
             marginLeft: 'auto',
           }}
         >
@@ -395,7 +395,7 @@ export default function Navbar() {
               backdropFilter: 'blur(15px)',
               borderBottom: '1px solid rgba(120,190,32,0.4)',
               animation: 'fadeIn 0.3s ease-out',
-              height: '100vh', 
+              height: '100vh',
               zIndex: 9998,
             }}
           >

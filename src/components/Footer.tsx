@@ -29,7 +29,7 @@ export default function Footer() {
         marginTop: "4rem",
         borderTop: "1px solid rgba(255, 255, 255, 0.1)",
         // --- CHANGE 1: Updated Background Color ---
-        background: "rgba(5, 20, 35, 0.8)", 
+        background: "rgba(5, 20, 35, 0.8)",
         // ------------------------------------------
         backdropFilter: "blur(10px)",
         padding: "1.5rem 0",
@@ -51,7 +51,7 @@ export default function Footer() {
       >
         {/* --- LEFT SECTION: Developer Button | Separator | Icons --- */}
         <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
-          
+
           {/* Developed By Button with Popup */}
           <div style={{ position: "relative" }} ref={popupRef}>
             <motion.button
@@ -63,9 +63,9 @@ export default function Footer() {
                 color: "#000",         // Black text for contrast
                 border: "none",
                 fontWeight: 700,
-                fontSize: "0.85rem",
+                fontSize: "1.5rem",
                 borderRadius: "20px",
-                padding: "8px 20px",
+                padding: "3px 10px",
                 cursor: "pointer",
                 boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
                 display: "flex",
@@ -73,7 +73,7 @@ export default function Footer() {
                 gap: "5px"
               }}
             >
-              DEVELOPED BY
+              {"♥"}
             </motion.button>
 
             {/* Popup Bubble */}
@@ -112,26 +112,26 @@ export default function Footer() {
                   >
                     Web Dev Team
                   </div>
-                  
+
                   {/* --- UPDATED NAMES WITH HOVER EFFECT --- */}
-                  <motion.div 
+                  <motion.div
                     whileHover={{ x: 5, color: "#78BE20" }}
-                    style={{ 
-                        fontSize: "0.95rem", 
-                        fontWeight: 500, 
-                        marginBottom: "4px", 
-                        cursor: "default" // or "pointer" if you add links later
+                    style={{
+                      fontSize: "0.95rem",
+                      fontWeight: 500,
+                      marginBottom: "4px",
+                      cursor: "default" // or "pointer" if you add links later
                     }}
                   >
                     Mugilkrishna D U
                   </motion.div>
 
-                  <motion.div 
+                  <motion.div
                     whileHover={{ x: 5, color: "#78BE20" }}
-                    style={{ 
-                        fontSize: "0.95rem", 
-                        fontWeight: 500,
-                        cursor: "default" 
+                    style={{
+                      fontSize: "0.95rem",
+                      fontWeight: 500,
+                      cursor: "default"
                     }}
                   >
                     Prawin Kumar S
@@ -157,16 +157,16 @@ export default function Footer() {
           </div>
 
           {/* Vertical Separator Line */}
-          <div style={{ 
-              width: "1px", 
-              height: "24px", 
-              background: "rgba(255,255,255,0.3)",
-              display: "block" // Ensures it shows up
+          <div style={{
+            width: "1px",
+            height: "24px",
+            background: "rgba(255,255,255,0.3)",
+            display: "block" // Ensures it shows up
           }}></div>
 
           {/* Social Icons Container */}
           <div style={{ display: "flex", gap: "1rem", alignItems: "center", fontSize: "2rem" }}>
-            
+
             {/* --- CHANGE 2: IEEE SPS Logo now has hover effect --- */}
             <motion.a
               href="https://signalprocessingsociety.org/"

@@ -261,9 +261,9 @@ export default function AboutPage() {
               variants={fadeInUp}
               animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', background: 'linear-gradient(90deg, #ffffffff, #2ecc71, #ffffff)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+              style={{ fontSize: 'clamp(2.3rem, 4.5vw, 4.3rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', background: 'linear-gradient(90deg, #ffffffff, #2ecc71, #ffffff)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
             >
-              <ScrambleText>IEEE SPS SSN</ScrambleText>
+              <ScrambleText>SSN IEEE SPS Student Branch</ScrambleText>
             </motion.h1>
 
             <motion.p variants={fadeInUp} style={{ fontSize: 'clamp(1.1rem, 2vw, 1.25rem)', color: 'inherit', marginBottom: '2.5rem', lineHeight: 1.6, fontWeight: 500, maxWidth: '600px' }}>

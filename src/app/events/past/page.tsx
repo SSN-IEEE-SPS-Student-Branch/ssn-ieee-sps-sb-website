@@ -57,7 +57,7 @@ const eventsData = [
     category: 'Talks',
     title: '"From Pixels to Insights": Computer Vision',
     image: '/events/event-12-1.png',
-    description: 'The inaugural keynote for the IEEE SPS SSN Chapter, exploring the evolution of computer vision and its ability to extract meaning from digital imagery.',
+    description: 'The inaugural keynote for the SSN IEEE SPS Student Chapter, exploring the evolution of computer vision and its ability to extract meaning from digital imagery.',
     fullDescription: 'Marking the official launch of the IEEE Signal Processing Society Student Branch, Dr. Sainarayanan Gopalakrishnan delivered a keynote on the journey from raw pixel data to actionable intelligence. He covered the progression of image recognition algorithms and their modern industrial applications. The event established the chapter’s mission to serve as a hub for research and professional networking in the signal processing domain.',
     date: 'AUG 13, 2025',
     time: '10:00 AM - 1:00 PM',

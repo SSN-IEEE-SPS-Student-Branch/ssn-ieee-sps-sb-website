@@ -3,15 +3,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Linkedin, Instagram, X, ChevronLeft, ChevronRight, Calendar, Eye } from 'lucide-react';
+import { Linkedin, Instagram, X, ChevronLeft, ChevronRight, Calendar, Eye, ChevronDown } from 'lucide-react';
 
 // --- DATA STRUCTURE ---
 const facultyCoordinators = [
   {
     name: 'Dr. Venkateswaran N',
     role: 'Chair of IEEE SPS Madras Section',
-    img: '/faculty/venkateswaran.jpg', 
-    linkedin: 'https://www.linkedin.com/in/venkateswarann2021/', 
+    img: '/faculty/venkateswaran.jpg',
+    linkedin: 'https://www.linkedin.com/in/venkateswarann2021/',
   },
   {
     name: 'Dr. Vijay Jeyakumar',
@@ -62,13 +62,35 @@ const teamsData: Record<string, any[]> = {
   ],
 };
 
+const pastTeamsData: Record<string, { name: string; role: string; img: string }[]> = {
+  "2023-2024": [
+    { name: 'Shri Thrisha', role: 'Chair', img: '/past-teams/2023-2024/Shri Thrisha.png' },
+    { name: 'Shivapriya S', role: 'Vice Chair', img: '/past-teams/2023-2024/Shivapriya S.png' },
+    { name: 'Anusha A', role: 'Secretary', img: '/past-teams/2023-2024/Anusha A.png' },
+    { name: 'Jothisa K', role: 'Treasurer', img: '/past-teams/2023-2024/Jothisa K.png' },
+  ],
+  "2024-2025": [
+    { name: 'Venkatesh M', role: 'Chair', img: '/past-teams/2024-2025/Venkatesh M.png' },
+    { name: 'Jothisa K', role: 'Vice Chair', img: '/past-teams/2024-2025/Jothisa K.png' },
+    { name: 'Swaati S', role: 'Treasurer', img: '/past-teams/2024-2025/Swaati S.png' },
+    { name: 'Karthick Siva R', role: 'Secretary', img: '/past-teams/2024-2025/Karthick Siva R.png' },
+    { name: 'Jeya Marshalin M', role: 'Joint Secretary', img: '/past-teams/2024-2025/Jeya Marshalin M.png' },
+  ],
+};
+
 const categories = Object.keys(teamsData);
-const activeYear = "2025-26"; 
+const activeYear = "2025-26";
+const allYears = ["2025-26", "2024-2025", "2023-2024"];
 
 export default function CurrentMembersPage() {
   const [selected, setSelected] = useState<any>(null);
   const [activeTab, setActiveTab] = useState("Office Bearers");
   const [mounted, setMounted] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(activeYear);
+  const [yearDropdownOpen, setYearDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const isActiveYear = selectedYear === activeYear;
 
   // --- TAB SCROLL STATE ---
   const tabsRef = useRef<HTMLDivElement>(null);
@@ -84,6 +106,17 @@ export default function CurrentMembersPage() {
     }
     return () => { document.body.style.overflow = 'unset'; };
   }, [selected]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setYearDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // --- SCROLL CHECK LOGIC ---
   const checkScrollButtons = () => {
@@ -112,7 +145,7 @@ export default function CurrentMembersPage() {
 
   return (
     <section style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
-      
+
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -149,13 +182,8 @@ export default function CurrentMembersPage() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: 'center', marginBottom: '3rem', paddingTop: '3rem' }}
+        style={{ textAlign: 'center', marginBottom: '3rem', paddingTop: '1rem' }}
       >
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(120, 190, 32, 0.1)', padding: '0.5rem 1rem', borderRadius: '2rem', marginBottom: '0.1rem', border: '1px solid rgba(120, 190, 32, 0.3)' }}>
-            <Calendar size={16} color="#78BE20" />
-            <span style={{ color: '#78BE20', fontWeight: '700', fontSize: '0.9rem' }}>ACADEMIC YEAR {activeYear}</span>
-        </div>
-
         <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: '800', marginBottom: '1.5rem', color: 'white', letterSpacing: '-0.025em' }}>
           MEET THE <span style={{ color: '#78BE20' }}>TEAM</span>
         </h1>
@@ -169,30 +197,30 @@ export default function CurrentMembersPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        style={{ marginBottom: '6rem' }}
+        style={{ marginBottom: '2rem' }}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
-            {/* Left Line Animation */}
-            <motion.div 
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: 150, opacity: 1 }}
-                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                style={{ height: '1px', background: 'white' }}
-            />
-            
-            <h2 style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
+          {/* Left Line Animation */}
+          <motion.div
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 150, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+            style={{ height: '1px', background: 'white' }}
+          />
+
+          <h2 style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
             Faculty Advisors
-            </h2>
-            
-            {/* Right Line Animation */}
-            <motion.div 
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: 150, opacity: 1 }}
-                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                style={{ height: '1px', background: 'white' }}
-            />
+          </h2>
+
+          {/* Right Line Animation */}
+          <motion.div
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 150, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+            style={{ height: '1px', background: 'white' }}
+          />
         </div>
-        
+
         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '3rem' }}>
           {facultyCoordinators.map((faculty, index) => (
             <div key={index} style={{ width: '100%', maxWidth: '300px' }}>
@@ -207,76 +235,248 @@ export default function CurrentMembersPage() {
         </div>
       </motion.div>
 
-      {/* --- TABS SECTION --- */}
-      <div style={{ position: 'relative', marginBottom: '3.5rem', maxWidth: '100%' }}>
-        
-        {/* Scroll Controls */}
-        <AnimatePresence>
-          {canScrollLeft && (
-            <motion.button
-              initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
-              onClick={() => scrollTabs('left')}
-              style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', zIndex: 10, background: '#092C2E', border: '1px solid #78BE20', color: '#78BE20', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
-            >
-              <ChevronLeft size={24} />
-            </motion.button>
-          )}
-          {canScrollRight && (
-            <motion.button
-              initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
-              onClick={() => scrollTabs('right')}
-              style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', zIndex: 10, background: '#092C2E', border: '1px solid #78BE20', color: '#78BE20', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
-            >
-              <ChevronRight size={24} />
-            </motion.button>
-          )}
-        </AnimatePresence>
 
-        {/* Tab Container */}
-        <div 
-          ref={tabsRef}
-          onScroll={checkScrollButtons}
-          className="no-scrollbar"
-          style={{ 
-            overflowX: 'auto', 
-            whiteSpace: 'nowrap',
-            padding: '1rem 3rem', 
-            maskImage: 'linear-gradient(to right, transparent, black 40px, black calc(100% - 40px), transparent)',
-            textAlign: 'center'
-          }}
-        >
-          <div style={{ display: 'inline-flex', gap: '0.75rem' }}>
-            {categories.map((tab) => (
-              <TabButton 
-                key={tab} 
-                tab={tab} 
-                isActive={activeTab === tab} 
-                onClick={() => setActiveTab(tab)} 
-              />
-            ))}
-          </div>
+      {/* YEAR SELECTOR DROPDOWN */}
+      <motion.div
+        initial={{ opacity: 0, y: -5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        style={{ textAlign: 'center', marginBottom: '0', paddingTop: '3rem' }}
+      >
+        <div ref={dropdownRef} style={{ position: 'relative', display: 'inline-block' }}>
+          <button
+            onClick={() => setYearDropdownOpen(!yearDropdownOpen)}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              background: 'rgba(9, 44, 46, 0.6)',
+              padding: '0.5rem 1rem',
+              borderRadius: '2rem',
+              marginBottom: '0.1rem',
+              border: '1px solid rgba(120, 190, 32, 0.3)',
+              cursor: 'pointer',
+              color: '#78BE20',
+              fontWeight: '700',
+              fontSize: '0.9rem',
+              transition: 'all 0.2s ease',
+              backdropFilter: 'blur(8px)',
+            }}
+            onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(9, 44, 46, 0.85)'; e.currentTarget.style.borderColor = 'rgba(120, 190, 32, 0.6)'; }}
+            onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(9, 44, 46, 0.6)'; e.currentTarget.style.borderColor = 'rgba(120, 190, 32, 0.3)'; }}
+          >
+            <Calendar size={16} color="#78BE20" />
+            <span>ACADEMIC YEAR {selectedYear}</span>
+            <motion.span
+              animate={{ rotate: yearDropdownOpen ? 180 : 0 }}
+              transition={{ duration: 0.25 }}
+              style={{ display: 'flex', alignItems: 'center' }}
+            >
+              <ChevronDown size={16} />
+            </motion.span>
+          </button>
+
+          {/* Dropdown Menu */}
+          <AnimatePresence>
+            {yearDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 0.5rem)',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: 'rgba(9, 44, 46, 0.95)',
+                  backdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(120, 190, 32, 0.3)',
+                  borderRadius: '1rem',
+                  padding: '0.5rem',
+                  zIndex: 100,
+                  minWidth: '220px',
+                  boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
+                }}
+              >
+                {allYears.map((year) => (
+                  <button
+                    key={year}
+                    onClick={() => {
+                      setSelectedYear(year);
+                      setYearDropdownOpen(false);
+                      if (year === activeYear) setActiveTab("Office Bearers");
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      width: '100%',
+                      padding: '0.65rem 1rem',
+                      borderRadius: '0.6rem',
+                      border: 'none',
+                      background: selectedYear === year ? 'rgba(120, 190, 32, 0.15)' : 'transparent',
+                      color: selectedYear === year ? '#78BE20' : 'rgba(255,255,255,0.75)',
+                      fontWeight: selectedYear === year ? '700' : '500',
+                      fontSize: '0.9rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                    }}
+                    onMouseOver={(e) => {
+                      if (selectedYear !== year) {
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                        e.currentTarget.style.color = 'white';
+                      }
+                    }}
+                    onMouseOut={(e) => {
+                      if (selectedYear !== year) {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = 'rgba(255,255,255,0.75)';
+                      }
+                    }}
+                  >
+                    <Calendar size={14} />
+                    <span>{year}</span>
+                    {year === activeYear && (
+                      <span style={{
+                        marginLeft: 'auto',
+                        fontSize: '0.7rem',
+                        background: 'rgba(120, 190, 32, 0.2)',
+                        color: '#78BE20',
+                        padding: '0.15rem 0.5rem',
+                        borderRadius: '1rem',
+                        fontWeight: '700',
+                      }}>CURRENT</span>
+                    )}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </div>
+      </motion.div>
 
-      {/* DYNAMIC MEMBERS GRID */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="universal-grid" data-count={teamsData[activeTab].length} style={{ marginBottom: '5rem' }}>
-            {teamsData[activeTab].map((m, index) => (
-              <div key={`${activeTab}-${index}`} className="member-item"> 
-                 {/* Passing category to enable specific effects */}
-                 <ProfileCard member={m} onClick={() => setSelected(m)} category={activeTab} />
+      {/* --- ACTIVE YEAR: TABS + CATEGORIZED GRID --- */}
+      {isActiveYear && (
+        <>
+          {/* --- TABS SECTION --- */}
+          <div style={{ position: 'relative', marginBottom: '3.5rem', maxWidth: '100%' }}>
+            {/* Scroll Controls */}
+            <AnimatePresence>
+              {canScrollLeft && (
+                <motion.button
+                  initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
+                  onClick={() => scrollTabs('left')}
+                  style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', zIndex: 10, background: '#092C2E', border: '1px solid #78BE20', color: '#78BE20', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
+                >
+                  <ChevronLeft size={24} />
+                </motion.button>
+              )}
+              {canScrollRight && (
+                <motion.button
+                  initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
+                  onClick={() => scrollTabs('right')}
+                  style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', zIndex: 10, background: '#092C2E', border: '1px solid #78BE20', color: '#78BE20', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
+                >
+                  <ChevronRight size={24} />
+                </motion.button>
+              )}
+            </AnimatePresence>
+
+            {/* Tab Container */}
+            <div
+              ref={tabsRef}
+              onScroll={checkScrollButtons}
+              className="no-scrollbar"
+              style={{
+                overflowX: 'auto',
+                whiteSpace: 'nowrap',
+                padding: '1rem 3rem',
+                maskImage: 'linear-gradient(to right, transparent, black 40px, black calc(100% - 40px), transparent)',
+                textAlign: 'center'
+              }}
+            >
+              <div style={{ display: 'inline-flex', gap: '0.75rem' }}>
+                {categories.map((tab) => (
+                  <TabButton
+                    key={tab}
+                    tab={tab}
+                    isActive={activeTab === tab}
+                    onClick={() => setActiveTab(tab)}
+                  />
+                ))}
               </div>
-            ))}
+            </div>
           </div>
+
+          {/* DYNAMIC MEMBERS GRID */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="universal-grid" data-count={teamsData[activeTab].length} style={{ marginBottom: '5rem' }}>
+                {teamsData[activeTab].map((m, index) => (
+                  <div key={`${activeTab}-${index}`} className="member-item">
+                    <ProfileCard member={m} onClick={() => setSelected(m)} category={activeTab} />
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </>
+      )}
+
+      {/* --- PAST YEAR: OFFICE BEARERS ONLY --- */}
+      {!isActiveYear && pastTeamsData[selectedYear] && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{ marginTop: '2rem' }}
+        >
+          {/* Section Header */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '3rem' }}>
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 150, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+              style={{ height: '1px', background: 'white' }}
+            />
+            <h2 style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
+              Office Bearers
+            </h2>
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 150, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+              style={{ height: '1px', background: 'white' }}
+            />
+          </div>
+
+          {/* Past Team Grid */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedYear}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="universal-grid" data-count={pastTeamsData[selectedYear].length} style={{ marginBottom: '5rem' }}>
+                {pastTeamsData[selectedYear].map((m, index) => (
+                  <div key={`past-${selectedYear}-${index}`} className="member-item">
+                    <ProfileCard member={m} onClick={() => setSelected(m)} category="Office Bearers" />
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
-      </AnimatePresence>
+      )}
 
       {/* MODAL */}
       {mounted && createPortal(
@@ -294,47 +494,47 @@ export default function CurrentMembersPage() {
 // --- SUB COMPONENTS ---
 
 function TabButton({ tab, isActive, onClick }: { tab: string, isActive: boolean, onClick: () => void }) {
-    // Note: Tooltip removed as requested
-    return (
-        <motion.button
-            onClick={onClick}
-            style={{
-                position: 'relative',
-                padding: '0.75rem 1.5rem',
-                borderRadius: '2rem',
-                border: 'none',
-                background: 'transparent',
-                color: isActive ? '#0F5156' : '#ffffff',
-                fontWeight: '700',
-                fontSize: '0.95rem',
-                cursor: 'pointer',
-                transition: 'color 0.3s ease',
-                zIndex: 1
-            }}
-        >
-            {tab}
-            
-            {/* Active Background */}
-            {isActive ? (
-                <motion.div
-                    layoutId="activeTab"
-                    style={{
-                        position: 'absolute',
-                        top: 0, left: 0, right: 0, bottom: 0,
-                        borderRadius: '2rem',
-                        background: '#78BE20',
-                        zIndex: -1,
-                        boxShadow: '0 0 20px rgba(120, 190, 32, 0.4)'
-                    }}
-                />
-            ) : (
-                <div style={{ 
-                    position: 'absolute', inset: 0, borderRadius: '2rem', 
-                    border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', zIndex: -1 
-                }} />
-            )}
-        </motion.button>
-    );
+  // Note: Tooltip removed as requested
+  return (
+    <motion.button
+      onClick={onClick}
+      style={{
+        position: 'relative',
+        padding: '0.75rem 1.5rem',
+        borderRadius: '2rem',
+        border: 'none',
+        background: 'transparent',
+        color: isActive ? '#0F5156' : '#ffffff',
+        fontWeight: '700',
+        fontSize: '0.95rem',
+        cursor: 'pointer',
+        transition: 'color 0.3s ease',
+        zIndex: 1
+      }}
+    >
+      {tab}
+
+      {/* Active Background */}
+      {isActive ? (
+        <motion.div
+          layoutId="activeTab"
+          style={{
+            position: 'absolute',
+            top: 0, left: 0, right: 0, bottom: 0,
+            borderRadius: '2rem',
+            background: '#78BE20',
+            zIndex: -1,
+            boxShadow: '0 0 20px rgba(120, 190, 32, 0.4)'
+          }}
+        />
+      ) : (
+        <div style={{
+          position: 'absolute', inset: 0, borderRadius: '2rem',
+          border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', zIndex: -1
+        }} />
+      )}
+    </motion.button>
+  );
 }
 
 function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { member: any, onClick: () => void, isFaculty?: boolean, category?: string }) {
@@ -343,10 +543,10 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
 
   const handleCardClick = async () => {
     if (isOfficeBearer) {
-        setIsShimmying(true);
-        // Wait for the shimmer animation (approx 300ms) before opening modal
-        await new Promise(resolve => setTimeout(resolve, 300));
-        setIsShimmying(false);
+      setIsShimmying(true);
+      // Wait for the shimmer animation (approx 300ms) before opening modal
+      await new Promise(resolve => setTimeout(resolve, 300));
+      setIsShimmying(false);
     }
     onClick();
   };
@@ -357,8 +557,6 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
       whileHover="hover"
       whileTap="tap"
       variants={{
-        rest: { y: 0, boxShadow: '0 4px 6px rgba(0,0,0,0.1)' },
-        hover: { y: -8, boxShadow: '0 20px 40px -10px rgba(0,0,0,0.5)' },
         tap: { scale: 0.98 }
       }}
       onClick={handleCardClick}
@@ -366,16 +564,16 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCardClick(); } }}
       style={{
-        background: isFaculty 
-            ? 'linear-gradient(145deg, rgba(15, 81, 86, 0.9), rgba(9, 44, 46, 0.95))' 
-            : 'linear-gradient(180deg, rgba(5, 20, 25, 0.85) 0%, rgba(3, 15, 18, 0.95) 100%)',
+        background: isFaculty
+          ? 'linear-gradient(145deg, rgba(15, 81, 86, 0.9), rgba(9, 44, 46, 0.95))'
+          : 'linear-gradient(180deg, rgba(5, 20, 25, 0.85) 0%, rgba(3, 15, 18, 0.95) 100%)',
         backdropFilter: 'blur(10px)',
         borderRadius: '1.5rem',
         padding: '1rem 1.5rem',
         cursor: 'pointer',
         textAlign: 'center',
         border: '1px solid rgba(255,255,255,0.08)',
-        height: '100%', 
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -387,23 +585,23 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
       {/* SHIMMER EFFECT FOR OFFICE BEARERS (COIN SHINE) */}
       <AnimatePresence>
         {isShimmying && (
-            <motion.div
-                initial={{ x: '-150%', opacity: 0 }}
-                animate={{ x: '150%', opacity: 0.8 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    background: 'linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.8) 50%, transparent 80%)',
-                    zIndex: 20,
-                    transform: 'skewX(-20deg)',
-                    pointerEvents: 'none'
-                }}
-            />
+          <motion.div
+            initial={{ x: '-150%', opacity: 0 }}
+            animate={{ x: '150%', opacity: 0.8 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.8) 50%, transparent 80%)',
+              zIndex: 20,
+              transform: 'skewX(-20deg)',
+              pointerEvents: 'none'
+            }}
+          />
         )}
       </AnimatePresence>
 
@@ -413,58 +611,58 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
       {/* Content that blurs on hover */}
       <motion.div
         variants={{
-            rest: { filter: 'blur(0px)', opacity: 1 },
-            hover: { filter: 'blur(5px)', opacity: 0.4 }
+          rest: { filter: 'blur(0px)', opacity: 1 },
+          hover: { filter: 'blur(5px)', opacity: 0.4 }
         }}
         transition={{ duration: 0.3 }}
         style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-          <div style={{ width: 140, height: 140, margin: '0 auto 1.5rem auto', position: 'relative' }}>
-             <img
-               src={member.img}
-               alt={member.name}
-               style={{
-               width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%', 
-               border: isFaculty ? '3px solid #EAB308' : '3px solid #78BE20',
-               boxShadow: '0 8px 20px rgba(0,0,0,0.3)'
-               }}
-           />
-          </div>
-          <h3 style={{ fontWeight: 800, fontSize: '1.35rem', marginBottom: '0.1rem', color: 'white', lineHeight: 1.2 }}>{member.name}</h3>
-          <p style={{ fontSize: '0.95rem', color: isFaculty ? '#FDE047' : '#78BE20', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '-0.1rem' }}>{member.role}</p>
+        <div style={{ width: 140, height: 140, margin: '0 auto 1.5rem auto', position: 'relative' }}>
+          <img
+            src={member.img}
+            alt={member.name}
+            style={{
+              width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%',
+              border: isFaculty ? '3px solid #EAB308' : '3px solid #78BE20',
+              boxShadow: '0 8px 20px rgba(0,0,0,0.3)'
+            }}
+          />
+        </div>
+        <h3 style={{ fontWeight: 800, fontSize: '1.35rem', marginBottom: '0.1rem', color: 'white', lineHeight: 1.2 }}>{member.name}</h3>
+        <p style={{ fontSize: '0.95rem', color: isFaculty ? '#FDE047' : '#78BE20', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '-0.1rem' }}>{member.role}</p>
       </motion.div>
 
       {/* "View Details" Overlay - appears on hover */}
       <motion.div
         variants={{
-            rest: { opacity: 0, scale: 0.8 },
-            hover: { opacity: 1, scale: 1 }
+          rest: { opacity: 0, scale: 0.8 },
+          hover: { opacity: 1, scale: 1 }
         }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.1 }}
         style={{
-            position: 'absolute',
-            top: 0, left: 0, right: 0, bottom: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 5,
-            pointerEvents: 'none' 
+          position: 'absolute',
+          top: 0, left: 0, right: 0, bottom: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 5,
+          pointerEvents: 'none'
         }}
       >
-        <div style={{ 
-            background: 'rgba(120, 190, 32, 0.9)', 
-            color: 'white', 
-            padding: '12px 20px', 
-            borderRadius: '30px', 
-            fontWeight: '700',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.5)'
+        <div style={{
+          background: 'rgba(120, 190, 32, 0.9)',
+          color: 'white',
+          padding: '12px 20px',
+          borderRadius: '30px',
+          fontWeight: '700',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.5)'
         }}>
-            <Eye size={18} />
-            <span>View Details</span>
+          <Eye size={18} />
+          <span>View Details</span>
         </div>
       </motion.div>
     </motion.div>
@@ -540,34 +738,34 @@ function ProfileModal({ member, onClose }: { member: any, onClose: () => void })
         />
         <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.75rem', fontWeight: '800', color: 'white' }}>{member.name}</h3>
         <div style={{ color: '#78BE20', fontWeight: '700', marginBottom: '2rem', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{member.role}</div>
-        
+
         {/* Social Icons */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
           {isValidLink(member.linkedin) && (
-            <a 
-              href={member.linkedin} target="_blank" rel="noopener noreferrer" 
-              style={{ transition: 'transform 0.2s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', color: 'white', textDecoration: 'none' }} 
-              onMouseOver={e => e.currentTarget.style.transform = 'scale(1.1)'} 
+            <a
+              href={member.linkedin} target="_blank" rel="noopener noreferrer"
+              style={{ transition: 'transform 0.2s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', color: 'white', textDecoration: 'none' }}
+              onMouseOver={e => e.currentTarget.style.transform = 'scale(1.1)'}
               onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
             >
-               <div style={{ background: '#0077b5', padding: '10px', borderRadius: '50%', display: 'flex' }}>
-                   <Linkedin color="white" size={24} />
-               </div>
-               <span style={{ fontSize: '0.8rem', opacity: 0.8 }}>LinkedIn</span>
+              <div style={{ background: '#0077b5', padding: '10px', borderRadius: '50%', display: 'flex' }}>
+                <Linkedin color="white" size={24} />
+              </div>
+              <span style={{ fontSize: '0.8rem', opacity: 0.8 }}>LinkedIn</span>
             </a>
           )}
-          
+
           {isValidLink(member.instagram) && (
-            <a 
-              href={member.instagram} target="_blank" rel="noopener noreferrer" 
-              style={{ transition: 'transform 0.2s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', color: 'white', textDecoration: 'none' }} 
-              onMouseOver={e => e.currentTarget.style.transform = 'scale(1.1)'} 
+            <a
+              href={member.instagram} target="_blank" rel="noopener noreferrer"
+              style={{ transition: 'transform 0.2s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', color: 'white', textDecoration: 'none' }}
+              onMouseOver={e => e.currentTarget.style.transform = 'scale(1.1)'}
               onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
             >
-                <div style={{ background: '#E1306C', padding: '10px', borderRadius: '50%', display: 'flex' }}>
-                   <Instagram color="white" size={24} />
-               </div>
-               <span style={{ fontSize: '0.8rem', opacity: 0.8 }}>Instagram</span>
+              <div style={{ background: '#E1306C', padding: '10px', borderRadius: '50%', display: 'flex' }}>
+                <Instagram color="white" size={24} />
+              </div>
+              <span style={{ fontSize: '0.8rem', opacity: 0.8 }}>Instagram</span>
             </a>
           )}
         </div>

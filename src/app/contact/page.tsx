@@ -8,8 +8,8 @@ import { Mail, MapPin, Phone, Clock, Plus, Minus, Send, CheckCircle, AlertCircle
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: "easeOut" }
   }
@@ -17,11 +17,11 @@ const fadeInUp: Variants = {
 
 const cardVariant: Variants = {
   hidden: { opacity: 0, scale: 0.9, y: 50 },
-  visible: { 
-    opacity: 1, 
-    scale: 1, 
+  visible: {
+    opacity: 1,
+    scale: 1,
     y: 0,
-    transition: { 
+    transition: {
       type: "spring",
       bounce: 0.4,
       duration: 0.8
@@ -54,7 +54,7 @@ const SignalWaveSeparator = () => (
       <defs>
         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
-          <stop offset="50%" stopColor="#78BE20" /> 
+          <stop offset="50%" stopColor="#78BE20" />
           <stop offset="100%" stopColor="rgba(255, 255, 255, 0)" />
         </linearGradient>
       </defs>
@@ -65,10 +65,10 @@ const SignalWaveSeparator = () => (
 // --- FAQ COMPONENT ---
 const FaqItem = ({ question, answer, isOpen, onClick }: { question: string, answer: string, isOpen: boolean, onClick: () => void }) => (
   <div style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '0.75rem' }}>
-    <button 
+    <button
       onClick={onClick}
-      style={{ 
-        width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
+      style={{
+        width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '0.75rem 0', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left'
       }}
     >
@@ -97,7 +97,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }: { question: string, answ
 
 export default function Contact() {
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0); 
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const faqs = [
     { q: 'How do I become a member?', a: 'Visit our Current Members page and fill out the membership application form. IEEE membership is required.' },
@@ -108,48 +108,25 @@ export default function Contact() {
     { q: 'Where are events held?', a: 'Most events are held at SSN College of Engineering. Specific venues are mentioned in event details.' },
   ];
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormStatus('sending');
-    const formData = new FormData(e.currentTarget);
-    const formElement = e.currentTarget;
-    try {
-      const response = await fetch("https://formspree.io/f/xbddlypk", {
-        method: "POST",
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-      if (response.ok) {
-        setFormStatus('success');
-        formElement.reset();
-        setTimeout(() => setFormStatus('idle'), 5000);
-      } else {
-        setFormStatus('error');
-      }
-    } catch (error) {
-      setFormStatus('error');
-    }
-  };
-
   // --- STYLES ---
   const cardStyle = {
-    padding: '2rem', 
+    padding: '2rem',
     borderRadius: '1.5rem',
-    backgroundColor: '#092C2E', 
+    backgroundColor: '#092C2E',
     border: '1px solid rgba(120, 190, 32, 0.2)',
     boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
     color: 'white',
-    height: '95%', 
+    height: '95%',
     display: 'flex',
     flexDirection: 'column' as const
   };
 
   const inputStyle = {
     width: '95%',
-    padding: '1rem 1.2rem', 
-    border: '1px solid rgba(255,255,255,0.15)', 
+    padding: '1rem 1.2rem',
+    border: '1px solid rgba(255,255,255,0.15)',
     borderRadius: '0.6rem',
-    backgroundColor: 'rgba(0,0,0,0.2)', 
+    backgroundColor: 'rgba(0,0,0,0.2)',
     color: 'white',
     outline: 'none',
     transition: 'all 0.3s ease',
@@ -158,10 +135,10 @@ export default function Contact() {
   };
 
   const labelStyle = {
-    display: 'block', 
-    fontSize: '0.9rem', 
-    fontWeight: '700', 
-    marginBottom: '0.6rem', 
+    display: 'block',
+    fontSize: '0.9rem',
+    fontWeight: '700',
+    marginBottom: '0.6rem',
     color: '#cbd5e1',
     letterSpacing: '0.02em'
   };
@@ -175,10 +152,16 @@ export default function Contact() {
           box-shadow: 0 0 0 4px rgba(120, 190, 32, 0.1);
         }
         .contact-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 2rem;
+          width: 60%;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
           align-items: stretch;
+        }
+        @media (max-width: 768px) {
+          .contact-grid {
+             width: 95%;
+          }
         }
         .submit-btn {
           background-size: 200% 100%;
@@ -191,17 +174,12 @@ export default function Contact() {
           color: #78BE20;
           border: 1px solid #78BE20;
         }
-        @media (min-width: 1024px) {
-          .contact-grid {
-             grid-template-columns: 1.5fr 1fr; 
-          }
-        }
       `}</style>
 
       {/* --- SECTION 1: HEADER & CARDS --- */}
       <section style={{ padding: '3rem 1rem 5rem 1rem', position: 'relative' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          
+
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -214,77 +192,25 @@ export default function Contact() {
             <p style={{ fontSize: '1.1rem', color: 'inherit', maxWidth: '600px', margin: '0 auto' }}>
               Have questions? We'd love to hear from you.
             </p>
+            <p style={{ fontSize: '1.1rem', color: 'inherit', maxWidth: '600px', margin: '0 auto' }}>
+              Feel free to reach out to us using the contact information below.
+            </p>
           </motion.div>
 
           <div className="contact-grid">
-            {/* Form Card */}
-            <motion.div 
-              variants={cardVariant}
-              initial="hidden"
-              whileInView="visible"
-              whileHover={{ y: -10, transition: { duration: 0.3 } }} // HOVER EFFECT ADDED
-              viewport={{ once: true }}
-              style={{ height: '100%' }}
-            >
-              <div style={cardStyle}>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: '800', color: 'white', marginBottom: '2rem', textTransform: 'uppercase', textAlign: 'center' }}>
-                  Send a Message
-                </h3>
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', flex: 1 }}>
-                  <div>
-                    <label style={labelStyle}>Full Name <span style={{ color: '#ef4444' }}>*</span></label>
-                    <input type="text" name="name" required className="contact-input" style={inputStyle} />
-                  </div>
-                  <div>
-                    <label style={labelStyle}>Email Address <span style={{ color: '#ef4444' }}>*</span></label>
-                    <input type="email" name="email" required className="contact-input" style={inputStyle} />
-                  </div>
-                  <div>
-                    <label style={labelStyle}>Message <span style={{ color: '#ef4444' }}>*</span></label>
-                    <textarea name="message" rows={8} required className="contact-input" style={{...inputStyle, resize: 'vertical'}} />
-                  </div>
-                  <AnimatePresence mode="wait">
-                    {formStatus === 'success' && (
-                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ background: 'rgba(34, 197, 94, 0.1)', border: '1px solid #22c55e', color: '#22c55e', padding: '0.75rem', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem' }}>
-                            <CheckCircle size={16} /> Message sent!
-                        </motion.div>
-                    )}
-                    {formStatus === 'error' && (
-                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid #ef4444', color: '#ef4444', padding: '0.75rem', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem' }}>
-                            <AlertCircle size={16} /> Error sending.
-                        </motion.div>
-                    )}
-                  </AnimatePresence>
-                  <button 
-                    type="submit" 
-                    disabled={formStatus === 'sending'}
-                    className="submit-btn"
-                    style={{
-                        padding: '1rem', border: 'none', borderRadius: '0.75rem', marginTop: 'auto',
-                        fontSize: '1rem', fontWeight: '800', letterSpacing: '0.05em', 
-                        cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem',
-                        opacity: formStatus === 'sending' ? 0.7 : 1
-                    }}
-                  >
-                    {formStatus === 'sending' ? 'Sending...' : <><Send size={18} /> SEND MESSAGE</>}
-                  </button>
-                </form>
-              </div>
-            </motion.div>
-
             {/* Info Card */}
-            <motion.div 
+            <motion.div
               variants={cardVariant}
               initial="hidden"
               whileInView="visible"
-              whileHover={{ y: -10, transition: { duration: 0.3 } }} // HOVER EFFECT ADDED
+              whileHover={{ y: -5, transition: { duration: 0.1 } }} // HOVER EFFECT ADDED
               viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.1 }}
               style={{ height: '100%' }}
             >
               <div style={cardStyle}>
                 <h3 style={{ fontSize: '1.5rem', fontWeight: '800', color: 'white', marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem', textTransform: 'uppercase', textAlign: 'center' }}>
-                   Contact Information
+                  Contact Information
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, gap: '1.5rem' }}>
                   <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -312,79 +238,79 @@ export default function Contact() {
 
       {/* --- SECTION 2: MAP (TRANSPARENT - NO BACKGROUND) --- */}
       <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        
+
         {/* Top Wave */}
         <SignalWaveSeparator />
-        
+
         {/* Map Content Wrapper */}
         <div style={{ width: '100%', maxWidth: '1200px', padding: '1rem 1rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-             
-             {/* Headline */}
-             <div style={{ textAlign: 'center' }}>
-                 <h2 style={{ fontSize: '2.5rem', fontWeight: '800', color: 'white', margin: 0 }}>
-                     FIND <span style={{ color: '#78BE20' }}>US</span>
-                 </h2>
-             </div>
 
-             {/* Map - HOVER EFFECT ADDED */}
-             <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                whileHover={{ y: -10, transition: { duration: 0.3 } }} // HOVER EFFECT
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                style={{ height: '500px', width: '100%', borderRadius: '1.5rem', overflow: 'hidden' }}
-             >
-                 <iframe 
-                     src="https://maps.google.com/maps?q=SSN+College+of+Engineering&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                     width="100%" 
-                     height="100%" 
-                     style={{ 
-                         border: 'none', 
-                         filter: 'grayscale(100%) invert(90%) hue-rotate(180deg)',
-                         display: 'block'
-                     }} 
-                     allowFullScreen 
-                     loading="lazy" 
-                     referrerPolicy="no-referrer-when-downgrade"
-                 ></iframe>
-             </motion.div>
+          {/* Headline */}
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: '800', color: 'white', margin: 0 }}>
+              FIND <span style={{ color: '#78BE20' }}>US</span>
+            </h2>
+          </div>
+
+          {/* Map - HOVER EFFECT ADDED */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            whileHover={{ y: -10, transition: { duration: 0.3 } }} // HOVER EFFECT
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            style={{ height: '500px', width: '100%', borderRadius: '1.5rem', overflow: 'hidden' }}
+          >
+            <iframe
+              src="https://maps.google.com/maps?q=SSN+College+of+Engineering&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              style={{
+                border: 'none',
+                filter: 'grayscale(100%) invert(90%) hue-rotate(180deg)',
+                display: 'block'
+              }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </motion.div>
         </div>
 
         {/* Bottom Wave */}
         <SignalWaveSeparator />
-      
+
       </section>
 
       {/* --- SECTION 3: FAQ --- */}
       <section style={{ padding: '2rem 1rem 4rem 1rem' }}>
-        <motion.div 
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+        <motion.div
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
         >
-            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '2.5rem', fontWeight: '800', color: 'white' }}>
-                    FREQUENTLY ASKED <span style={{ color: '#78BE20' }}>QUESTIONS</span>
-                </h2>
-            </div>
-            
-            {/* FAQ CONTAINER - HOVER EFFECT ADDED */}
-            <motion.div 
-              style={{ ...cardStyle, maxWidth: '800px', margin: '0 auto', height: 'auto', padding: '2rem' }}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }} // HOVER EFFECT
-            >
-                {faqs.map((faq, index) => (
-                    <FaqItem 
-                        key={index} 
-                        question={faq.q} 
-                        answer={faq.a} 
-                        isOpen={openFaqIndex === index}
-                        onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                    />
-                ))}
-            </motion.div>
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: '800', color: 'white' }}>
+              FREQUENTLY ASKED <span style={{ color: '#78BE20' }}>QUESTIONS</span>
+            </h2>
+          </div>
+
+          {/* FAQ CONTAINER - HOVER EFFECT ADDED */}
+          <motion.div
+            style={{ ...cardStyle, maxWidth: '800px', margin: '0 auto', height: 'auto', padding: '2rem' }}
+            whileHover={{ y: -10, transition: { duration: 0.3 } }} // HOVER EFFECT
+          >
+            {faqs.map((faq, index) => (
+              <FaqItem
+                key={index}
+                question={faq.q}
+                answer={faq.a}
+                isOpen={openFaqIndex === index}
+                onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+              />
+            ))}
+          </motion.div>
         </motion.div>
       </section>
 
@@ -393,46 +319,46 @@ export default function Contact() {
 }
 
 function InfoItem({ icon, label, value, href }: any) {
-    return (
-        <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-            <div style={{ color: '#78BE20', marginTop: '0.1rem' }}>{icon}</div>
-            <div>
-                <span style={{ fontWeight: '700', color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', display: 'block', textTransform: 'uppercase', marginBottom: '0.2rem' }}>{label}</span>
-                {href ? (
-                    <a href={href} style={{ color: 'white', textDecoration: 'none', fontWeight: '600', fontSize: '1.05rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#78BE20'} onMouseOut={e => e.currentTarget.style.color = 'white'}>
-                        {value}
-                    </a>
-                ) : (
-                    <span style={{ color: 'white', fontWeight: '600', fontSize: '1.05rem' }}>{value}</span>
-                )}
-            </div>
-        </li>
-    );
+  return (
+    <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+      <div style={{ color: '#78BE20', marginTop: '0.1rem' }}>{icon}</div>
+      <div>
+        <span style={{ fontWeight: '700', color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', display: 'block', textTransform: 'uppercase', marginBottom: '0.2rem' }}>{label}</span>
+        {href ? (
+          <a href={href} style={{ color: 'white', textDecoration: 'none', fontWeight: '600', fontSize: '1.05rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#78BE20'} onMouseOut={e => e.currentTarget.style.color = 'white'}>
+            {value}
+          </a>
+        ) : (
+          <span style={{ color: 'white', fontWeight: '600', fontSize: '1.05rem' }}>{value}</span>
+        )}
+      </div>
+    </li>
+  );
 }
 
 function SocialIcon({ icon, href }: any) {
-    return (
-        <a 
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-                width: '45px', height: '45px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', 
-                display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', 
-                transition: 'all 0.3s ease', border: '1px solid rgba(255,255,255,0.1)'
-            }}
-            onMouseOver={e => {
-                e.currentTarget.style.background = '#78BE20';
-                e.currentTarget.style.color = '#05191a';
-                e.currentTarget.style.transform = 'translateY(-3px)';
-            }}
-            onMouseOut={e => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-                e.currentTarget.style.color = 'white';
-                e.currentTarget.style.transform = 'translateY(0)';
-            }}
-        >
-            {icon}
-        </a>
-    )
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        width: '45px', height: '45px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white',
+        transition: 'all 0.3s ease', border: '1px solid rgba(255,255,255,0.1)'
+      }}
+      onMouseOver={e => {
+        e.currentTarget.style.background = '#78BE20';
+        e.currentTarget.style.color = '#05191a';
+        e.currentTarget.style.transform = 'translateY(-3px)';
+      }}
+      onMouseOut={e => {
+        e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+        e.currentTarget.style.color = 'white';
+        e.currentTarget.style.transform = 'translateY(0)';
+      }}
+    >
+      {icon}
+    </a>
+  )
 }
