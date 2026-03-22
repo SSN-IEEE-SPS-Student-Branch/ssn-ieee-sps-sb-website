@@ -7,7 +7,7 @@ import { Download, ExternalLink, FileText, BookOpen, ChevronDown, Calendar } fro
 const MAGAZINES = [
   {
     title: 'SPS Annual Magazine',
-    year: '2025-26',
+    year: '2025-2026',
     url: '/magazines/sps-annual-magazine-2025.pdf',
     description: 'Welcome to the Annual Magazine of the IEEE Signal Processing Society SSN Chapter. This publication showcases exciting research, projects, and innovations from our vibrant community of students and professionals.',
   },
@@ -16,12 +16,6 @@ const MAGAZINES = [
     year: '2024-2025',
     url: '/magazines/sps-annual-magazine-2024.pdf',
     description: 'Explore the highlights, achievements, and technical articles from the 2024-2025 academic year of the IEEE Signal Processing Society SSN Chapter.',
-  },
-  {
-    title: 'SPS Annual Magazine',
-    year: '2023-2024',
-    url: '/magazines/sps-annual-magazine-2023.pdf',
-    description: 'Looking back at the pivotal moments, events, and community growth during the 2023-2024 academic year of the IEEE Signal Processing Society SSN Chapter.',
   }
 ];
 
@@ -113,7 +107,7 @@ export default function MagazinePage() {
                 borderRadius: '3rem',
                 border: '1px solid #78BE20',
                 cursor: 'pointer',
-                color: '#05191a',
+                color: dropdownOpen ? '#78BE20' : '#05191a',
                 fontWeight: '800',
                 fontSize: '1rem',
                 transition: 'all 0.2s ease',

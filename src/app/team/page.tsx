@@ -72,6 +72,7 @@ const pastTeamsData: Record<string, { name: string; role: string; img: string }[
   "2024-2025": [
     { name: 'Venkatesh M', role: 'Chair', img: '/past-teams/2024-2025/Venkatesh M.png' },
     { name: 'Jothisa K', role: 'Vice Chair', img: '/past-teams/2024-2025/Jothisa K.png' },
+    { name: 'Jeevan J', role: 'Vice Chair', img: '/past-teams/2024-2025/Jeevan J.png' },
     { name: 'Swaati S', role: 'Treasurer', img: '/past-teams/2024-2025/Swaati S.png' },
     { name: 'Karthick Siva R', role: 'Secretary', img: '/past-teams/2024-2025/Karthick Siva R.png' },
     { name: 'Jeya Marshalin M', role: 'Joint Secretary', img: '/past-teams/2024-2025/Jeya Marshalin M.png' },
