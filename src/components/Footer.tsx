@@ -101,23 +101,23 @@ export default function Footer() {
                   <div
                     style={{
                       fontWeight: 800,
-                      fontSize: "0.9rem",
+                      fontSize: "0.7rem",
                       color: "#78BE20",
-                      marginBottom: "8px",
+                      marginBottom: "2px",
                       borderBottom: "1px solid #eee",
-                      paddingBottom: "6px",
+                      paddingBottom: "4px",
                       textTransform: "uppercase",
                       letterSpacing: "0.5px"
                     }}
                   >
-                    Web Dev Team
+                    Developed with love by
                   </div>
 
                   {/* --- UPDATED NAMES WITH HOVER EFFECT --- */}
                   <motion.div
                     whileHover={{ x: 5, color: "#78BE20" }}
                     style={{
-                      fontSize: "0.95rem",
+                      fontSize: "0.8rem",
                       fontWeight: 500,
                       marginBottom: "4px",
                       cursor: "default" // or "pointer" if you add links later
@@ -129,7 +129,7 @@ export default function Footer() {
                   <motion.div
                     whileHover={{ x: 5, color: "#78BE20" }}
                     style={{
-                      fontSize: "0.95rem",
+                      fontSize: "0.8rem",
                       fontWeight: 500,
                       cursor: "default"
                     }}

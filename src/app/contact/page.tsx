@@ -216,7 +216,6 @@ export default function Contact() {
                   <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                     <InfoItem icon={<User size={20} />} label="Faculty Coordinator" value="Dr. Vijay Jeyakumar" />
                     <InfoItem icon={<Mail size={20} />} label="Email" value="ieeespssb@ssn.edu.in" href="mailto:ieeespssb@ssn.edu.in" />
-                    <InfoItem icon={<Phone size={20} />} label="Phone" value="+91 73530 44155" href="tel:+917353044155" />
                     <InfoItem icon={<MapPin size={20} />} label="Location" value="SSN College of Engineering, Chennai" />
                     <InfoItem icon={<Clock size={20} />} label="Hours" value="Mon - Fri: 9:00 AM - 4:00 PM" />
                   </ul>
