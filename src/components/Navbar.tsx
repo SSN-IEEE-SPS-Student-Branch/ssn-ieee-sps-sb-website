@@ -25,6 +25,7 @@ const dropdowns = [
 const navLinks = [
   { name: 'HOME', path: '/' },
   { name: 'TEAM', path: '/team' },
+  { name: 'STUDENT ACHIEVEMENTS', path: '/student-achievements' },
   { name: 'MAGAZINE', path: '/magazine' },
   { name: 'GALLERY', path: '/gallery' },
   { name: 'CONTACT', path: '/contact' }
