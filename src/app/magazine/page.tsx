@@ -50,6 +50,26 @@ export default function MagazinePage() {
 
       {/* Reusing your gradient button style */}
       <style>{`
+        .dropdown-menu {
+          position: absolute;
+          top: calc(100% + 0.5rem);
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(9, 44, 46, 0.95);
+          backdrop-filter: blur(16px);
+          border: 1px solid rgba(120, 190, 32, 0.3);
+          border-radius: 1rem;
+          padding: 0.5rem;
+          z-index: 100;
+          min-width: 220px;
+          box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+        }
+        @media (max-width: 640px) {
+          .dropdown-menu {
+            left: 0;
+            transform: none;
+          }
+        }
         .event-btn {
           background-size: 200% 100%;
           background-image: linear-gradient(to right, #78BE20 50%, #05191a 50%);
@@ -138,20 +158,7 @@ export default function MagazinePage() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.95 }}
                   transition={{ duration: 0.2, ease: 'easeOut' }}
-                  style={{
-                    position: 'absolute',
-                    top: 'calc(100% + 0.5rem)',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    background: 'rgba(9, 44, 46, 0.95)',
-                    backdropFilter: 'blur(16px)',
-                    border: '1px solid rgba(120, 190, 32, 0.3)',
-                    borderRadius: '1rem',
-                    padding: '0.5rem',
-                    zIndex: 100,
-                    minWidth: '220px',
-                    boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
-                  }}
+                  className="dropdown-menu"
                 >
                   {MAGAZINES.map((mag) => (
                     <button
@@ -253,11 +260,10 @@ export default function MagazinePage() {
           >
             {/* Fallback for mobile/browsers without PDF support */}
             <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#ccfbf1', padding: '2rem', textAlign: 'center', background: '#05191a' }}>
-              <FileText size={64} style={{ marginBottom: '1rem', opacity: 0.5 }} />
-              <p style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '0.5rem' }}>Preview not available on this device</p>
-              <p style={{ marginBottom: '1.5rem', opacity: 0.7 }}>Please download the PDF to view it.</p>
-              <a href={currentIssue.url} download style={{ color: '#78BE20', fontWeight: 'bold', fontSize: '1.1rem', textDecoration: 'underline' }}>
-                Download Magazine
+              <FileText size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
+              <p style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '1rem', maxWidth: '300px' }}>Preview is only available on laptops and larger screens</p>
+              <a href={currentIssue.url} download style={{ color: '#78BE20', fontWeight: 'bold', fontSize: '1rem', textDecoration: 'underline' }}>
+                Download PDF
               </a>
             </div>
           </object>

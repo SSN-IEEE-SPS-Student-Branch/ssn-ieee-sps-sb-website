@@ -80,8 +80,8 @@ const pastTeamsData: Record<string, { name: string; role: string; img: string }[
 };
 
 const categories = Object.keys(teamsData);
-const activeYear = "2025-26";
-const allYears = ["2025-26", "2024-2025", "2023-2024"];
+const activeYear = "2025-2026";
+const allYears = ["2025-2026", "2024-2025", "2023-2024"];
 
 export default function CurrentMembersPage() {
   const [selected, setSelected] = useState<any>(null);
@@ -148,6 +148,27 @@ export default function CurrentMembersPage() {
     <section style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
 
       <style>{`
+        .dropdown-menu {
+          position: absolute;
+          top: calc(100% + 0.5rem);
+          left: 0%;
+          transform: translateX(-50%);
+          background: rgba(9, 44, 46, 0.95);
+          backdrop-filter: blur(16px);
+          border: 1px solid rgba(120, 190, 32, 0.3);
+          border-radius: 1rem;
+          padding: 0.5rem;
+          z-index: 100;
+          min-width: 220px;
+          box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+        }
+        @media (max-width: 640px) {
+          .dropdown-menu {
+            width: 90vw;
+            max-width: 280px;
+          }
+        }
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -285,20 +306,7 @@ export default function CurrentMembersPage() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.95 }}
                 transition={{ duration: 0.2, ease: 'easeOut' }}
-                style={{
-                  position: 'absolute',
-                  top: 'calc(100% + 0.5rem)',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  background: 'rgba(9, 44, 46, 0.95)',
-                  backdropFilter: 'blur(16px)',
-                  border: '1px solid rgba(120, 190, 32, 0.3)',
-                  borderRadius: '1rem',
-                  padding: '0.5rem',
-                  zIndex: 100,
-                  minWidth: '220px',
-                  boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
-                }}
+                className="dropdown-menu"
               >
                 {allYears.map((year) => (
                   <button
