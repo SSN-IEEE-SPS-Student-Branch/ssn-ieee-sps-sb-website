@@ -14,7 +14,26 @@ export default function StudentAchievements() {
     };
 
     return (
-        <section style={{ padding: '4rem 1rem 6rem 1rem', color: 'white', minHeight: '100vh', maxWidth: '1200px', margin: '0 auto' }}>
+        <section className="page-section" style={{ color: 'white', minHeight: '100vh', maxWidth: '1200px', margin: '0 auto' }}>
+
+            <style>{`
+                .page-section { padding: 4rem 1rem 6rem 1rem; }
+                .achiev-card { padding: 2.5rem; }
+                .achiev-inner-card { padding: 2rem; }
+                .achiev-item { padding: 1.5rem; }
+                @media (max-width: 768px) {
+                    .page-section { padding: 4rem 0.5rem 6rem 0.5rem; }
+                    .achiev-card { padding: 1.5rem 0.5rem; }
+                    .achiev-inner-card { padding: 1.5rem 0.5rem; border: none; }
+                    .achiev-item { padding: 1.25rem 0.75rem; }
+                }
+                @media (max-width: 480px) {
+                    .page-section { padding: 4rem 0.2rem 6rem 0.2rem; }
+                    .achiev-card { padding: 1.5rem 0.5rem; }
+                    .achiev-inner-card { padding: 1.5rem 0.5rem; border: none; }
+                    .achiev-item { padding: 1.25rem 0.75rem; }
+                }
+            `}</style>
 
             {/* HEADER SECTION */}
             <motion.div
@@ -42,15 +61,15 @@ export default function StudentAchievements() {
 
                 {/* Recognition Card: Scholarship and Project Fund */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 0 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 0.1 }}
+                    className="achiev-card"
                     style={{
                         background: 'linear-gradient(145deg, #092C2E 0%, #05191a 100%)',
                         border: '1px solid rgba(120, 190, 32, 0.2)',
                         borderRadius: '1.5rem',
-                        padding: '2.5rem',
                         boxShadow: '0 15px 35px rgba(0,0,0,0.3)',
                         position: 'relative',
                         overflow: 'hidden'
@@ -70,14 +89,14 @@ export default function StudentAchievements() {
                             </h2>
                         </div>
 
-                        <div style={{ background: 'rgba(0,0,0,0.25)', padding: '2rem', borderRadius: '1.2rem', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div className="achiev-inner-card" style={{ background: 'rgba(0,0,0,0.25)', borderRadius: '1.2rem', border: '1px solid rgba(255,255,255,0.05)' }}>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                                <li style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '1rem', border: '2px solid #78BE20', transition: 'transform 0.2s ease', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.transform = 'translateX(5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateX(0px)'}>
+                                <li className="achiev-item" style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '1rem', border: '2px solid #78BE20', transition: 'transform 0.2s ease', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.transform = 'translateX(5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateX(0px)'}>
                                     <p style={{ margin: 0, fontSize: '1.15rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.9)' }}>
                                         <strong style={{ color: 'white', fontSize: '1.25rem' }}>Abirami Thirupathy</strong>, Final year <strong style={{ color: 'white' }}>BME</strong>, has been selected to be the recipient of the IEEE Signal Processing Society Scholarship of <strong style={{ color: '#78BE20' }}>1000 USD</strong> in recognition of her academic excellence.
                                     </p>
                                 </li>
-                                <li style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '1rem', border: '2px solid #78BE20', transition: 'transform 0.2s ease', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.transform = 'translateX(5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateX(0px)'}>
+                                <li className="achiev-item" style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '1rem', border: '2px solid #78BE20', transition: 'transform 0.2s ease', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.transform = 'translateX(5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateX(0px)'}>
                                     <p style={{ margin: 0, fontSize: '1.15rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.9)' }}>
                                         <strong style={{ color: 'white', fontSize: '1.25rem' }}>Augustine Wisely Bezalel</strong>, Final year <strong style={{ color: 'white' }}>BME</strong>, has been funded <strong style={{ color: '#78BE20' }}>4000 USD</strong> to work on a project under the mentorship of Dr. Deepak Mishra, The University of New South Wales, Sydney for the IEEE SPS sigMA Program.
                                     </p>
