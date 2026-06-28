@@ -23,43 +23,48 @@ const facultyCoordinators = [
 
 const teamsData: Record<string, any[]> = {
   "Office Bearers": [
-    { name: 'Augustine W Bezalel', role: 'Chair', img: '/officebearers/augustine.jpeg', linkedin: 'http://www.linkedin.com/in/augustine-wisely-bezalel-5a985a250', instagram: 'https://www.instagram.com/Bezalel_4270' },
-    { name: 'Abirami T', role: 'Vice-Chair', img: '/officebearers/abirami.jpg', linkedin: 'http://www.linkedin.com/in/abirami-thirupathy-aa4408305', instagram: 'https://www.instagram.com/abirami._.3' },
-    { name: 'Pradeep K M', role: 'Vice-Chair', img: '/officebearers/pradeep.jpg', linkedin: 'http://www.linkedin.com/in/pradeepkmaran', instagram: 'https://www.instagram.com/pradeepkmaran' },
-    { name: 'Bharathi K', role: 'Secretary', img: '/officebearers/bharathi.jpg', linkedin: 'https://www.linkedin.com/in/bharathi-kamaraj-0134b1305/', instagram: 'https://www.instagram.com/kamaraj_bharathi/' },
-    { name: 'Monish Kumar S', role: 'Treasurer', img: '/officebearers/monish.png', linkedin: 'http://www.linkedin.com/in/monish-kumar-278531315', instagram: 'https://www.instagram.com/monish_kumar2004' },
-    { name: 'Leelasri B', role: 'Joint-Secretary', img: '/officebearers/leela.png', linkedin: 'https://www.linkedin.com/in/leelasri', instagram: 'https://www.instagram.com/insiko_110110 ' },
+    { name: 'Leelasri B', role: 'Chair', img: '/officebearers/Leela_Chair_insiko_110110.jpeg', linkedin: 'https://www.linkedin.com/in/leelasri', instagram: 'https://www.instagram.com/insiko_110110' },
+    { name: 'Varsha Valliappan', role: 'Vice-Chair', img: '/officebearers/Varsha_vicechair_vvvvarshavvvv.jpg', linkedin: 'https://www.linkedin.com/in/varsha-valliappan-a81733278/', instagram: 'https://www.instagram.com/vvvvarshavvvv/' },
+    { name: 'Swathi Muralikrishnan', role: 'Vice-Chair', img: '/officebearers/SwathiM-ViceChair-’_wobblyjelly474_’.jpg', linkedin: 'https://www.linkedin.com/in/swathi-muralikrishnan447744/', instagram: 'https://www.instagram.com/_wobblyjelly474_/' },
+    { name: 'Harvin Vardhan C S', role: 'Secretary', img: '/officebearers/Harvin_Secretary_harvin_vardhan_21.jpg', linkedin: 'https://www.linkedin.com/in/harvin-vardhan-cs-03774428b/', instagram: 'https://www.instagram.com/harvin_vardhan_21/' },
+    { name: 'Deeksha S', role: 'Treasurer', img: '/officebearers/S Deeksha - Treasurer - deeksh_aa._', linkedin: 'https://www.linkedin.com/in/sdeeksha2605/', instagram: 'https://www.instagram.com/monish_kumar2004' },
+    { name: 'Aravindaa Krishnan M', role: 'Joint-Secretary', img: '/officebearers/Aravindaa_krishna.jpg', linkedin: 'https://www.linkedin.com/in/aravindaa-krishnan-m-7a5b75309/', instagram: 'https://www.instagram.com/insiko_110110 ' },
+    { name: 'Aadarsh Ram VK', role: 'Deputy Secretary', img: '/officebearers/Aadarsh.JPG', linkedin: 'https://www.linkedin.com/in/harvin-vardhan-cs-03774428b/', instagram: 'https://www.instagram.com/harvin_vardhan_21' },
   ],
   "Core Committee": [
-    { name: 'Sharadha G', role: 'Coordinator', img: '/core/sharadha.jpg', linkedin: 'https://www.linkedin.com/in/shar-gopal', instagram: 'https://www.instagram.com/shar_1512' },
-    { name: 'Shivani M', role: 'Coordinator', img: '/core/shivani.jpg', linkedin: 'https://in.linkedin.com/in/shivani-m-259240305', instagram: 'https://www.instagram.com/5hivani_26' },
+    { name: 'Tarunika', role: 'Coordinator', img: '/core/Tarunika__Core Committee Head__tarunika_v.jpg', linkedin: 'https://www.linkedin.com/in/tarunika-v7405/', instagram: 'https://www.instagram.com/tarunika_v' },
   ],
   "Content & Editorial": [
-    { name: 'Anindhitha A', role: 'Editorial Head', img: '/editorial/Anindhitha Aravind-Content and Editorial_.jpg', linkedin: 'https://www.linkedin.com/in/anindhitha-aravind-861858317/', instagram: 'https://www.instagram.com/anindhithaaa' },
-    { name: 'Aravindaa Krishnan M', role: 'Editorial Head', img: '/editorial/Aravindaa Krishnan editorial_.jpg', linkedin: 'https://www.linkedin.com/in/aravindaa-krishnan-m-7a5b75309', instagram: 'https://www.instagram.com/auro_krish' },
+    { name: 'Varun Sudheer', role: 'Editorial Head', img: '/editorial/Varun-photo.jpg', linkedin: 'https://www.linkedin.com/in/varun-sudheer/', instagram: 'https://www.instagram.com/v.a.r.u.n.s_' },
+    { name: 'Shanmuga Nadhan S', role: 'Editorial Head', img: '/editorial/photo.jpg', linkedin: 'https://www.linkedin.com/in/shanmuganadhan-senthilkumar-5ab0aa32b/', instagram: 'https://www.instagram.com/shanmuga_thinks' },
   ],
   "Design": [
-    { name: 'Swathi M', role: 'Design Head', img: '/design/swathi.png', linkedin: 'http://www.linkedin.com/in/swathi-muralikrishnan447744', instagram: 'https://www.instagram.com/__wobblyjelly474__' },
-    { name: 'Maanasvini A', role: 'Design Head', img: '/design/maanasvini.jpg', linkedin: 'https://www.linkedin.com/in/maanasvini-anand-9068312ab', instagram: 'https://www.instagram.com/iniminivini' },
-    { name: 'Praveen N R', role: 'Design Member', img: '/design/praveen.jpg', linkedin: 'https://www.linkedin.com/in/praveen-n-r-945230305/', instagram: 'https://www.instagram.com/pevi_2225' },
+    { name: 'Sajanth C', role: 'Design Head', img: '/design/swathi.png', linkedin: 'https://www.linkedin.com/in/sajanth-c/', instagram: 'https://www.instagram.com/__wobblyjelly474__' },
+    { name: 'Samyuktha S', role: 'Design Head', img: '/design/maanasvini.jpg', linkedin: 'https://www.linkedin.com/in/samyuktha-senthil-9194a030b/', instagram: 'https://www.instagram.com/samyuktha.senthil' },
   ],
   "Event Management": [
-    { name: 'Varsha V', role: 'Event Mgmt Head', img: '/eventmgmt/varsha.jpg', linkedin: 'http://www.linkedin.com/in/varsha-valliappan-a81733278', instagram: 'https://www.instagram.com/vvvvarshavvvv' },
-    { name: 'Kavya S', role: 'Event Mgmt Head', img: '/eventmgmt/kavya.jpg', linkedin: 'https://www.linkedin.com/in/kavya-suresh-00a305288/', instagram: 'https://www.instagram.com/kavya__1205' },
+    { name: 'Yuva Sriram', role: 'Event Mgmt Head', img: '/eventmgmt/Image.jpg', linkedin: 'https://www.linkedin.com/in/yuva-sriram/', instagram: 'https://www.instagram.com/coolboiyuva_2' },
+    { name: 'Adithya Sai', role: 'Event Mgmt Head', img: '/eventmgmt/Adhithya Sai_Event manage_adhithyaa._29.jpg', linkedin: 'https://www.linkedin.com/in/kavya-suresh-00a305288/', instagram: 'https://www.instagram.com/adhithyaa._29' },
   ],
   "Photography": [
-    { name: 'Rasi R', role: 'Photography Head', img: '/photography/rasi.jpg', linkedin: 'https://www.linkedin.com/in/rasi-rajesh-239ba722b', instagram: 'https://www.instagram.com/raawsyndrome' },
-    { name: 'Seanan Josh D', role: 'Photography Head', img: '/photography/seanan.jpg', linkedin: 'https://www.linkedin.com/in/seanan-josh-darbin-028162283', instagram: 'https://www.instagram.com/_.seanan.josh.7._' },
+    { name: 'Seanan Josh Darbin', role: 'Photography Head', img: '/photography/Seanan Josh photography head.jpg', linkedin: 'https://www.linkedin.com/in/seanan-josh-darbin-028162283/', instagram: 'https://www.instagram.com/_.seanan.josh.7._' },
+    { name: 'Smrithi S', role: 'Photography Head', img: '/photography/SmrithiS_Photography_Head_(_smrithiiiiii_).jpg', linkedin: 'https://www.linkedin.com/in/smrithi-s-41968b389/', instagram: 'https://www.instagram.com/_smrithiiiiii_' },
   ],
   "Social Media": [
-    { name: 'Shrinithi S K', role: 'Social Media Head', img: '/socialmedia/shrinithi.png', linkedin: 'http://www.linkedin.com/in/shrinithi-sk-a98240305', instagram: 'https://www.instagram.com/shriiiiini_625' },
-    { name: 'Harvin Vardhan C S', role: 'Social Media Head', img: '/socialmedia/harvin.jpg', linkedin: 'https://www.linkedin.com/in/harvin-vardhan-cs-03774428b/', instagram: 'https://www.instagram.com/harvin_vardhan_21' },
-    { name: 'Deeksha S', role: 'Social Media Head', img: '/socialmedia/deeksha.jpg', linkedin: 'http://www.linkedin.com/in/sdeeksha2605', instagram: 'https://www.instagram.com/deeksh_aa._' },
+    { name: 'R Rasi', role: 'Social Media Head', img: '/socialmedia/Rasi R _ Pr head _raawsyndrome.jpg', linkedin: 'https://www.linkedin.com/in/rasi-rajesh-239ba722b/', instagram: 'https://www.instagram.com/raawsyndrome' },
+    { name: 'Smruti M', role: 'Social Media Head', img: '/socialmedia/SmrutiM_PRHead_ smruti__2502.jpg', linkedin: 'https://www.linkedin.com/in/smruti-mathavan-b93997305/', instagram: 'https://www.instagram.com/smruti__2502' },
   ],
   "Web Development": [
-    { name: 'Mugilkrishna D U', role: 'Web Dev Head', img: '/webdev/mugil.jpg', linkedin: 'https://www.linkedin.com/in/mugilkrishna-du', instagram: 'https://www.instagram.com/mugil._.13' },
-    { name: 'Prawin Kumar S', role: 'Web Dev Head', img: '/webdev/prawin.jpg', linkedin: 'https://www.linkedin.com/in/prawin-kumar-s-a60153284', instagram: 'https://www.instagram.com/prawin._.spk' },
+    { name: 'Vijaya lakshmi M', role: 'Web Dev Head', img: '/webdev/Vijayalakshmi_Webdevelopment_Head_weasley3535.jpg', linkedin: 'www.linkedin.com/in/vijaya-lakshmi-m', instagram: 'https://www.instagram.com/weasley3535' },
   ],
+  "Documentation": [
+    { name: 'Asmita Padmanabhan', role: 'Documentation Head', img: '/documentation/WhatsApp Image 2026-06-28 at 10.21.32 PM.jpeg', linkedin: 'https://www.linkedin.com/in/asmita-padmanabhan-2212532ba/', instagram: 'https://www.instagram.com/aham_asmi' }
+  ],
+  "Hospitality": [
+    { name: 'Sweatha E', role: 'Hospitality Head', img: '/hospitality/Sweatha_hospitality head-_sweath.a_06_page-0001.jpg', linkedin: 'https://www.linkedin.com/in/sweathae/', instagram: 'https://www.instagram.com/_sweath.a_06' },
+    { name: 'Kavitha U', role: 'Hospitality Head', img: '/hospitality/Kavitha.U - hospitality head - itz_kavee06.U - hospitality head - itz_kavee06.U - hospitality head - itz_kavee06', linkedin: 'https://www.linkedin.com/in/kavitha-uma-shankar-8018a02a7/', instagram: 'https://www.instagram.com/itz_kavee06' },
+  ],
+
 };
 
 const pastTeamsData: Record<string, { name: string; role: string; img: string }[]> = {
@@ -77,11 +82,19 @@ const pastTeamsData: Record<string, { name: string; role: string; img: string }[
     { name: 'Karthick Siva R', role: 'Secretary', img: '/past-teams/2024-2025/Karthick Siva R.png' },
     { name: 'Jeya Marshalin M', role: 'Joint Secretary', img: '/past-teams/2024-2025/Jeya Marshalin M.png' },
   ],
+  "2025-2026": [
+    { name: 'Augustine W Bezalel', role: 'Chair', img: '/past-teams/2025-2026/augustine.jpeg' },
+    { name: 'Abirami T', role: 'Vice Chair', img: '/past-teams/2025-2026/abirami.jpg' },
+    { name: 'Pradeep K M', role: 'Vice Chair', img: '/past-teams/2025-2026/pradeep.jpg' },
+    { name: 'Monish Kumar S', role: 'Treasurer', img: '/past-teams/2025-2026/monish.png' },
+    { name: 'Bharathi K', role: 'Secretary', img: '/past-teams/2025-2026/bharathi.jpg' },
+    { name: 'Leelasri B', role: 'Joint Secretary', img: '/past-teams/2025-2026/leela.png' },
+  ],
 };
 
 const categories = Object.keys(teamsData);
-const activeYear = "2025-2026";
-const allYears = ["2025-2026", "2024-2025", "2023-2024"];
+const activeYear = "2026-2027";
+const allYears = ["2026-2027","2025-2026", "2024-2025", "2023-2024"];
 
 export default function CurrentMembersPage() {
   const [selected, setSelected] = useState<any>(null);
@@ -374,6 +387,7 @@ export default function CurrentMembersPage() {
             <AnimatePresence>
               {canScrollLeft && (
                 <motion.button
+                  key="scroll-left"
                   initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
                   onClick={() => scrollTabs('left')}
                   style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', zIndex: 10, background: '#092C2E', border: '1px solid #78BE20', color: '#78BE20', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
@@ -383,6 +397,7 @@ export default function CurrentMembersPage() {
               )}
               {canScrollRight && (
                 <motion.button
+                  key="scroll-right"
                   initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
                   onClick={() => scrollTabs('right')}
                   style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', zIndex: 10, background: '#092C2E', border: '1px solid #78BE20', color: '#78BE20', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
