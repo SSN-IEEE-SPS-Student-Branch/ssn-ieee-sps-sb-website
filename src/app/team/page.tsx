@@ -44,7 +44,7 @@ const teamsData: Record<string, any[]> = {
   ],
   "Event Management": [
     { name: 'Yuva Sriram', role: 'Event Mgmt Head', img: '/eventmgmt/Image.jpg', linkedin: 'https://www.linkedin.com/in/yuva-sriram/', instagram: 'https://www.instagram.com/coolboiyuva_2' },
-    { name: 'Adithya Sai', role: 'Event Mgmt Head', img: '/eventmgmt/Adhithya Sai_Event manage_adhithyaa._29.jpg', linkedin: 'https://www.linkedin.com/in/kavya-suresh-00a305288/', instagram: 'https://www.instagram.com/adhithyaa._29' },
+    { name: 'Adithya Sai', role: 'Event Mgmt Head', img: '/eventmgmt/Adhithya Sai_Event manage_adhithyaa._29.jpg', linkedin: 'https://www.linkedin.com/in', instagram: 'https://www.instagram.com/adhithyaa._29' },
   ],
   "Photography": [
     { name: 'Seanan Josh Darbin', role: 'Photography Head', img: '/photography/Seanan Josh photography head.jpg', linkedin: 'https://www.linkedin.com/in/seanan-josh-darbin-028162283/', instagram: 'https://www.instagram.com/_.seanan.josh.7._' },
