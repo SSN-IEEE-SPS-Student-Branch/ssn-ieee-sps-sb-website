@@ -27,7 +27,7 @@ const teamsData: Record<string, any[]> = {
     { name: 'Varsha Valliappan', role: 'Vice-Chair', img: '/officebearers/Varsha_vicechair_vvvvarshavvvv.jpg', linkedin: 'https://www.linkedin.com/in/varsha-valliappan-a81733278/', instagram: 'https://www.instagram.com/vvvvarshavvvv/' },
     { name: 'Swathi Muralikrishnan', role: 'Vice-Chair', img: '/officebearers/SwathiM-ViceChair-’_wobblyjelly474_’.jpg', linkedin: 'https://www.linkedin.com/in/swathi-muralikrishnan447744/', instagram: 'https://www.instagram.com/_wobblyjelly474_/' },
     { name: 'Harvin Vardhan C S', role: 'Secretary', img: '/officebearers/Harvin_Secretary_harvin_vardhan_21.jpg', linkedin: 'https://www.linkedin.com/in/harvin-vardhan-cs-03774428b/', instagram: 'https://www.instagram.com/harvin_vardhan_21/' },
-    { name: 'Deeksha S', role: 'Treasurer', img: '/officebearers/S Deeksha - Treasurer - deeksh_aa._', linkedin: 'https://www.linkedin.com/in/sdeeksha2605/', instagram: 'https://www.instagram.com/monish_kumar2004' },
+    { name: 'Deeksha S', role: 'Treasurer', img: '/officebearers/S Deeksha - Treasurer - deeksh_aa._', linkedin: 'https://www.linkedin.com/in/sdeeksha2605/', instagram: 'https://www.instagram.com/deeksh_aa._' },
     { name: 'Aravindaa Krishnan M', role: 'Joint-Secretary', img: '/officebearers/Aravindaa_krishna.jpg', linkedin: 'https://www.linkedin.com/in/aravindaa-krishnan-m-7a5b75309/', instagram: 'https://www.instagram.com/insiko_110110 ' },
     { name: 'Aadarsh Ram VK', role: 'Deputy Secretary', img: '/officebearers/Aadarsh.JPG', linkedin: 'https://www.linkedin.com/in/harvin-vardhan-cs-03774428b/', instagram: 'https://www.instagram.com/harvin_vardhan_21' },
   ],
@@ -39,8 +39,8 @@ const teamsData: Record<string, any[]> = {
     { name: 'Shanmuga Nadhan S', role: 'Editorial Head', img: '/editorial/photo.jpg', linkedin: 'https://www.linkedin.com/in/shanmuganadhan-senthilkumar-5ab0aa32b/', instagram: 'https://www.instagram.com/shanmuga_thinks' },
   ],
   "Design": [
-    { name: 'Sajanth C', role: 'Design Head', img: '/design/swathi.png', linkedin: 'https://www.linkedin.com/in/sajanth-c/', instagram: 'https://www.instagram.com/__wobblyjelly474__' },
-    { name: 'Samyuktha S', role: 'Design Head', img: '/design/maanasvini.jpg', linkedin: 'https://www.linkedin.com/in/samyuktha-senthil-9194a030b/', instagram: 'https://www.instagram.com/samyuktha.senthil' },
+    { name: 'Sajanth C', role: 'Design Head', img: '/design/sajanth.jpeg', linkedin: 'https://www.linkedin.com/in/sajanth-c/', instagram: 'https://www.instagram.com/__wobblyjelly474__' },
+    { name: 'Samyuktha S', role: 'Design Head', img: '/design/samyuktha.jpeg', linkedin: 'https://www.linkedin.com/in/samyuktha-senthil-9194a030b/', instagram: 'https://www.instagram.com/samyuktha.senthil' },
   ],
   "Event Management": [
     { name: 'Yuva Sriram', role: 'Event Mgmt Head', img: '/eventmgmt/Image.jpg', linkedin: 'https://www.linkedin.com/in/yuva-sriram/', instagram: 'https://www.instagram.com/coolboiyuva_2' },
