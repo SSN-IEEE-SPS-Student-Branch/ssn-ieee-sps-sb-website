@@ -110,7 +110,7 @@ export default function FundingPage() {
   }, []);
 
   return (
-    <section style={{ padding: '5rem 1rem', color: 'white', minHeight: '100vh', position: 'relative' }}>
+    <section className="subpage-shell" style={{ padding: '5rem 1rem', color: 'white', minHeight: '100vh', position: 'relative' }}>
       
       <style>{`
         .glass-backdrop {
@@ -186,6 +186,7 @@ export default function FundingPage() {
         
         {/* HEADER */}
         <motion.div
+          className="page-header"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

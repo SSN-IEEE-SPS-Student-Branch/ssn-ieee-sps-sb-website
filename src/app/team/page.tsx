@@ -166,7 +166,7 @@ export default function CurrentMembersPage() {
   };
 
   return (
-    <section style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
+    <section className="subpage-shell" style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
 
       <style>{`
         .dropdown-menu {
@@ -222,6 +222,7 @@ export default function CurrentMembersPage() {
 
       {/* HEADER */}
       <motion.div
+        className="page-header"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}

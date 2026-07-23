@@ -14,7 +14,7 @@ export default function StudentAchievements() {
     };
 
     return (
-        <section className="page-section" style={{ color: 'white', minHeight: '100vh', maxWidth: '1200px', margin: '0 auto' }}>
+        <section className="page-section subpage-shell" style={{ color: 'white', minHeight: '100vh', maxWidth: '1200px', margin: '0 auto' }}>
 
             <style>{`
                 .page-section { padding: 4rem 1rem 6rem 1rem; }
@@ -37,6 +37,7 @@ export default function StudentAchievements() {
 
             {/* HEADER SECTION */}
             <motion.div
+                className="page-header"
                 initial="hidden"
                 animate="visible"
                 variants={fadeInUp}

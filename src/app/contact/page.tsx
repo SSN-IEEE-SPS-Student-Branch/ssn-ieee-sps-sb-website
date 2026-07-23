@@ -140,7 +140,7 @@ export default function Contact() {
   };
 
   return (
-    <div style={{ width: '100%', overflowX: 'hidden' }}>
+    <div className="subpage-shell" style={{ width: '100%', overflowX: 'hidden' }}>
       <style>{`
         .contact-grid {
           width: 60%;
@@ -161,6 +161,7 @@ export default function Contact() {
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
 
           <motion.div
+            className="page-header"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}

@@ -49,7 +49,7 @@ export default function MagazinePage() {
   };
 
   return (
-    <section style={{ padding: '4rem 1rem', color: 'white', minHeight: '100vh', maxWidth: '1200px', margin: '0 auto' }}>
+    <section className="subpage-shell" style={{ padding: '4rem 1rem', color: 'white', minHeight: '100vh', maxWidth: '1200px', margin: '0 auto' }}>
 
       {/* Reusing your gradient button style */}
       <style>{`
@@ -98,6 +98,7 @@ export default function MagazinePage() {
 
       {/* HEADER SECTION */}
       <motion.div
+        className="page-header"
         initial="hidden"
         animate="visible"
         variants={fadeInUp}

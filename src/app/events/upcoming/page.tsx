@@ -54,7 +54,7 @@ export default function UpcomingEventsPage() {
   };
 
   return (
-    <div style={{ 
+    <div className="subpage-shell upcoming-shell" style={{
       width: '100%',
       minHeight: '80vh', 
       display: 'flex',
@@ -180,6 +180,7 @@ export default function UpcomingEventsPage() {
 
       {/* --- TEXT CONTENT --- */}
       <motion.div
+        className="page-header"
         variants={textVariant}
         initial="hidden"
         animate="visible"

@@ -1,13 +1,15 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import '../app/globals.css';
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import { IBM_Plex_Sans } from 'next/font/google';
 import type { Metadata, Viewport } from 'next';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
-  fallback: ['Arial', 'sans-serif'],
+  variable: '--font-plex',
+  fallback: ['Helvetica Neue', 'Arial', 'sans-serif'],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
@@ -47,7 +49,7 @@ export const metadata: Metadata = {
       'Events, opportunities, achievements, resources, and people from the IEEE SPS Student Branch Chapter at SSN.',
     images: [
       {
-        url: '/og.png',
+        url: '/og-editorial.png',
         width: 1200,
         height: 630,
         alt: 'SSN IEEE Signal Processing Society Student Branch Chapter',
@@ -59,7 +61,7 @@ export const metadata: Metadata = {
     title: 'SSN IEEE Signal Processing Society',
     description:
       'Events, opportunities, achievements, resources, and people from the IEEE SPS Student Branch Chapter at SSN.',
-    images: ['/og.png'],
+    images: ['/og-editorial.png'],
   },
   robots: {
     index: true,
@@ -69,8 +71,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0a51a3',
-  colorScheme: 'dark',
+  themeColor: '#00629b',
+  colorScheme: 'light',
 };
 
 interface RootLayoutProps {
@@ -80,35 +82,13 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body
-        className={plusJakartaSans.className}
-        style={{
-          margin: 0,
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          background: 'linear-gradient(135deg, #0a51a3 20%, #24a647 90%)', // Your specific background
-          color: 'white',
-          overflowX: 'hidden', // Prevents accidental horizontal scroll
-        }}
-      >
+      <body className={`${ibmPlexSans.className} ${ibmPlexSans.variable}`}>
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
         <Navbar />
 
-        <main
-          id="main-content"
-          style={{
-            flex: 1,
-            width: '100%',
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '2rem 1rem',
-            boxSizing: 'border-box',
-            position: 'relative',
-          }}
-        >
+        <main id="main-content" className="site-main">
           {children}
         </main>
 

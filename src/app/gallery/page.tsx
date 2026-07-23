@@ -170,7 +170,7 @@ export default function GalleryPage() {
   };
 
   return (
-    <section style={{ padding: '2rem 1rem', maxWidth: '1200px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
+    <section className="subpage-shell" style={{ padding: '2rem 1rem', maxWidth: '1200px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
       
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -186,6 +186,7 @@ export default function GalleryPage() {
 
       {/* HEADER */}
       <motion.div
+        className="page-header"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
