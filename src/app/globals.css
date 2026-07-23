@@ -610,16 +610,16 @@ p {
   position: relative;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #dfe7e9;
+  display: grid;
+  place-items: center;
+  background: #e7edef;
+  border-bottom: 1px solid var(--line);
 }
 
 .story-image {
-  object-fit: cover;
-  transition: transform 260ms ease;
-}
-
-.story-card:hover .story-image {
-  transform: scale(1.025);
+  object-fit: contain;
+  object-position: center;
+  padding: 0.65rem;
 }
 
 .story-body {
