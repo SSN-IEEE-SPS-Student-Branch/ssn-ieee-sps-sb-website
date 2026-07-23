@@ -400,10 +400,11 @@ export default function PastEventsPage() {
         }}
       >
         <AnimatePresence mode="popLayout">
-          {filteredEvents.map((event) => (
+          {filteredEvents.map((event, index) => (
             <div key={event.id} className="event-card-wrapper">
               <EventCard
                 event={event}
+                priority={index < 3}
                 onClick={() => setSelectedEvent(event)}
               />
             </div>
@@ -429,7 +430,15 @@ export default function PastEventsPage() {
 
 // --- SUB COMPONENTS ---
 
-function EventCard({ event, onClick }: { event: PastEvent, onClick: () => void }) {
+function EventCard({
+  event,
+  onClick,
+  priority,
+}: {
+  event: PastEvent;
+  onClick: () => void;
+  priority: boolean;
+}) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -469,7 +478,7 @@ function EventCard({ event, onClick }: { event: PastEvent, onClick: () => void }
         }}
       >
         <div style={{
-          width: '100%', height: '100%',
+          width: '100%', height: '100%', position: 'relative',
           transition: 'filter 0.3s ease, transform 0.5s ease',
           filter: isHovered ? 'blur(2px) brightness(0.7)' : 'none',
           transform: isHovered ? 'scale(1.05)' : 'scale(1)'
@@ -478,6 +487,7 @@ function EventCard({ event, onClick }: { event: PastEvent, onClick: () => void }
             src={event.image}
             alt={event.title}
             fill
+            priority={priority}
             sizes="(max-width: 480px) 100vw, 350px"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />

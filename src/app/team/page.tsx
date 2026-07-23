@@ -270,6 +270,7 @@ export default function CurrentMembersPage() {
               <ProfileCard
                 member={faculty}
                 isFaculty={true}
+                priority={true}
                 onClick={() => setSelected(faculty)}
                 category="Faculty"
               />
@@ -580,7 +581,19 @@ function TabButton({ tab, isActive, onClick }: { tab: string, isActive: boolean,
   );
 }
 
-function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { member: TeamMember, onClick: () => void, isFaculty?: boolean, category?: string }) {
+function ProfileCard({
+  member,
+  onClick,
+  isFaculty = false,
+  category = "",
+  priority = false,
+}: {
+  member: TeamMember;
+  onClick: () => void;
+  isFaculty?: boolean;
+  category?: string;
+  priority?: boolean;
+}) {
   const [isShimmying, setIsShimmying] = useState(false);
   const isOfficeBearer = category === "Office Bearers";
 
@@ -666,6 +679,7 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
             src={member.img}
             alt={member.name}
             fill
+            priority={priority}
             sizes="140px"
             style={{
               width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%',

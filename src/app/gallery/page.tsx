@@ -296,10 +296,11 @@ export default function GalleryPage() {
         className="gallery-grid"
       >
         <AnimatePresence mode="popLayout">
-          {filteredImages.map((item) => (
+          {filteredImages.map((item, index) => (
             <GalleryCard 
               key={item.id}
               item={item} 
+              priority={index === 0}
               onClick={() => setSelectedEvent(item)} 
             />
           ))}
@@ -324,7 +325,15 @@ export default function GalleryPage() {
 
 // --- SUB COMPONENTS ---
 
-function GalleryCard({ item, onClick }: { item: GalleryItem, onClick: () => void }) {
+function GalleryCard({
+  item,
+  onClick,
+  priority,
+}: {
+  item: GalleryItem;
+  onClick: () => void;
+  priority: boolean;
+}) {
   const imageCount = item.images ? item.images.length : 1;
   const [isHovered, setIsHovered] = useState(false);
 
@@ -381,6 +390,7 @@ function GalleryCard({ item, onClick }: { item: GalleryItem, onClick: () => void
                     src={item.cover}
                     alt={item.title}
                     fill
+                    priority={priority}
                     sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
                     style={{ 
                         width: '100%', 
