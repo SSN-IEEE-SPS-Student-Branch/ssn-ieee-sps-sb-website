@@ -475,7 +475,12 @@ function EventCard({
       {/* Image Section */}
       <div
         style={{
-          height: '220px', width: '100%', position: 'relative', overflow: 'hidden', cursor: 'pointer'
+          height: '220px',
+          width: '100%',
+          position: 'relative',
+          overflow: 'hidden',
+          cursor: 'pointer',
+          background: '#e7edef'
         }}
       >
         <div style={{
@@ -490,7 +495,13 @@ function EventCard({
             fill
             priority={priority}
             sizes="(max-width: 480px) 100vw, 350px"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              objectPosition: 'center',
+              padding: '0.55rem'
+            }}
           />
         </div>
 

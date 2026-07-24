@@ -1195,11 +1195,11 @@ p {
   }
 
   .home-hero-copy {
-    padding: 3.5rem 0;
+    padding: 3rem 0;
   }
 
   .home-hero h1 {
-    font-size: clamp(2.85rem, 13vw, 4.3rem);
+    font-size: clamp(2.55rem, 12.5vw, 4rem);
   }
 
   .home-actions {
@@ -1256,7 +1256,15 @@ p {
 
   .story-image-wrap {
     min-height: 0;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 4 / 3;
+  }
+
+  .story-image {
+    padding: 0.45rem;
+  }
+
+  .story-body {
+    padding: 1.4rem;
   }
 
   .pathway-card {
@@ -1271,7 +1279,18 @@ p {
 
   .subpage-shell .page-header h1,
   .subpage-shell > h1 {
-    font-size: clamp(2.6rem, 13vw, 4rem) !important;
+    max-width: 100%;
+    font-size: clamp(2.25rem, 11.5vw, 3.6rem) !important;
+    overflow-wrap: anywhere;
+  }
+
+  .subpage-shell .page-header h1 span {
+    overflow-wrap: anywhere;
+  }
+
+  .subpage-shell .page-header > p,
+  .subpage-shell .page-header > div > p {
+    font-size: 1rem !important;
   }
 
   .footer-primary {
@@ -1284,6 +1303,36 @@ p {
     padding: 1.25rem 0;
     align-items: flex-start;
     flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-masthead,
+  .home-section-inner,
+  .home-hero-grid,
+  .footer-primary,
+  .footer-secondary {
+    width: min(calc(100% - 24px), var(--content-width));
+  }
+
+  .site-brand-logo {
+    width: 58px;
+    height: 50px;
+  }
+
+  .site-brand-copy strong {
+    max-width: 190px;
+    font-size: 0.9rem;
+  }
+
+  .home-hero h1 {
+    font-size: clamp(2.35rem, 12vw, 3rem);
+  }
+
+  .subpage-shell .page-header h1,
+  .subpage-shell > h1 {
+    font-size: clamp(2rem, 11vw, 2.65rem) !important;
+    letter-spacing: -0.045em !important;
   }
 }
 

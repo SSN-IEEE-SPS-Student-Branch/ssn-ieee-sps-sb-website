@@ -166,7 +166,7 @@ export default function CurrentMembersPage() {
   };
 
   return (
-    <section className="subpage-shell" style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
+    <section className="subpage-shell team-page" style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
 
       <style>{`
         .dropdown-menu {
@@ -193,16 +193,36 @@ export default function CurrentMembersPage() {
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* UNIFIED GRID WITH INCREASED VERTICAL GAP */
+        /* Consistent portrait grid */
         .universal-grid {
            display: grid;
-           /* 250px min ensures the original 'portrait' ratio feels restored */
            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
            column-gap: 3rem;
-           row-gap: 4.5rem; /* Increased vertical spacing significantly */
+           row-gap: 4.5rem;
            justify-content: center;
         }
-        
+
+        .team-section-heading > div {
+          background: var(--line) !important;
+        }
+
+        .team-section-title {
+          color: var(--ieee-navy) !important;
+        }
+
+        .profile-card {
+          width: 100%;
+          min-height: 320px;
+          border-radius: 0 !important;
+          border-color: rgba(120, 190, 32, 0.45) !important;
+          box-shadow: 0 12px 28px rgba(0, 42, 58, 0.14);
+        }
+
+        .profile-image-frame {
+          width: 156px !important;
+          height: 156px !important;
+        }
+
         /* Centering Logic for rows with few items */
         @media (min-width: 768px) {
             .universal-grid[data-count="1"], 
@@ -217,6 +237,43 @@ export default function CurrentMembersPage() {
                 max-width: 300px;
                 width: 100%;
             }
+        }
+
+        @media (max-width: 680px) {
+          .universal-grid {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 1.5rem;
+          }
+
+          .team-page .page-header {
+            margin-bottom: 2.25rem !important;
+          }
+
+          .team-section-heading {
+            justify-content: flex-start !important;
+            margin-bottom: 1.5rem !important;
+          }
+
+          .team-section-heading > div {
+            display: none;
+          }
+
+          .team-section-title {
+            white-space: normal !important;
+            font-size: 1rem !important;
+            letter-spacing: 0.12em !important;
+          }
+
+          .profile-card {
+            min-height: 300px;
+            padding: 1.5rem 1.25rem !important;
+          }
+
+          .profile-image-frame {
+            width: 148px !important;
+            height: 148px !important;
+            margin-bottom: 1.25rem !important;
+          }
         }
       `}</style>
 
@@ -243,7 +300,7 @@ export default function CurrentMembersPage() {
         transition={{ duration: 0.7 }}
         style={{ marginBottom: '2rem' }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
+        <div className="team-section-heading" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
           {/* Left Line Animation */}
           <motion.div
             initial={{ width: 0, opacity: 0 }}
@@ -252,7 +309,7 @@ export default function CurrentMembersPage() {
             style={{ height: '1px', background: 'white' }}
           />
 
-          <h2 style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
+          <h2 className="team-section-title" style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
             Faculty Advisors
           </h2>
 
@@ -482,14 +539,14 @@ export default function CurrentMembersPage() {
           style={{ marginTop: '2rem' }}
         >
           {/* Section Header */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '3rem' }}>
+          <div className="team-section-heading" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '3rem' }}>
             <motion.div
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: 150, opacity: 1 }}
               transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
               style={{ height: '1px', background: 'white' }}
             />
-            <h2 style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
+            <h2 className="team-section-title" style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
               Office Bearers
             </h2>
             <motion.div
@@ -620,6 +677,7 @@ function ProfileCard({
         tap: { scale: 0.98 }
       }}
       onClick={handleCardClick}
+      className="profile-card"
       style={{
         background: isFaculty
           ? 'linear-gradient(145deg, rgba(15, 81, 86, 0.9), rgba(9, 44, 46, 0.95))'
@@ -675,13 +733,13 @@ function ProfileCard({
         transition={{ duration: 0.3 }}
         style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <div style={{ width: 140, height: 140, margin: '0 auto 1.5rem auto', position: 'relative' }}>
+        <div className="profile-image-frame" style={{ width: 140, height: 140, margin: '0 auto 1.5rem auto', position: 'relative' }}>
           <Image
             src={member.img}
             alt={member.name}
             fill
             priority={priority}
-            sizes="140px"
+            sizes="(max-width: 680px) 148px, 156px"
             style={{
               width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%',
               border: isFaculty ? '3px solid #EAB308' : '3px solid #78BE20',
