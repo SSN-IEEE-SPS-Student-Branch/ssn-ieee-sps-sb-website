@@ -223,6 +223,15 @@ export default function CurrentMembersPage() {
           height: 156px !important;
         }
 
+        .team-category-label {
+          margin: 0 0 0.9rem;
+          color: var(--ieee-navy);
+          font-size: 0.78rem;
+          font-weight: 800;
+          letter-spacing: 0.13em;
+          text-transform: uppercase;
+        }
+
         /* Centering Logic for rows with few items */
         @media (min-width: 768px) {
             .universal-grid[data-count="1"], 
@@ -273,6 +282,38 @@ export default function CurrentMembersPage() {
             width: 148px !important;
             height: 148px !important;
             margin-bottom: 1.25rem !important;
+          }
+
+          .team-category-navigation {
+            margin-bottom: 2.5rem !important;
+          }
+
+          .team-tab-scroll-button {
+            display: none !important;
+          }
+
+          .team-tabs-scroll {
+            overflow: visible !important;
+            padding: 0 !important;
+            mask-image: none !important;
+            white-space: normal !important;
+            text-align: left !important;
+          }
+
+          .team-tabs-list {
+            width: 100%;
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.65rem !important;
+          }
+
+          .team-tab-button {
+            width: 100%;
+            min-height: 54px;
+            padding: 0.7rem 0.6rem !important;
+            white-space: normal;
+            font-size: 0.82rem !important;
+            line-height: 1.25;
           }
         }
       `}</style>
@@ -454,11 +495,20 @@ export default function CurrentMembersPage() {
       {isActiveYear && (
         <>
           {/* --- TABS SECTION --- */}
-          <div style={{ position: 'relative', marginBottom: '3.5rem', maxWidth: '100%' }}>
+          <section
+            className="team-category-navigation"
+            aria-labelledby="team-sections-heading"
+            style={{ position: 'relative', marginBottom: '3.5rem', maxWidth: '100%' }}
+          >
+            <h2 id="team-sections-heading" className="team-category-label">
+              Team sections
+            </h2>
+
             {/* Scroll Controls */}
             <AnimatePresence>
               {canScrollLeft && (
                 <motion.button
+                  className="team-tab-scroll-button"
                   type="button"
                   aria-label="Scroll team categories left"
                   key="scroll-left"
@@ -471,6 +521,7 @@ export default function CurrentMembersPage() {
               )}
               {canScrollRight && (
                 <motion.button
+                  className="team-tab-scroll-button"
                   type="button"
                   aria-label="Scroll team categories right"
                   key="scroll-right"
@@ -487,7 +538,7 @@ export default function CurrentMembersPage() {
             <div
               ref={tabsRef}
               onScroll={checkScrollButtons}
-              className="no-scrollbar"
+              className="no-scrollbar team-tabs-scroll"
               style={{
                 overflowX: 'auto',
                 whiteSpace: 'nowrap',
@@ -496,7 +547,7 @@ export default function CurrentMembersPage() {
                 textAlign: 'center'
               }}
             >
-              <div style={{ display: 'inline-flex', gap: '0.75rem' }}>
+              <div className="team-tabs-list" style={{ display: 'inline-flex', gap: '0.75rem' }}>
                 {categories.map((tab) => (
                   <TabButton
                     key={tab}
@@ -507,7 +558,7 @@ export default function CurrentMembersPage() {
                 ))}
               </div>
             </div>
-          </div>
+          </section>
 
           {/* DYNAMIC MEMBERS GRID */}
           <AnimatePresence mode="wait">
@@ -594,47 +645,26 @@ export default function CurrentMembersPage() {
 // --- SUB COMPONENTS ---
 
 function TabButton({ tab, isActive, onClick }: { tab: string, isActive: boolean, onClick: () => void }) {
-  // Note: Tooltip removed as requested
   return (
     <motion.button
+      className={`team-tab-button ${isActive ? 'is-active' : ''}`}
       type="button"
       onClick={onClick}
       aria-pressed={isActive}
       style={{
         position: 'relative',
         padding: '0.75rem 1.5rem',
-        borderRadius: '2rem',
-        border: 'none',
-        background: 'transparent',
-        color: isActive ? '#0F5156' : '#ffffff',
+        borderRadius: 0,
+        border: isActive ? '1px solid #78BE20' : '1px solid #cfdbdf',
+        background: isActive ? '#78BE20' : '#ffffff',
+        color: '#002A3A',
         fontWeight: '700',
         fontSize: '0.95rem',
         cursor: 'pointer',
-        transition: 'color 0.3s ease',
-        zIndex: 1
+        transition: 'background 0.2s ease, border-color 0.2s ease, color 0.2s ease',
       }}
     >
       {tab}
-
-      {/* Active Background */}
-      {isActive ? (
-        <motion.div
-          layoutId="activeTab"
-          style={{
-            position: 'absolute',
-            top: 0, left: 0, right: 0, bottom: 0,
-            borderRadius: '2rem',
-            background: '#78BE20',
-            zIndex: -1,
-            boxShadow: '0 0 20px rgba(120, 190, 32, 0.4)'
-          }}
-        />
-      ) : (
-        <div style={{
-          position: 'absolute', inset: 0, borderRadius: '2rem',
-          border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', zIndex: -1
-        }} />
-      )}
     </motion.button>
   );
 }

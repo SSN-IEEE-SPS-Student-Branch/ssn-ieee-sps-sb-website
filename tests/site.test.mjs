@@ -29,6 +29,7 @@ function sourceFiles(directory) {
 const sources = sourceFiles(join(root, 'src')).filter((file) => /\.(?:ts|tsx)$/.test(file));
 const sourceText = sources.map((file) => readFileSync(file, 'utf8')).join('\n');
 const globalStyles = readFileSync(join(appDir, 'globals.css'), 'utf8');
+const teamPageSource = readFileSync(join(appDir, 'team', 'page.tsx'), 'utf8');
 
 test('every navigation route has a page and route metadata', () => {
   for (const route of expectedRoutes) {
@@ -104,4 +105,27 @@ test('mobile navigation accent guides share one left edge', () => {
   assert.match(submenuGuide.groups.rules, /margin:\s*0;/);
   assert.match(submenuGuide.groups.rules, /border-left:\s*4px solid var\(--sps-green\);/);
   assert.doesNotMatch(globalStyles, /\.mobile-navigation \.nav-link:hover::after/);
+});
+
+test('all current team sections are visibly available on mobile', () => {
+  for (const section of [
+    'Office Bearers',
+    'Core Committee',
+    'Content & Editorial',
+    'Design',
+    'Event Management',
+    'Photography',
+    'Social Media',
+    'Web Development',
+    'Documentation',
+    'Hospitality',
+  ]) {
+    assert.match(teamPageSource, new RegExp(`"${section}"\\s*:`));
+  }
+
+  assert.match(
+    teamPageSource,
+    /\.team-tabs-list\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);/s,
+  );
+  assert.match(teamPageSource, /\.team-tab-scroll-button\s*\{[^}]*display:\s*none !important;/s);
 });
