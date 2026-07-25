@@ -28,6 +28,7 @@ function sourceFiles(directory) {
 
 const sources = sourceFiles(join(root, 'src')).filter((file) => /\.(?:ts|tsx)$/.test(file));
 const sourceText = sources.map((file) => readFileSync(file, 'utf8')).join('\n');
+const globalStyles = readFileSync(join(appDir, 'globals.css'), 'utf8');
 
 test('every navigation route has a page and route metadata', () => {
   for (const route of expectedRoutes) {
@@ -88,4 +89,19 @@ test('production validation cannot silently ignore code errors', () => {
 test('repository contains no generated build output in source checks', () => {
   const relativeSources = sources.map((file) => relative(root, file));
   assert.ok(relativeSources.every((file) => !file.startsWith('.next/')));
+});
+
+test('mobile navigation accent guides share one left edge', () => {
+  const activeGuide = globalStyles.match(
+    /\.mobile-navigation \.nav-link::after\s*\{(?<rules>[^}]+)\}/,
+  );
+  const submenuGuide = globalStyles.match(/\.nav-dropdown-mobile\s*\{(?<rules>[^}]+)\}/);
+
+  assert.ok(activeGuide, 'Mobile active-link guide styles are missing');
+  assert.ok(submenuGuide, 'Mobile submenu guide styles are missing');
+  assert.match(activeGuide.groups.rules, /left:\s*0;/);
+  assert.match(activeGuide.groups.rules, /width:\s*4px;/);
+  assert.match(submenuGuide.groups.rules, /margin:\s*0;/);
+  assert.match(submenuGuide.groups.rules, /border-left:\s*4px solid var\(--sps-green\);/);
+  assert.doesNotMatch(globalStyles, /\.mobile-navigation \.nav-link:hover::after/);
 });

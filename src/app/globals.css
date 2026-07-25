@@ -1062,17 +1062,21 @@ p {
     width: 100%;
     min-height: 48px;
     justify-content: space-between;
+    padding: 0 0.75rem 0 1rem;
     border-bottom: 1px solid var(--line);
     color: var(--ieee-navy);
     line-height: 1.2;
   }
 
   .mobile-navigation .nav-link::after {
+    top: 0;
     right: auto;
+    bottom: 0;
+    left: 0;
     width: 4px;
-    height: 100%;
+    height: auto;
     transform: scaleY(0);
-    transform-origin: top;
+    transform-origin: center;
   }
 
   .mobile-navigation .nav-link:hover,
@@ -1080,7 +1084,6 @@ p {
     color: var(--ieee-blue);
   }
 
-  .mobile-navigation .nav-link:hover::after,
   .mobile-navigation .nav-link.is-active::after {
     transform: scaleY(1);
   }
@@ -1088,6 +1091,7 @@ p {
   .nav-dropdown-mobile {
     position: static;
     min-width: 0;
+    margin: 0;
     padding: 0.3rem 0 0.65rem 1rem;
     border: 0;
     border-left: 4px solid var(--sps-green);
