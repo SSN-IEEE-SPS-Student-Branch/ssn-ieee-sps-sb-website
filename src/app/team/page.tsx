@@ -221,6 +221,31 @@ export default function CurrentMembersPage() {
         .profile-image-frame {
           width: 156px !important;
           height: 156px !important;
+          flex: 0 0 auto;
+          overflow: hidden;
+          border-radius: 50%;
+        }
+
+        .profile-image-frame img,
+        .profile-modal-image-frame img {
+          object-position: center center;
+        }
+
+        .faculty-section {
+          margin-bottom: 0;
+        }
+
+        .year-selector {
+          padding-top: 2rem;
+        }
+
+        .profile-modal-image-frame {
+          width: 180px;
+          height: 180px;
+          margin: 0 auto 1.5rem;
+          position: relative;
+          overflow: hidden;
+          border-radius: 50%;
         }
 
         .team-category-label {
@@ -284,6 +309,16 @@ export default function CurrentMembersPage() {
             margin-bottom: 1.25rem !important;
           }
 
+          .year-selector {
+            padding-top: 1.5rem;
+          }
+
+          .profile-modal-image-frame {
+            width: 168px;
+            height: 168px;
+            margin-bottom: 1.25rem;
+          }
+
           .team-category-navigation {
             margin-bottom: 2.5rem !important;
           }
@@ -336,10 +371,10 @@ export default function CurrentMembersPage() {
 
       {/* FACULTY COORDINATORS */}
       <motion.div
+        className="faculty-section"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        style={{ marginBottom: '2rem' }}
       >
         <div className="team-section-heading" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
           {/* Left Line Animation */}
@@ -381,10 +416,11 @@ export default function CurrentMembersPage() {
 
       {/* YEAR SELECTOR DROPDOWN */}
       <motion.div
+        className="year-selector"
         initial={{ opacity: 0, y: -5 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: 'center', marginBottom: '0', paddingTop: '3rem' }}
+        style={{ textAlign: 'center', marginBottom: '0' }}
       >
         <div ref={dropdownRef} style={{ position: 'relative', display: 'inline-block' }}>
           <button
@@ -886,11 +922,20 @@ function ProfileModal({ member, onClose }: { member: TeamMember, onClose: () => 
           <X size={20} />
         </button>
 
-        <Image src={member.img} alt={member.name}
-          width={180}
-          height={180}
-          style={{ width: 180, height: 180, borderRadius: '50%', objectFit: 'cover', marginBottom: '1.5rem', border: '4px solid #78BE20', boxShadow: '0 10px 30px rgba(0,0,0,0.4)' }}
-        />
+        <div className="profile-modal-image-frame">
+          <Image
+            src={member.img}
+            alt={member.name}
+            fill
+            sizes="(max-width: 680px) 168px, 180px"
+            style={{
+              objectFit: 'cover',
+              borderRadius: '50%',
+              border: '4px solid #78BE20',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.4)'
+            }}
+          />
+        </div>
         <h3 id="profile-modal-title" style={{ margin: '0 0 0.5rem 0', fontSize: '1.75rem', fontWeight: '800', color: 'white' }}>{member.name}</h3>
         <div style={{ color: '#78BE20', fontWeight: '700', marginBottom: '2rem', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{member.role}</div>
 

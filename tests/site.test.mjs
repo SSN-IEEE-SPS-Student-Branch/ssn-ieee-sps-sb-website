@@ -129,3 +129,18 @@ test('all current team sections are visibly available on mobile', () => {
   );
   assert.match(teamPageSource, /\.team-tab-scroll-button\s*\{[^}]*display:\s*none !important;/s);
 });
+
+test('team portraits stay centered and faculty spacing remains compact on mobile', () => {
+  assert.match(
+    teamPageSource,
+    /\.profile-modal-image-frame\s*\{[^}]*margin:\s*0 auto 1\.5rem;/s,
+  );
+  assert.match(
+    teamPageSource,
+    /\.profile-image-frame img,\s*\.profile-modal-image-frame img\s*\{[^}]*object-position:\s*center center;/s,
+  );
+  assert.match(
+    teamPageSource,
+    /@media \(max-width:\s*680px\)[\s\S]*?\.year-selector\s*\{[^}]*padding-top:\s*1\.5rem;/,
+  );
+});
