@@ -7,6 +7,12 @@ import { Download, ExternalLink, FileText, BookOpen, ChevronDown, Calendar } fro
 const MAGAZINES = [
   {
     title: 'SPS Annual Magazine',
+    year: '2026-2027',
+    url: '/magazines/sps-annual-magazine-2026.pdf',
+    description: 'Annual magazine showcasing the SSN IEEE SPS chapter’s events, achievements, and student experiences. A celebration of innovation, learning, and growth in signal processing.',
+  },
+  {
+    title: 'SPS Annual Magazine',
     year: '2025-2026',
     url: '/magazines/sps-annual-magazine-2025.pdf',
     description: 'Welcome to the Annual Magazine of the IEEE Signal Processing Society SSN Chapter. This publication showcases exciting research, projects, and innovations from our vibrant community of students and professionals.',

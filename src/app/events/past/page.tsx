@@ -8,6 +8,28 @@ import { X, Clock, MapPin, Calendar, ArrowUpRight, ChevronLeft, ChevronRight, Ey
 // --- DATA (Reordered: Most Recent First | Rewritten: Professional & Concise) ---
 const eventsData = [
   {
+    id: 18,
+    category: 'Competitions',
+    title: 'Noise To Masterpiece: IEEE SPS Signal Art Exhibition 2026"',
+    image: '/events/Noise_to_Masterpiece.png',
+    description: 'Introduced signal processing through music, science, and creative art. Participants transformed signal concepts into visual artwork and explored water marbling. An innovative exhibition making signal processing engaging and accessible.',
+    fullDescription:'Noise to Masterpiece: IEEE SPS Signal Art Exhibition 2026 was an innovative event that combined signal processing, music, science, and artistic expression. Participants explored hidden mathematical, physical, algorithmic, and signal-processing concepts embedded in curated songs, then transformed their interpretations into visual artwork. The event also featured a hands-on water marbling championship, where signal frequencies and oscillations were represented through fluid art. The exhibition successfully made signal processing engaging, creative, and accessible through an unconventional learning experience.',
+    date: 'JUL 31, 2026',
+    time: '9:00 AM – 3:00 PM',
+    venue: 'Assembly Hall, School of Advanced Career Education (SAC), E Block, SSN College of Engineering, Kalavakkam'
+  },
+  {
+    id: 17,
+    category: 'Workshops',
+    title: 'School Outreach Program on "Introduction to Biosignals"',
+    image: '/events/outreach.PNG',
+    description: 'A hands-on session introducing students to biosignals and their healthcare applications. Covered ECG, EEG, EMG, EOG, signal processing, and biomedical technologies. An interactive quiz reinforced learning and engagement.',
+    fullDescription: 'An engaging school outreach session introducing students to the fundamentals of biosignals and their role in modern healthcare. The session covered analog and digital signals, ECG, EEG, EMG, and EOG, along with biosignal acquisition, noise, filtering, amplification, and real-world applications such as cardiac monitoring, brain-computer interfaces, prosthetics, rehabilitation, and wearable health technologies. An interactive quiz encouraged students to apply their learning and explore the possibilities of biomedical engineering.',
+    date: 'JUL 17, 2026',
+    time: '9:00 AM - 3:00 PM',
+    venue: 'Government High School, Ganga Nagar, Mettukuppam, Chennai – 600095 (Near Maduravoyal)'
+  },
+  {
     id: 16,
     category: 'Competitions',
     title: 'Circuit-O-Poly',
@@ -75,7 +97,7 @@ const eventsData = [
     time: '10:00 AM - 1:00 PM',
     venue: 'Central Seminar Hall (Online)',
     speaker: 'S. Chris Prema'
-  },
+  },  
   {
     id: 10,
     category: 'Talks',
