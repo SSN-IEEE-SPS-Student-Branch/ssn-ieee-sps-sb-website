@@ -15,12 +15,14 @@ const MAGAZINES = [
     title: 'SPS Annual Magazine',
     year: '2025-2026',
     url: '/magazines/sps-annual-magazine-2025.pdf',
+    size: '8.5 MB',
     description: 'Welcome to the Annual Magazine of the IEEE Signal Processing Society SSN Chapter. This publication showcases exciting research, projects, and innovations from our vibrant community of students and professionals.',
   },
   {
     title: 'SPS Annual Magazine',
     year: '2024-2025',
     url: '/magazines/sps-annual-magazine-2024.pdf',
+    size: '13.4 MB',
     description: 'Explore the highlights, achievements, and technical articles from the 2024-2025 academic year of the IEEE Signal Processing Society SSN Chapter.',
   }
 ];
@@ -28,6 +30,7 @@ const MAGAZINES = [
 export default function MagazinePage() {
   const [selectedYear, setSelectedYear] = useState(MAGAZINES[0].year);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const currentIssue = MAGAZINES.find(m => m.year === selectedYear) || MAGAZINES[0];
 
@@ -52,7 +55,7 @@ export default function MagazinePage() {
   };
 
   return (
-    <section style={{ padding: '4rem 1rem', color: 'white', minHeight: '100vh', maxWidth: '1200px', margin: '0 auto' }}>
+    <section className="subpage-shell" style={{ padding: '4rem 1rem', color: 'white', minHeight: '100vh', maxWidth: '1200px', margin: '0 auto' }}>
 
       {/* Reusing your gradient button style */}
       <style>{`
@@ -101,6 +104,7 @@ export default function MagazinePage() {
 
       {/* HEADER SECTION */}
       <motion.div
+        className="page-header"
         initial="hidden"
         animate="visible"
         variants={fadeInUp}
@@ -123,7 +127,10 @@ export default function MagazinePage() {
         <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
           <div ref={dropdownRef} style={{ position: 'relative', display: 'inline-block' }}>
             <button
+              type="button"
               onClick={() => setDropdownOpen(!dropdownOpen)}
+              aria-expanded={dropdownOpen}
+              aria-controls="magazine-year-menu"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -160,6 +167,7 @@ export default function MagazinePage() {
             <AnimatePresence>
               {dropdownOpen && (
                 <motion.div
+                  id="magazine-year-menu"
                   initial={{ opacity: 0, y: -8, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.95 }}
@@ -168,9 +176,11 @@ export default function MagazinePage() {
                 >
                   {MAGAZINES.map((mag) => (
                     <button
+                      type="button"
                       key={mag.year}
                       onClick={() => {
                         setSelectedYear(mag.year);
+                        setPreviewOpen(false);
                         setDropdownOpen(false);
                       }}
                       style={{
@@ -221,7 +231,7 @@ export default function MagazinePage() {
               )}
             </AnimatePresence>
           </div>
-          <ActionButton href={currentIssue.url} icon={<Download size={20} />}>
+          <ActionButton href={currentIssue.url} icon={<Download size={20} />} download>
             Download PDF
           </ActionButton>
           <ActionButton href={currentIssue.url} icon={<ExternalLink size={20} />}>
@@ -246,35 +256,108 @@ export default function MagazinePage() {
           overflow: 'hidden',
           boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
           backgroundColor: '#05191a',
-          height: '85vh',
+          height: previewOpen ? '85vh' : '420px',
           position: 'relative',
+          transition: 'height 0.3s ease',
         }}
         >
-          {/* Loading / Background Layer */}
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 0 }}>
-            <span style={{ color: 'rgba(255,255,255,0.3)' }}>Loading Preview...</span>
-          </div>
-
-          {/* PDF Object */}
-          <object
-            key={currentIssue.url} // Force re-render when URL changes
-            data={currentIssue.url}
-            type="application/pdf"
-            width="100%"
-            height="100%"
-            style={{ position: 'relative', zIndex: 1, display: 'block' }}
-          >
-            {/* Fallback for mobile/browsers without PDF support */}
-            <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#ccfbf1', padding: '2rem', textAlign: 'center', background: '#05191a' }}>
-              <FileText size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
-              <p style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '1rem', maxWidth: '300px' }}>Preview is only available on laptops and larger screens</p>
-              <a href={currentIssue.url} download style={{ color: '#78BE20', fontWeight: 'bold', fontSize: '1rem', textDecoration: 'underline' }}>
-                Download PDF
-              </a>
+          {previewOpen ? (
+            <object
+              key={currentIssue.url}
+              data={currentIssue.url}
+              type="application/pdf"
+              aria-label={`${currentIssue.title} ${currentIssue.year} preview`}
+              width="100%"
+              height="100%"
+              style={{ position: 'relative', zIndex: 1, display: 'block' }}
+            >
+              <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#ccfbf1', padding: '2rem', textAlign: 'center', background: '#05191a' }}>
+                <FileText size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
+                <p style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '1rem', maxWidth: '320px' }}>
+                  Your browser cannot display this PDF preview.
+                </p>
+                <a href={currentIssue.url} download style={{ color: '#78BE20', fontWeight: 'bold', fontSize: '1rem', textDecoration: 'underline' }}>
+                  Download PDF
+                </a>
+              </div>
+            </object>
+          ) : (
+            <div
+              style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '1rem',
+                padding: '2rem',
+                textAlign: 'center',
+                background:
+                  'radial-gradient(circle at center, rgba(120,190,32,0.12), transparent 60%)',
+              }}
+            >
+              <FileText size={64} color="#78BE20" aria-hidden="true" />
+              <h2 style={{ margin: 0, fontSize: 'clamp(1.5rem, 4vw, 2.2rem)' }}>
+                {currentIssue.year} digital edition
+              </h2>
+              <p style={{ margin: 0, color: 'rgba(255,255,255,0.72)', maxWidth: '34rem', lineHeight: 1.6 }}>
+                The embedded preview is {currentIssue.size}. Load it only when you are ready, or use
+                the download and new-tab options above.
+              </p>
+              <button
+                type="button"
+                className="event-btn"
+                onClick={() => setPreviewOpen(true)}
+                style={{ marginTop: '0.5rem' }}
+              >
+                Load PDF preview
+              </button>
             </div>
-          </object>
+          )}
         </div>
       </motion.div>
+
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+        aria-labelledby="magazine-contribute-heading"
+        style={{
+          maxWidth: '900px',
+          margin: '0 auto',
+          padding: '2.5rem',
+          borderRadius: '1.25rem',
+          background: 'rgba(9, 44, 46, 0.85)',
+          border: '1px solid rgba(120, 190, 32, 0.35)',
+          boxShadow: '0 16px 36px rgba(0,0,0,0.25)',
+        }}
+      >
+        <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', marginBottom: '1rem' }}>
+          <FileText size={28} color="#78BE20" aria-hidden="true" />
+          <h2 id="magazine-contribute-heading" style={{ margin: 0, fontSize: 'clamp(1.6rem, 4vw, 2.25rem)' }}>
+            CONTRIBUTE TO THE <span style={{ color: '#78BE20' }}>NEXT ISSUE</span>
+          </h2>
+        </div>
+        <p style={{ color: 'rgba(255,255,255,0.82)', lineHeight: 1.7, fontSize: '1.05rem' }}>
+          We welcome original research explainers, project stories, technical tutorials, event
+          reflections, and student achievements from the SSN community.
+        </p>
+        <ul style={{ lineHeight: 1.8, color: 'rgba(255,255,255,0.88)', paddingLeft: '1.25rem' }}>
+          <li>Prepare 600–1,200 words in an editable document.</li>
+          <li>Include a short author bio and properly credited visuals.</li>
+          <li>Submit only original work and disclose any collaborators or prior publication.</li>
+          <li>Deadlines are announced through official chapter channels for each annual edition.</li>
+        </ul>
+        <motion.a
+          href="mailto:ieeespssb@ssn.edu.in?subject=SPS%20Magazine%20Contribution"
+          className="event-btn"
+          whileTap={{ scale: 0.96 }}
+          style={{ marginTop: '0.5rem' }}
+        >
+          Email the Editorial Team
+        </motion.a>
+      </motion.section>
 
     </section>
   );
@@ -285,14 +368,16 @@ interface ActionButtonProps {
   href: string;
   icon: React.ReactNode;
   children: React.ReactNode;
+  download?: boolean;
 }
 
-function ActionButton({ href, icon, children }: ActionButtonProps) {
+function ActionButton({ href, icon, children, download = false }: ActionButtonProps) {
   return (
     <motion.a
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      download={download}
+      target={download ? undefined : '_blank'}
+      rel={download ? undefined : 'noopener noreferrer'}
       className="event-btn"
       whileTap={{ scale: 0.95 }}
     >

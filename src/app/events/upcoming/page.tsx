@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, Variants, useMotionValue } from 'framer-motion';
+import { motion, Variants, useMotionValue, type PanInfo } from 'framer-motion';
 import { Radio, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -46,7 +46,7 @@ export default function UpcomingEventsPage() {
 
   // Function to handle the manual rotation logic
   // We map the X and Y movement of the mouse/finger to rotation degrees
-  const handlePan = (event: any, info: any) => {
+  const handlePan = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const currentRotation = knobRotation.get();
     // Dragging right/down increases rotation, left/up decreases it
     const delta = info.delta.x + info.delta.y; 
@@ -54,7 +54,7 @@ export default function UpcomingEventsPage() {
   };
 
   return (
-    <div style={{ 
+    <div className="subpage-shell upcoming-shell" style={{
       width: '100%',
       minHeight: '80vh', 
       display: 'flex',
@@ -109,7 +109,9 @@ export default function UpcomingEventsPage() {
         {/* INTERACTIVE CENTER KNOB 
             We replaced the standard div with motion.div to handle 'onPan' and 'style={{ rotate }}'
         */}
-        <motion.div 
+        <motion.button
+            type="button"
+            aria-label="Rotate the signal scanner"
             className="knob-container"
             style={{ 
                 zIndex: 10, 
@@ -121,11 +123,19 @@ export default function UpcomingEventsPage() {
                 touchAction: 'none' // Prevents scrolling on mobile while twisting
             }}
             onPan={handlePan} // Listens for drag gestures
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                knobRotation.set(knobRotation.get() + 15);
+              }
+              if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                knobRotation.set(knobRotation.get() - 15);
+              }
+            }}
             whileTap={{ scale: 0.95 }} // Visual feedback when pressing
             whileHover={{ scale: 1.05 }}
         >
             <Radio size={48} color="#78BE20" style={{ pointerEvents: 'none' }} />
-        </motion.div>
+        </motion.button>
 
         {/* Pulsing Rings (The "Signal") */}
         <motion.div 
@@ -170,6 +180,7 @@ export default function UpcomingEventsPage() {
 
       {/* --- TEXT CONTENT --- */}
       <motion.div
+        className="page-header"
         variants={textVariant}
         initial="hidden"
         animate="visible"

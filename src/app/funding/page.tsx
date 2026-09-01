@@ -87,13 +87,8 @@ const opportunities: Opportunity[] = [
 
 export default function FundingPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
 
   const selectedItem = opportunities.find(item => item.id === selectedId);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -115,7 +110,7 @@ export default function FundingPage() {
   }, []);
 
   return (
-    <section style={{ padding: '5rem 1rem', color: 'white', minHeight: '100vh', position: 'relative' }}>
+    <section className="subpage-shell" style={{ padding: '5rem 1rem', color: 'white', minHeight: '100vh', position: 'relative' }}>
       
       <style>{`
         .glass-backdrop {
@@ -191,6 +186,7 @@ export default function FundingPage() {
         
         {/* HEADER */}
         <motion.div
+          className="page-header"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -229,9 +225,15 @@ export default function FundingPage() {
               key={item.id}
               layoutId={`card-${item.id}`} 
               onClick={() => setSelectedId(item.id)}
-              onKeyDown={(e) => e.key === 'Enter' && setSelectedId(item.id)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelectedId(item.id);
+                }
+              }}
               tabIndex={0}
               role="button"
+              aria-haspopup="dialog"
               className="card-hover"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -285,20 +287,20 @@ export default function FundingPage() {
         {/* BOTTOM ACTION BUTTON */}
         <div style={{ textAlign: 'center', marginTop: '2rem' }}>
            {/* Assuming you have a mentoring page, otherwise change href */}
-           <Link href="/mentoring" style={{ textDecoration: 'none' }}>
-            <motion.button
-              className="event-btn" 
+           <Link href="/mentoring" className="event-btn">
+            <motion.span
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
               whileTap={{ scale: 0.95 }}
             >
               EXPLORE MENTORING PROGRAMS <ArrowRight size={18} />
-            </motion.button>
+            </motion.span>
           </Link>
         </div>
 
       </div>
 
       {/* MODAL PORTAL */}
-      {mounted && createPortal(
+      {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {selectedId && selectedItem && (
             <motion.div
@@ -319,6 +321,9 @@ export default function FundingPage() {
             >
               <motion.div
                 layoutId={`card-${selectedId}`}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="funding-modal-title"
                 onClick={(e) => e.stopPropagation()} 
                 style={{
                   backgroundColor: '#092C2E', 
@@ -350,12 +355,14 @@ export default function FundingPage() {
                     >
                         {cloneElement(selectedItem.icon, { color: '#78BE20', className: '' })}
                     </motion.div>
-                    <h2 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '800', color: 'white', margin: 0, lineHeight: 1.2 }}>
+                    <h2 id="funding-modal-title" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '800', color: 'white', margin: 0, lineHeight: 1.2 }}>
                       {selectedItem.title}
                     </h2>
                   </div>
-                  <button 
+                  <button
+                    type="button"
                     onClick={() => setSelectedId(null)}
+                    aria-label="Close funding details"
                     style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', padding: '0.5rem' }}
                   >
                     <X size={28} />
@@ -435,8 +442,10 @@ export default function FundingPage() {
 
                 {/* External Link Footer */}
                 <div style={{ padding: '1.5rem 2.5rem', backgroundColor: 'rgba(0,0,0,0.2)', textAlign: 'right' }}>
-                  <a href={selectedItem.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                    <motion.button
+                  <motion.a
+                      href={selectedItem.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.15)' }}
                       whileTap={{ scale: 0.98 }}
                       style={{
@@ -454,8 +463,7 @@ export default function FundingPage() {
                       }}
                     >
                       Visit Official Page <ExternalLink size={16}/>
-                    </motion.button>
-                  </a>
+                  </motion.a>
                 </div>
 
               </motion.div>

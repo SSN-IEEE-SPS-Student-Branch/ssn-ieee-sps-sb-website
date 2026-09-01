@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { Mail, MapPin, Phone, Clock, Plus, Minus, Send, CheckCircle, AlertCircle, Linkedin, Instagram, Globe, Youtube, User } from 'lucide-react';
+import { Mail, MapPin, Clock, Plus, Minus, Linkedin, Instagram, Globe, Youtube, User, FileText } from 'lucide-react';
 
 // --- ANIMATION VARIANTS (Typed to fix TS Error) ---
 
@@ -63,10 +63,26 @@ const SignalWaveSeparator = () => (
 );
 
 // --- FAQ COMPONENT ---
-const FaqItem = ({ question, answer, isOpen, onClick }: { question: string, answer: string, isOpen: boolean, onClick: () => void }) => (
+const FaqItem = ({
+  id,
+  question,
+  answer,
+  isOpen,
+  onClick,
+}: {
+  id: string;
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onClick: () => void;
+}) => (
   <div style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '0.75rem' }}>
     <button
+      id={`${id}-button`}
+      type="button"
       onClick={onClick}
+      aria-expanded={isOpen}
+      aria-controls={`${id}-panel`}
       style={{
         width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '0.75rem 0', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left'
@@ -80,6 +96,9 @@ const FaqItem = ({ question, answer, isOpen, onClick }: { question: string, answ
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          id={`${id}-panel`}
+          role="region"
+          aria-labelledby={`${id}-button`}
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 'auto', opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
@@ -96,15 +115,14 @@ const FaqItem = ({ question, answer, isOpen, onClick }: { question: string, answ
 );
 
 export default function Contact() {
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const faqs = [
-    { q: 'How do I become a member?', a: 'Visit our Current Members page and fill out the membership application form. IEEE membership is required.' },
+    { q: 'How do I become a member?', a: 'Start with the IEEE SPS membership page, then use the downloadable joining guide above for the SSN chapter procedure.' },
     { q: 'How do I apply for funding?', a: 'Visit our Funding page to see available opportunities and application procedures for each program.' },
     { q: 'Are events free for members?', a: 'Most events are free for IEEE members. Some specialized workshops may have a nominal fee.' },
     { q: 'Do you offer mentoring?', a: 'Yes, we have comprehensive mentoring programs. Check our Mentoring page for different program options.' },
-    { q: 'Can I contribute to the magazine?', a: 'Yes! Check our Magazine page for submission guidelines and deadlines for different types of articles.' },
+    { q: 'Can I contribute to the magazine?', a: 'Yes. The Magazine page now includes contribution topics, preparation guidance, and the editorial email link.' },
     { q: 'Where are events held?', a: 'Most events are held at SSN College of Engineering. Specific venues are mentioned in event details.' },
   ];
 
@@ -121,36 +139,9 @@ export default function Contact() {
     flexDirection: 'column' as const
   };
 
-  const inputStyle = {
-    width: '95%',
-    padding: '1rem 1.2rem',
-    border: '1px solid rgba(255,255,255,0.15)',
-    borderRadius: '0.6rem',
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    color: 'white',
-    outline: 'none',
-    transition: 'all 0.3s ease',
-    fontSize: '1rem',
-    fontWeight: '600'
-  };
-
-  const labelStyle = {
-    display: 'block',
-    fontSize: '0.9rem',
-    fontWeight: '700',
-    marginBottom: '0.6rem',
-    color: '#cbd5e1',
-    letterSpacing: '0.02em'
-  };
-
   return (
-    <div style={{ width: '100%', overflowX: 'hidden' }}>
+    <div className="subpage-shell" style={{ width: '100%', overflowX: 'hidden' }}>
       <style>{`
-        .contact-input:focus {
-          border-color: #78BE20 !important;
-          background-color: rgba(120, 190, 32, 0.05) !important;
-          box-shadow: 0 0 0 4px rgba(120, 190, 32, 0.1);
-        }
         .contact-grid {
           width: 60%;
           margin: 0 auto;
@@ -163,17 +154,6 @@ export default function Contact() {
              width: 95%;
           }
         }
-        .submit-btn {
-          background-size: 200% 100%;
-          background-image: linear-gradient(to right, #78BE20 50%, #05191a 50%);
-          transition: background-position 0.4s ease-out, color 0.4s ease-out;
-          color: #05191a;
-        }
-        .submit-btn:hover {
-          background-position: -100% 0;
-          color: #78BE20;
-          border: 1px solid #78BE20;
-        }
       `}</style>
 
       {/* --- SECTION 1: HEADER & CARDS --- */}
@@ -181,6 +161,7 @@ export default function Contact() {
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
 
           <motion.div
+            className="page-header"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -190,7 +171,7 @@ export default function Contact() {
               <span style={{ color: '#78BE20' }}>CONTACT </span> US
             </h1>
             <p style={{ fontSize: '1.1rem', color: 'inherit', maxWidth: '600px', margin: '0 auto' }}>
-              Have questions? We'd love to hear from you.
+              Have questions? We&apos;d love to hear from you.
             </p>
             <p style={{ fontSize: '1.1rem', color: 'inherit', maxWidth: '600px', margin: '0 auto' }}>
               Feel free to reach out to us using the contact information below.
@@ -216,16 +197,23 @@ export default function Contact() {
                   <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                     <InfoItem icon={<User size={20} />} label="Faculty Coordinator" value="Dr. Vijay Jeyakumar" />
                     <InfoItem icon={<Mail size={20} />} label="Email" value="ieeespssb@ssn.edu.in" href="mailto:ieeespssb@ssn.edu.in" />
+                    <InfoItem
+                      icon={<FileText size={20} />}
+                      label="Membership guide"
+                      value="Download the joining procedure"
+                      href="/IEEE SPS Joining Procedure.pdf"
+                      download
+                    />
                     <InfoItem icon={<MapPin size={20} />} label="Location" value="SSN College of Engineering, Chennai" />
                     <InfoItem icon={<Clock size={20} />} label="Hours" value="Mon - Fri: 9:00 AM - 4:00 PM" />
                   </ul>
                   <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center' }}>
                     <p style={{ fontSize: '0.9rem', fontWeight: '700', color: '#cbd5e1', marginBottom: '1rem', textTransform: 'uppercase' }}>Follow Us</p>
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                      <SocialIcon icon={<Linkedin size={20} />} href="https://www.linkedin.com/company/ssn-ieee-signal-processing-society/" />
-                      <SocialIcon icon={<Instagram size={20} />} href="https://www.instagram.com/ieee_sps_ssn/" />
-                      <SocialIcon icon={<Globe size={20} />} href="https://signalprocessingsociety.org/" />
-                      <SocialIcon icon={<Youtube size={20} />} href="https://www.youtube.com/@IEEESSNSPSSB" />
+                      <SocialIcon label="LinkedIn" icon={<Linkedin size={20} />} href="https://www.linkedin.com/company/ssn-ieee-signal-processing-society/" />
+                      <SocialIcon label="Instagram" icon={<Instagram size={20} />} href="https://www.instagram.com/ieee_sps_ssn/" />
+                      <SocialIcon label="IEEE SPS website" icon={<Globe size={20} />} href="https://signalprocessingsociety.org/" />
+                      <SocialIcon label="YouTube" icon={<Youtube size={20} />} href="https://www.youtube.com/@IEEESSNSPSSB" />
                     </div>
                   </div>
                 </div>
@@ -261,6 +249,7 @@ export default function Contact() {
             style={{ height: '500px', width: '100%', borderRadius: '1.5rem', overflow: 'hidden' }}
           >
             <iframe
+              title="Map showing SSN College of Engineering"
               src="https://maps.google.com/maps?q=SSN+College+of+Engineering&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
@@ -302,7 +291,8 @@ export default function Contact() {
           >
             {faqs.map((faq, index) => (
               <FaqItem
-                key={index}
+                key={faq.q}
+                id={`faq-${index}`}
                 question={faq.q}
                 answer={faq.a}
                 isOpen={openFaqIndex === index}
@@ -317,14 +307,22 @@ export default function Contact() {
   );
 }
 
-function InfoItem({ icon, label, value, href }: any) {
+interface InfoItemProps {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  href?: string;
+  download?: boolean;
+}
+
+function InfoItem({ icon, label, value, href, download = false }: InfoItemProps) {
   return (
     <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
       <div style={{ color: '#78BE20', marginTop: '0.1rem' }}>{icon}</div>
       <div>
         <span style={{ fontWeight: '700', color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', display: 'block', textTransform: 'uppercase', marginBottom: '0.2rem' }}>{label}</span>
         {href ? (
-          <a href={href} style={{ color: 'white', textDecoration: 'none', fontWeight: '600', fontSize: '1.05rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#78BE20'} onMouseOut={e => e.currentTarget.style.color = 'white'}>
+          <a href={href} download={download} style={{ color: 'white', textDecoration: 'none', fontWeight: '600', fontSize: '1.05rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#78BE20'} onMouseOut={e => e.currentTarget.style.color = 'white'}>
             {value}
           </a>
         ) : (
@@ -335,12 +333,13 @@ function InfoItem({ icon, label, value, href }: any) {
   );
 }
 
-function SocialIcon({ icon, href }: any) {
+function SocialIcon({ icon, href, label }: { icon: ReactNode; href: string; label: string }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={label}
       style={{
         width: '45px', height: '45px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)',
         display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white',

@@ -1,9 +1,12 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn, Images } from 'lucide-react';
+import Image from 'next/image';
+
+const MotionImage = motion.create(Image);
 
 // --- TYPES ---
 interface GalleryItem {
@@ -114,12 +117,12 @@ const categories = ['All', 'Inauguration', 'Talks', 'Workshops', 'Competitions']
 export default function GalleryPage() {
   const [selectedEvent, setSelectedEvent] = useState<GalleryItem | null>(null);
   const [activeTab, setActiveTab] = useState('All');
-  const [mounted, setMounted] = useState(false);
 
   // --- TAB SCROLL STATE ---
   const tabsRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const closeSelectedEvent = useCallback(() => setSelectedEvent(null), []);
 
   // 1. Sort items by Date (Newest First) automatically
   const sortedItems = [...galleryItems].sort((a, b) => {
@@ -132,7 +135,6 @@ export default function GalleryPage() {
     : sortedItems.filter(item => item.category === activeTab);
 
   useEffect(() => {
-    setMounted(true);
     // Lock body scroll when modal is open
     if (selectedEvent) {
       document.body.style.overflow = 'hidden';
@@ -168,7 +170,7 @@ export default function GalleryPage() {
   };
 
   return (
-    <section style={{ padding: '2rem 1rem', maxWidth: '1200px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
+    <section className="subpage-shell" style={{ padding: '2rem 1rem', maxWidth: '1200px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
       
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -184,6 +186,7 @@ export default function GalleryPage() {
 
       {/* HEADER */}
       <motion.div
+        className="page-header"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -294,10 +297,11 @@ export default function GalleryPage() {
         className="gallery-grid"
       >
         <AnimatePresence mode="popLayout">
-          {filteredImages.map((item) => (
+          {filteredImages.map((item, index) => (
             <GalleryCard 
               key={item.id}
               item={item} 
+              priority={index === 0}
               onClick={() => setSelectedEvent(item)} 
             />
           ))}
@@ -305,12 +309,12 @@ export default function GalleryPage() {
       </motion.div>
 
       {/* CAROUSEL MODAL */}
-      {mounted && createPortal(
+      {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {selectedEvent && (
             <CarouselModal 
               event={selectedEvent} 
-              onClose={() => setSelectedEvent(null)} 
+              onClose={closeSelectedEvent}
             />
           )}
         </AnimatePresence>,
@@ -322,12 +326,23 @@ export default function GalleryPage() {
 
 // --- SUB COMPONENTS ---
 
-function GalleryCard({ item, onClick }: { item: GalleryItem, onClick: () => void }) {
+function GalleryCard({
+  item,
+  onClick,
+  priority,
+}: {
+  item: GalleryItem;
+  onClick: () => void;
+  priority: boolean;
+}) {
   const imageCount = item.images ? item.images.length : 1;
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <motion.div
+    <motion.button
+      type="button"
+      aria-haspopup="dialog"
+      aria-label={`Open ${item.title} gallery with ${imageCount} photos`}
       layout
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -337,7 +352,7 @@ function GalleryCard({ item, onClick }: { item: GalleryItem, onClick: () => void
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ position: 'relative', cursor: 'pointer' }}
+      style={{ position: 'relative', cursor: 'pointer', border: 'none', padding: 0, background: 'transparent', textAlign: 'left', color: 'inherit' }}
     >
         {/* STACK EFFECT (Background Cards) */}
         <div style={{
@@ -372,10 +387,12 @@ function GalleryCard({ item, onClick }: { item: GalleryItem, onClick: () => void
         }}>
             {/* Image Area */}
             <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}>
-                <img
+                <Image
                     src={item.cover}
                     alt={item.title}
-                    loading="lazy"
+                    fill
+                    priority={priority}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
                     style={{ 
                         width: '100%', 
                         height: '100%', 
@@ -422,21 +439,21 @@ function GalleryCard({ item, onClick }: { item: GalleryItem, onClick: () => void
                 </div>
             </div>
         </div>
-    </motion.div>
+    </motion.button>
   );
 }
 
 function CarouselModal({ event, onClose }: { event: GalleryItem, onClose: () => void }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const images = event.images || [event.cover]; 
+  const images = event.images.length > 0 ? event.images : [event.cover];
 
-  const paginate = (newDirection: number) => {
+  const paginate = useCallback((newDirection: number) => {
     if (newDirection === 1) {
         setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     } else {
         setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     }
-  };
+  }, [images.length]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -446,10 +463,10 @@ function CarouselModal({ event, onClose }: { event: GalleryItem, onClose: () => 
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex]); 
+  }, [onClose, paginate]);
 
   // Touch Swipe Logic
-  const handleDragEnd = (e: any, { offset, velocity }: PanInfo) => {
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, { offset, velocity }: PanInfo) => {
     const swipeConfidenceThreshold = 10000;
     const swipePower = Math.abs(offset.x) * velocity.x;
 
@@ -476,6 +493,9 @@ function CarouselModal({ event, onClose }: { event: GalleryItem, onClose: () => 
       onClick={onClose}
     >
       <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="gallery-modal-title"
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -497,7 +517,9 @@ function CarouselModal({ event, onClose }: { event: GalleryItem, onClose: () => 
       >
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
+          aria-label="Close gallery"
           style={{
             position: 'absolute', top: 20, right: 20,
             background: 'rgba(0,0,0,0.6)', 
@@ -516,6 +538,8 @@ function CarouselModal({ event, onClose }: { event: GalleryItem, onClose: () => 
             {/* Left Nav Button (Desktop) */}
             {images.length > 1 && (
                 <button
+                type="button"
+                aria-label="Show previous photo"
                 onClick={(e) => { e.stopPropagation(); paginate(-1); }}
                 className="nav-btn"
                 style={{
@@ -530,10 +554,12 @@ function CarouselModal({ event, onClose }: { event: GalleryItem, onClose: () => 
 
             {/* Draggable Image for Mobile Swipe */}
             <AnimatePresence initial={false} mode="wait">
-                <motion.img 
+                <MotionImage
                     key={currentIndex}
                     src={images[currentIndex]} 
-                    alt={`Slide ${currentIndex + 1}`}
+                    alt={`${event.title} photo ${currentIndex + 1} of ${images.length}`}
+                    width={1200}
+                    height={800}
                     
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -551,6 +577,8 @@ function CarouselModal({ event, onClose }: { event: GalleryItem, onClose: () => 
             {/* Right Nav Button (Desktop) */}
             {images.length > 1 && (
                 <button
+                type="button"
+                aria-label="Show next photo"
                 onClick={(e) => { e.stopPropagation(); paginate(1); }}
                 className="nav-btn"
                 style={{
@@ -567,11 +595,18 @@ function CarouselModal({ event, onClose }: { event: GalleryItem, onClose: () => 
             {images.length > 1 && (
                 <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px', zIndex: 10, background: 'rgba(0,0,0,0.3)', padding: '0.5rem 1rem', borderRadius: '1rem' }}>
                     {images.map((_: string, idx: number) => (
-                        <div 
+                        <button
+                            type="button"
+                            aria-label={`Show photo ${idx + 1}`}
+                            aria-current={idx === currentIndex ? 'true' : undefined}
+                            onClick={() => setCurrentIndex(idx)}
                             key={idx}
                             style={{ 
                                 width: idx === currentIndex ? '24px' : '8px', 
                                 height: '8px', 
+                                border: 'none',
+                                padding: 0,
+                                cursor: 'pointer',
                                 borderRadius: '4px', 
                                 background: idx === currentIndex ? '#78BE20' : 'rgba(255,255,255,0.4)',
                                 transition: 'all 0.3s ease'
@@ -589,7 +624,7 @@ function CarouselModal({ event, onClose }: { event: GalleryItem, onClose: () => 
                     <span style={{ color: '#78BE20', fontWeight: '700', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                         {event.category} • {event.date}
                     </span>
-                    <h2 style={{ margin: '0.2rem 0 0 0', fontSize: '1.25rem', fontWeight: '700', color: 'white' }}>
+                    <h2 id="gallery-modal-title" style={{ margin: '0.2rem 0 0 0', fontSize: '1.25rem', fontWeight: '700', color: 'white' }}>
                         {event.title}
                     </h2>
                 </div>

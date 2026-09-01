@@ -134,13 +134,11 @@ const mentoringPrograms: MentoringProgram[] = [
 
 export default function MentoringPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
 
   const selectedItem = mentoringPrograms.find(item => item.id === selectedId);
 
   // Handle hydration mismatch and body scroll locking
   useEffect(() => {
-    setMounted(true);
     if (selectedId) {
       document.body.style.overflow = 'hidden'; // Lock background scroll
     } else {
@@ -158,7 +156,7 @@ export default function MentoringPage() {
   };
 
   return (
-    <section style={{ padding: '5rem 1rem', color: 'white', minHeight: '100vh', position: 'relative' }}>
+    <section className="subpage-shell" style={{ padding: '5rem 1rem', color: 'white', minHeight: '100vh', position: 'relative' }}>
       
       <style>{`
         .glass-backdrop {
@@ -237,6 +235,7 @@ export default function MentoringPage() {
         
         {/* Header */}
         <motion.div
+          className="page-header"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -278,6 +277,7 @@ export default function MentoringPage() {
               onKeyDown={(e) => handleKeyDown(e, item.id)}
               role="button" 
               tabIndex={0}
+              aria-haspopup="dialog"
               className="card-hover"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -340,31 +340,32 @@ export default function MentoringPage() {
         }}>
            
            {/* Link back to funding */}
-           <Link href="/resources/funding" style={{ textDecoration: 'none' }}>
-            <motion.button
-              className="event-btn"
+           <Link href="/funding" className="event-btn">
+            <motion.span
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
               whileTap={{ scale: 0.95 }}
             >
               EXPLORE FUNDING PROGRAMS <ArrowRight size={18} />
-            </motion.button>
+            </motion.span>
           </Link>
 
            {/* Link to Membership */}
-           <Link href="https://signalprocessingsociety.org/community-involvement/membership" style={{ textDecoration: 'none' }}>
-            <motion.button
+           <motion.a
+              href="https://signalprocessingsociety.org/community-involvement/membership"
+              target="_blank"
+              rel="noopener noreferrer"
               className="event-btn"
               whileTap={{ scale: 0.95 }}
             >
               JOIN IEEE SPS <ExternalLink size={18} />
-            </motion.button>
-          </Link>
+          </motion.a>
 
         </div>
 
       </div>
 
       {/* --- POPUP MODAL --- */}
-      {mounted && createPortal(
+      {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {selectedId && selectedItem && (
             <motion.div
@@ -385,6 +386,9 @@ export default function MentoringPage() {
             >
               <motion.div
                 layoutId={`card-${selectedId}`}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="mentoring-modal-title"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
@@ -413,11 +417,12 @@ export default function MentoringPage() {
                     >
                         {cloneElement(selectedItem.icon, { color: '#78BE20', className: '' })}
                     </motion.div>
-                    <h2 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '800', color: 'white', margin: 0 }}>
+                    <h2 id="mentoring-modal-title" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', fontWeight: '800', color: 'white', margin: 0 }}>
                       {selectedItem.title}
                     </h2>
                   </div>
-                  <button 
+                  <button
+                    type="button"
                     onClick={() => setSelectedId(null)}
                     style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', padding: '0.5rem' }}
                     aria-label="Close modal"
@@ -495,8 +500,10 @@ export default function MentoringPage() {
 
                 {/* Modal Footer with Dynamic Link */}
                 <div style={{ padding: '1.5rem 2.5rem', backgroundColor: 'rgba(0,0,0,0.2)', textAlign: 'right' }}>
-                  <a href={selectedItem.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                    <motion.button
+                  <motion.a
+                      href={selectedItem.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.15)' }}
                       whileTap={{ scale: 0.98 }}
                       style={{
@@ -514,8 +521,7 @@ export default function MentoringPage() {
                       }}
                     >
                       View Official Program Details <ExternalLink size={16}/>
-                    </motion.button>
-                  </a>
+                  </motion.a>
                 </div>
 
               </motion.div>

@@ -1,12 +1,21 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Linkedin, Instagram, X, ChevronLeft, ChevronRight, Calendar, Eye, ChevronDown } from 'lucide-react';
+import Image from 'next/image';
 
 // --- DATA STRUCTURE ---
-const facultyCoordinators = [
+interface TeamMember {
+  name: string;
+  role: string;
+  img: string;
+  linkedin?: string;
+  instagram?: string;
+}
+
+const facultyCoordinators: TeamMember[] = [
   {
     name: 'Dr. Venkateswaran N',
     role: 'Chair of IEEE SPS Madras Section',
@@ -21,15 +30,15 @@ const facultyCoordinators = [
   }
 ];
 
-const teamsData: Record<string, any[]> = {
+const teamsData: Record<string, TeamMember[]> = {
   "Office Bearers": [
     { name: 'Leelasri B', role: 'Chair', img: '/officebearers/Leela_Chair_insiko_110110.jpeg', linkedin: 'https://www.linkedin.com/in/leelasri', instagram: 'https://www.instagram.com/insiko_110110' },
     { name: 'Varsha Valliappan', role: 'Vice-Chair', img: '/officebearers/Varsha_vicechair_vvvvarshavvvv.jpg', linkedin: 'https://www.linkedin.com/in/varsha-valliappan-a81733278/', instagram: 'https://www.instagram.com/vvvvarshavvvv/' },
     { name: 'Swathi Muralikrishnan', role: 'Vice-Chair', img: '/officebearers/SwathiM-ViceChair-’_wobblyjelly474_’.jpg', linkedin: 'https://www.linkedin.com/in/swathi-muralikrishnan447744/', instagram: 'https://www.instagram.com/_wobblyjelly474_/' },
     { name: 'Harvin Vardhan C S', role: 'Secretary', img: '/officebearers/Harvin_Secretary_harvin_vardhan_21.jpg', linkedin: 'https://www.linkedin.com/in/harvin-vardhan-cs-03774428b/', instagram: 'https://www.instagram.com/harvin_vardhan_21/' },
     { name: 'Deeksha S', role: 'Treasurer', img: '/officebearers/S Deeksha - Treasurer - deeksh_aa._', linkedin: 'https://www.linkedin.com/in/sdeeksha2605/', instagram: 'https://www.instagram.com/deeksh_aa._' },
-    { name: 'Aravindaa Krishnan M', role: 'Joint-Secretary', img: '/officebearers/Aravindaa_krishna.jpg', linkedin: 'https://www.linkedin.com/in/aravindaa-krishnan-m-7a5b75309/', instagram: 'https://www.instagram.com/insiko_110110 ' },
-    { name: 'Aadarsh Ram VK', role: 'Deputy Secretary', img: '/officebearers/Aadarsh.JPG', linkedin: 'https://www.linkedin.com/in/harvin-vardhan-cs-03774428b/', instagram: 'https://www.instagram.com/harvin_vardhan_21' },
+    { name: 'Aravindaa Krishnan M', role: 'Joint-Secretary', img: '/officebearers/Aravindaa_krishna.jpg', linkedin: 'https://www.linkedin.com/in/aravindaa-krishnan-m-7a5b75309/' },
+    { name: 'Aadarsh Ram VK', role: 'Deputy Secretary', img: '/officebearers/Aadarsh.JPG' },
   ],
   "Core Committee": [
     { name: 'Tarunika', role: 'Coordinator', img: '/core/Tarunika__Core Committee Head__tarunika_v.jpg', linkedin: 'https://www.linkedin.com/in/tarunika-v7405/', instagram: 'https://www.instagram.com/tarunika_v' },
@@ -44,7 +53,7 @@ const teamsData: Record<string, any[]> = {
   ],
   "Event Management": [
     { name: 'Yuva Sriram', role: 'Event Mgmt Head', img: '/eventmgmt/Image.jpg', linkedin: 'https://www.linkedin.com/in/yuva-sriram/', instagram: 'https://www.instagram.com/coolboiyuva_2' },
-    { name: 'Adithya Sai', role: 'Event Mgmt Head', img: '/eventmgmt/Adhithya Sai_Event manage_adhithyaa._29.jpg', linkedin: 'https://www.linkedin.com/in', instagram: 'https://www.instagram.com/adhithyaa._29' },
+    { name: 'Adithya Sai', role: 'Event Mgmt Head', img: '/eventmgmt/Adhithya Sai_Event manage_adhithyaa._29.jpg', instagram: 'https://www.instagram.com/adhithyaa._29' },
   ],
   "Photography": [
     { name: 'Seanan Josh Darbin', role: 'Photography Head', img: '/photography/Seanan Josh photography head.jpg', linkedin: 'https://www.linkedin.com/in/seanan-josh-darbin-028162283/', instagram: 'https://www.instagram.com/_.seanan.josh.7._' },
@@ -55,7 +64,7 @@ const teamsData: Record<string, any[]> = {
     { name: 'Smruti M', role: 'Social Media Head', img: '/socialmedia/SmrutiM_PRHead_ smruti__2502.jpg', linkedin: 'https://www.linkedin.com/in/smruti-mathavan-b93997305/', instagram: 'https://www.instagram.com/smruti__2502' },
   ],
   "Web Development": [
-    { name: 'Vijaya lakshmi M', role: 'Web Dev Head', img: '/webdev/Vijayalakshmi_Webdevelopment_Head_weasley3535.jpg', linkedin: 'www.linkedin.com/in/vijaya-lakshmi-m', instagram: 'https://www.instagram.com/weasley3535' },
+    { name: 'Vijaya Lakshmi M', role: 'Web Dev Head', img: '/webdev/Vijayalakshmi_Webdevelopment_Head_weasley3535.jpg', linkedin: 'https://www.linkedin.com/in/vijaya-lakshmi-m', instagram: 'https://www.instagram.com/weasley3535' },
   ],
   "Documentation": [
     { name: 'Asmita Padmanabhan', role: 'Documentation Head', img: '/documentation/WhatsApp Image 2026-06-28 at 10.21.32 PM.jpeg', linkedin: 'https://www.linkedin.com/in/asmita-padmanabhan-2212532ba/', instagram: 'https://www.instagram.com/aham_asmi' }
@@ -67,7 +76,7 @@ const teamsData: Record<string, any[]> = {
 
 };
 
-const pastTeamsData: Record<string, { name: string; role: string; img: string }[]> = {
+const pastTeamsData: Record<string, TeamMember[]> = {
   "2023-2024": [
     { name: 'Shri Thrisha', role: 'Chair', img: '/past-teams/2023-2024/Shri Thrisha.png' },
     { name: 'Shivapriya S', role: 'Vice Chair', img: '/past-teams/2023-2024/Shivapriya S.png' },
@@ -97,9 +106,8 @@ const activeYear = "2026-2027";
 const allYears = ["2026-2027","2025-2026", "2024-2025", "2023-2024"];
 
 export default function CurrentMembersPage() {
-  const [selected, setSelected] = useState<any>(null);
+  const [selected, setSelected] = useState<TeamMember | null>(null);
   const [activeTab, setActiveTab] = useState("Office Bearers");
-  const [mounted, setMounted] = useState(false);
   const [selectedYear, setSelectedYear] = useState(activeYear);
   const [yearDropdownOpen, setYearDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -110,9 +118,9 @@ export default function CurrentMembersPage() {
   const tabsRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const closeProfile = useCallback(() => setSelected(null), []);
 
   useEffect(() => {
-    setMounted(true);
     if (selected) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -158,7 +166,7 @@ export default function CurrentMembersPage() {
   };
 
   return (
-    <section style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
+    <section className="subpage-shell team-page" style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
 
       <style>{`
         .dropdown-menu {
@@ -185,16 +193,70 @@ export default function CurrentMembersPage() {
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* UNIFIED GRID WITH INCREASED VERTICAL GAP */
+        /* Consistent portrait grid */
         .universal-grid {
            display: grid;
-           /* 250px min ensures the original 'portrait' ratio feels restored */
            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
            column-gap: 3rem;
-           row-gap: 4.5rem; /* Increased vertical spacing significantly */
+           row-gap: 4.5rem;
            justify-content: center;
         }
-        
+
+        .team-section-heading > div {
+          background: var(--line) !important;
+        }
+
+        .team-section-title {
+          color: var(--ieee-navy) !important;
+        }
+
+        .profile-card {
+          width: 100%;
+          min-height: 320px;
+          border-radius: 0 !important;
+          border-color: rgba(120, 190, 32, 0.45) !important;
+          box-shadow: 0 12px 28px rgba(0, 42, 58, 0.14);
+        }
+
+        .profile-image-frame {
+          width: 156px !important;
+          height: 156px !important;
+          flex: 0 0 auto;
+          overflow: hidden;
+          border-radius: 50%;
+        }
+
+        .profile-image-frame img,
+        .profile-modal-image-frame img {
+          object-position: center center;
+        }
+
+        .faculty-section {
+          margin-bottom: 0;
+        }
+
+        .year-selector {
+          padding-top: 2rem;
+        }
+
+        .profile-modal-image-frame {
+          width: 180px;
+          height: 180px;
+          margin: 0 auto 1.5rem;
+          position: relative;
+          overflow: hidden;
+          border-radius: 50%;
+        }
+
+        .team-category-label {
+          margin: 0 0 0.9rem;
+          color: var(--ieee-navy);
+          font-size: 0.78rem;
+          font-weight: 800;
+          letter-spacing: 0.13em;
+          text-transform: uppercase;
+        }
+
         /* Centering Logic for rows with few items */
         @media (min-width: 768px) {
             .universal-grid[data-count="1"], 
@@ -210,10 +272,90 @@ export default function CurrentMembersPage() {
                 width: 100%;
             }
         }
+
+        @media (max-width: 680px) {
+          .universal-grid {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 1.5rem;
+          }
+
+          .team-page .page-header {
+            margin-bottom: 2.25rem !important;
+          }
+
+          .team-section-heading {
+            justify-content: flex-start !important;
+            margin-bottom: 1.5rem !important;
+          }
+
+          .team-section-heading > div {
+            display: none;
+          }
+
+          .team-section-title {
+            white-space: normal !important;
+            font-size: 1rem !important;
+            letter-spacing: 0.12em !important;
+          }
+
+          .profile-card {
+            min-height: 300px;
+            padding: 1.5rem 1.25rem !important;
+          }
+
+          .profile-image-frame {
+            width: 148px !important;
+            height: 148px !important;
+            margin-bottom: 1.25rem !important;
+          }
+
+          .year-selector {
+            padding-top: 1.5rem;
+          }
+
+          .profile-modal-image-frame {
+            width: 168px;
+            height: 168px;
+            margin-bottom: 1.25rem;
+          }
+
+          .team-category-navigation {
+            margin-bottom: 2.5rem !important;
+          }
+
+          .team-tab-scroll-button {
+            display: none !important;
+          }
+
+          .team-tabs-scroll {
+            overflow: visible !important;
+            padding: 0 !important;
+            mask-image: none !important;
+            white-space: normal !important;
+            text-align: left !important;
+          }
+
+          .team-tabs-list {
+            width: 100%;
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.65rem !important;
+          }
+
+          .team-tab-button {
+            width: 100%;
+            min-height: 54px;
+            padding: 0.7rem 0.6rem !important;
+            white-space: normal;
+            font-size: 0.82rem !important;
+            line-height: 1.25;
+          }
+        }
       `}</style>
 
       {/* HEADER */}
       <motion.div
+        className="page-header"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -229,12 +371,12 @@ export default function CurrentMembersPage() {
 
       {/* FACULTY COORDINATORS */}
       <motion.div
+        className="faculty-section"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        style={{ marginBottom: '2rem' }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
+        <div className="team-section-heading" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
           {/* Left Line Animation */}
           <motion.div
             initial={{ width: 0, opacity: 0 }}
@@ -243,7 +385,7 @@ export default function CurrentMembersPage() {
             style={{ height: '1px', background: 'white' }}
           />
 
-          <h2 style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
+          <h2 className="team-section-title" style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
             Faculty Advisors
           </h2>
 
@@ -262,6 +404,7 @@ export default function CurrentMembersPage() {
               <ProfileCard
                 member={faculty}
                 isFaculty={true}
+                priority={true}
                 onClick={() => setSelected(faculty)}
                 category="Faculty"
               />
@@ -273,14 +416,18 @@ export default function CurrentMembersPage() {
 
       {/* YEAR SELECTOR DROPDOWN */}
       <motion.div
+        className="year-selector"
         initial={{ opacity: 0, y: -5 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: 'center', marginBottom: '0', paddingTop: '3rem' }}
+        style={{ textAlign: 'center', marginBottom: '0' }}
       >
         <div ref={dropdownRef} style={{ position: 'relative', display: 'inline-block' }}>
           <button
+            type="button"
             onClick={() => setYearDropdownOpen(!yearDropdownOpen)}
+            aria-expanded={yearDropdownOpen}
+            aria-controls="academic-year-menu"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -315,6 +462,7 @@ export default function CurrentMembersPage() {
           <AnimatePresence>
             {yearDropdownOpen && (
               <motion.div
+                id="academic-year-menu"
                 initial={{ opacity: 0, y: -8, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.95 }}
@@ -323,6 +471,7 @@ export default function CurrentMembersPage() {
               >
                 {allYears.map((year) => (
                   <button
+                    type="button"
                     key={year}
                     onClick={() => {
                       setSelectedYear(year);
@@ -382,11 +531,22 @@ export default function CurrentMembersPage() {
       {isActiveYear && (
         <>
           {/* --- TABS SECTION --- */}
-          <div style={{ position: 'relative', marginBottom: '3.5rem', maxWidth: '100%' }}>
+          <section
+            className="team-category-navigation"
+            aria-labelledby="team-sections-heading"
+            style={{ position: 'relative', marginBottom: '3.5rem', maxWidth: '100%' }}
+          >
+            <h2 id="team-sections-heading" className="team-category-label">
+              Team sections
+            </h2>
+
             {/* Scroll Controls */}
             <AnimatePresence>
               {canScrollLeft && (
                 <motion.button
+                  className="team-tab-scroll-button"
+                  type="button"
+                  aria-label="Scroll team categories left"
                   key="scroll-left"
                   initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
                   onClick={() => scrollTabs('left')}
@@ -397,6 +557,9 @@ export default function CurrentMembersPage() {
               )}
               {canScrollRight && (
                 <motion.button
+                  className="team-tab-scroll-button"
+                  type="button"
+                  aria-label="Scroll team categories right"
                   key="scroll-right"
                   initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
                   onClick={() => scrollTabs('right')}
@@ -411,7 +574,7 @@ export default function CurrentMembersPage() {
             <div
               ref={tabsRef}
               onScroll={checkScrollButtons}
-              className="no-scrollbar"
+              className="no-scrollbar team-tabs-scroll"
               style={{
                 overflowX: 'auto',
                 whiteSpace: 'nowrap',
@@ -420,7 +583,7 @@ export default function CurrentMembersPage() {
                 textAlign: 'center'
               }}
             >
-              <div style={{ display: 'inline-flex', gap: '0.75rem' }}>
+              <div className="team-tabs-list" style={{ display: 'inline-flex', gap: '0.75rem' }}>
                 {categories.map((tab) => (
                   <TabButton
                     key={tab}
@@ -431,7 +594,7 @@ export default function CurrentMembersPage() {
                 ))}
               </div>
             </div>
-          </div>
+          </section>
 
           {/* DYNAMIC MEMBERS GRID */}
           <AnimatePresence mode="wait">
@@ -463,14 +626,14 @@ export default function CurrentMembersPage() {
           style={{ marginTop: '2rem' }}
         >
           {/* Section Header */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '3rem' }}>
+          <div className="team-section-heading" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '3rem' }}>
             <motion.div
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: 150, opacity: 1 }}
               transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
               style={{ height: '1px', background: 'white' }}
             />
-            <h2 style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
+            <h2 className="team-section-title" style={{ fontSize: '1.5rem', color: '#E0F2FE', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', margin: 0, whiteSpace: 'nowrap' }}>
               Office Bearers
             </h2>
             <motion.div
@@ -503,10 +666,10 @@ export default function CurrentMembersPage() {
       )}
 
       {/* MODAL */}
-      {mounted && createPortal(
+      {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {selected && (
-            <ProfileModal member={selected} onClose={() => setSelected(null)} />
+            <ProfileModal member={selected} onClose={closeProfile} />
           )}
         </AnimatePresence>,
         document.body
@@ -518,50 +681,43 @@ export default function CurrentMembersPage() {
 // --- SUB COMPONENTS ---
 
 function TabButton({ tab, isActive, onClick }: { tab: string, isActive: boolean, onClick: () => void }) {
-  // Note: Tooltip removed as requested
   return (
     <motion.button
+      className={`team-tab-button ${isActive ? 'is-active' : ''}`}
+      type="button"
       onClick={onClick}
+      aria-pressed={isActive}
       style={{
         position: 'relative',
         padding: '0.75rem 1.5rem',
-        borderRadius: '2rem',
-        border: 'none',
-        background: 'transparent',
-        color: isActive ? '#0F5156' : '#ffffff',
+        borderRadius: 0,
+        border: isActive ? '1px solid #78BE20' : '1px solid #cfdbdf',
+        background: isActive ? '#78BE20' : '#ffffff',
+        color: '#002A3A',
         fontWeight: '700',
         fontSize: '0.95rem',
         cursor: 'pointer',
-        transition: 'color 0.3s ease',
-        zIndex: 1
+        transition: 'background 0.2s ease, border-color 0.2s ease, color 0.2s ease',
       }}
     >
       {tab}
-
-      {/* Active Background */}
-      {isActive ? (
-        <motion.div
-          layoutId="activeTab"
-          style={{
-            position: 'absolute',
-            top: 0, left: 0, right: 0, bottom: 0,
-            borderRadius: '2rem',
-            background: '#78BE20',
-            zIndex: -1,
-            boxShadow: '0 0 20px rgba(120, 190, 32, 0.4)'
-          }}
-        />
-      ) : (
-        <div style={{
-          position: 'absolute', inset: 0, borderRadius: '2rem',
-          border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', zIndex: -1
-        }} />
-      )}
     </motion.button>
   );
 }
 
-function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { member: any, onClick: () => void, isFaculty?: boolean, category?: string }) {
+function ProfileCard({
+  member,
+  onClick,
+  isFaculty = false,
+  category = "",
+  priority = false,
+}: {
+  member: TeamMember;
+  onClick: () => void;
+  isFaculty?: boolean;
+  category?: string;
+  priority?: boolean;
+}) {
   const [isShimmying, setIsShimmying] = useState(false);
   const isOfficeBearer = category === "Office Bearers";
 
@@ -576,7 +732,10 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
   };
 
   return (
-    <motion.div
+    <motion.button
+      type="button"
+      aria-haspopup="dialog"
+      aria-label={`View profile for ${member.name}, ${member.role}`}
       initial="rest"
       whileHover="hover"
       whileTap="tap"
@@ -584,9 +743,7 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
         tap: { scale: 0.98 }
       }}
       onClick={handleCardClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCardClick(); } }}
+      className="profile-card"
       style={{
         background: isFaculty
           ? 'linear-gradient(145deg, rgba(15, 81, 86, 0.9), rgba(9, 44, 46, 0.95))'
@@ -597,6 +754,7 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
         cursor: 'pointer',
         textAlign: 'center',
         border: '1px solid rgba(255,255,255,0.08)',
+        color: 'inherit',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -641,10 +799,13 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
         transition={{ duration: 0.3 }}
         style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <div style={{ width: 140, height: 140, margin: '0 auto 1.5rem auto', position: 'relative' }}>
-          <img
+        <div className="profile-image-frame" style={{ width: 140, height: 140, margin: '0 auto 1.5rem auto', position: 'relative' }}>
+          <Image
             src={member.img}
             alt={member.name}
+            fill
+            priority={priority}
+            sizes="(max-width: 680px) 148px, 156px"
             style={{
               width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%',
               border: isFaculty ? '3px solid #EAB308' : '3px solid #78BE20',
@@ -689,12 +850,12 @@ function ProfileCard({ member, onClick, isFaculty = false, category = "" }: { me
           <span>View Details</span>
         </div>
       </motion.div>
-    </motion.div>
+    </motion.button>
   );
 }
 
-function ProfileModal({ member, onClose }: { member: any, onClose: () => void }) {
-  const isValidLink = (link: string) => link && link.trim() !== '' && link !== '#';
+function ProfileModal({ member, onClose }: { member: TeamMember, onClose: () => void }) {
+  const isValidLink = (link?: string): link is string => Boolean(link && link.trim() !== '' && link !== '#');
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -718,6 +879,9 @@ function ProfileModal({ member, onClose }: { member: any, onClose: () => void })
       onClick={onClose}
     >
       <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="profile-modal-title"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -736,6 +900,7 @@ function ProfileModal({ member, onClose }: { member: any, onClose: () => void })
         onClick={e => e.stopPropagation()}
       >
         <button
+          type="button"
           onClick={onClose}
           aria-label="Close modal"
           style={{
@@ -757,10 +922,21 @@ function ProfileModal({ member, onClose }: { member: any, onClose: () => void })
           <X size={20} />
         </button>
 
-        <img src={member.img} alt={member.name}
-          style={{ width: 180, height: 180, borderRadius: '50%', objectFit: 'cover', marginBottom: '1.5rem', border: '4px solid #78BE20', boxShadow: '0 10px 30px rgba(0,0,0,0.4)' }}
-        />
-        <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.75rem', fontWeight: '800', color: 'white' }}>{member.name}</h3>
+        <div className="profile-modal-image-frame">
+          <Image
+            src={member.img}
+            alt={member.name}
+            fill
+            sizes="(max-width: 680px) 168px, 180px"
+            style={{
+              objectFit: 'cover',
+              borderRadius: '50%',
+              border: '4px solid #78BE20',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.4)'
+            }}
+          />
+        </div>
+        <h3 id="profile-modal-title" style={{ margin: '0 0 0.5rem 0', fontSize: '1.75rem', fontWeight: '800', color: 'white' }}>{member.name}</h3>
         <div style={{ color: '#78BE20', fontWeight: '700', marginBottom: '2rem', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{member.role}</div>
 
         {/* Social Icons */}

@@ -1,12 +1,26 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, MapPin, Calendar, ArrowUpRight, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
+import Image from 'next/image';
+
+interface PastEvent {
+  id: number;
+  category: string;
+  title: string;
+  image: string;
+  description: string;
+  fullDescription: string;
+  date: string;
+  time?: string;
+  venue?: string;
+  speaker?: string;
+}
 
 // --- DATA (Reordered: Most Recent First | Rewritten: Professional & Concise) ---
-const eventsData = [
+const eventsData: PastEvent[] = [
   {
     id: 18,
     category: 'Competitions',
@@ -219,9 +233,9 @@ const eventsData = [
 const categories = ['All', 'Talks', 'Workshops', 'Competitions'];
 
 export default function PastEventsPage() {
-  const [selectedEvent, setSelectedEvent] = useState<any>(null);
+  const [selectedEvent, setSelectedEvent] = useState<PastEvent | null>(null);
   const [activeTab, setActiveTab] = useState('All');
-  const [mounted, setMounted] = useState(false);
+  const closeSelectedEvent = useCallback(() => setSelectedEvent(null), []);
 
   // --- TAB SCROLL STATE ---
   const tabsRef = useRef<HTMLDivElement>(null);
@@ -233,7 +247,6 @@ export default function PastEventsPage() {
     : eventsData.filter(item => item.category === activeTab);
 
   useEffect(() => {
-    setMounted(true);
     if (selectedEvent) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'unset';
     return () => { document.body.style.overflow = 'unset'; };
@@ -265,7 +278,7 @@ export default function PastEventsPage() {
   };
 
   return (
-    <section style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
+    <section className="subpage-shell" style={{ padding: '2rem 1rem', maxWidth: '1400px', margin: '0 auto', color: 'white', minHeight: '100vh' }}>
 
       <style>{`
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
@@ -305,6 +318,7 @@ export default function PastEventsPage() {
 
       {/* HEADER */}
       <motion.div
+        className="page-header"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -409,10 +423,11 @@ export default function PastEventsPage() {
         }}
       >
         <AnimatePresence mode="popLayout">
-          {filteredEvents.map((event) => (
+          {filteredEvents.map((event, index) => (
             <div key={event.id} className="event-card-wrapper">
               <EventCard
                 event={event}
+                priority={index < 3}
                 onClick={() => setSelectedEvent(event)}
               />
             </div>
@@ -421,12 +436,12 @@ export default function PastEventsPage() {
       </motion.div>
 
       {/* MODAL */}
-      {mounted && createPortal(
+      {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {selectedEvent && (
             <EventModal
               event={selectedEvent}
-              onClose={() => setSelectedEvent(null)}
+              onClose={closeSelectedEvent}
             />
           )}
         </AnimatePresence>,
@@ -438,11 +453,22 @@ export default function PastEventsPage() {
 
 // --- SUB COMPONENTS ---
 
-function EventCard({ event, onClick }: { event: any, onClick: () => void }) {
+function EventCard({
+  event,
+  onClick,
+  priority,
+}: {
+  event: PastEvent;
+  onClick: () => void;
+  priority: boolean;
+}) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <motion.div
+    <motion.button
+      type="button"
+      aria-haspopup="dialog"
+      aria-label={`View details for ${event.title}`}
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -450,10 +476,15 @@ function EventCard({ event, onClick }: { event: any, onClick: () => void }) {
       exit={{ opacity: 0, scale: 0.9 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
       style={{
         backgroundColor: '#05191a',
         borderRadius: '10px',
         border: '1px solid rgba(120, 190, 32, 0.2)',
+        padding: 0,
+        color: 'inherit',
+        textAlign: 'left',
+        cursor: 'pointer',
         boxShadow: isHovered ? '0 20px 40px rgba(0,0,0,0.4)' : '0 10px 30px rgba(0,0,0,0.2)',
         height: '100%',
         display: 'flex',
@@ -463,23 +494,36 @@ function EventCard({ event, onClick }: { event: any, onClick: () => void }) {
         transition: 'box-shadow 0.3s ease'
       }}
     >
-      {/* Image Section - CLICKABLE */}
+      {/* Image Section */}
       <div
-        onClick={onClick}
         style={{
-          height: '220px', width: '100%', position: 'relative', overflow: 'hidden', cursor: 'pointer'
+          height: '220px',
+          width: '100%',
+          position: 'relative',
+          overflow: 'hidden',
+          cursor: 'pointer',
+          background: '#e7edef'
         }}
       >
         <div style={{
-          width: '100%', height: '100%',
+          width: '100%', height: '100%', position: 'relative',
           transition: 'filter 0.3s ease, transform 0.5s ease',
           filter: isHovered ? 'blur(2px) brightness(0.7)' : 'none',
           transform: isHovered ? 'scale(1.05)' : 'scale(1)'
         }}>
-          <img
+          <Image
             src={event.image}
             alt={event.title}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            fill
+            priority={priority}
+            sizes="(max-width: 480px) 100vw, 350px"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              objectPosition: 'center',
+              padding: '0.55rem'
+            }}
           />
         </div>
 
@@ -531,9 +575,8 @@ function EventCard({ event, onClick }: { event: any, onClick: () => void }) {
           {event.description}
         </p>
 
-        {/* Footer - View More - CLICKABLE */}
+        {/* Footer - View More */}
         <div
-          onClick={onClick}
           style={{
             borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem',
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -543,12 +586,20 @@ function EventCard({ event, onClick }: { event: any, onClick: () => void }) {
           <ArrowUpRight size={18} />
         </div>
       </div>
-    </motion.div>
+    </motion.button>
   );
 }
 
-function EventModal({ event, onClose }: { event: any, onClose: () => void }) {
-  const contentClick = (e: React.MouseEvent) => e.stopPropagation();
+function EventModal({ event, onClose }: { event: PastEvent, onClose: () => void }) {
+  const contentClick = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
 
   return (
     <motion.div
@@ -566,6 +617,9 @@ function EventModal({ event, onClose }: { event: any, onClose: () => void }) {
       onClick={onClose}
     >
       <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="event-modal-title"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -584,7 +638,9 @@ function EventModal({ event, onClose }: { event: any, onClose: () => void }) {
       >
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
+          aria-label="Close event details"
           style={{
             position: 'absolute', top: '1rem', right: '1rem', zIndex: 50,
             background: 'rgba(0,0,0,0.5)', border: 'none', borderRadius: '50%',
@@ -599,9 +655,11 @@ function EventModal({ event, onClose }: { event: any, onClose: () => void }) {
 
           {/* LEFT SIDE: POSTER IMAGE (Scrollable if too long) */}
           <div className="custom-scrollbar" style={{ position: 'relative', width: '100%', height: '100%', backgroundColor: '#000', overflowY: 'auto' }}>
-            <img
+            <Image
               src={event.image}
               alt={event.title}
+              width={1200}
+              height={1600}
               style={{
                 width: '100%',
                 minHeight: '100%',
@@ -623,7 +681,7 @@ function EventModal({ event, onClose }: { event: any, onClose: () => void }) {
                 {event.category}
               </span>
 
-              <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: '800', color: 'white', lineHeight: 1.1, marginTop: '0.5rem', textTransform: 'uppercase' }}>
+              <h2 id="event-modal-title" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: '800', color: 'white', lineHeight: 1.1, marginTop: '0.5rem', textTransform: 'uppercase' }}>
                 {event.title}
               </h2>
             </div>
