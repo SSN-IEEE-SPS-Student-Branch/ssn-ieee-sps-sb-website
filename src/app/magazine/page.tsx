@@ -15,7 +15,7 @@ const MAGAZINES = [
     title: 'SPS Annual Magazine',
     year: '2025-2026',
     url: '/magazines/sps-annual-magazine-2025.pdf',
-    size: '8.5 MB',
+    size: '8.5 MB', 
     description: 'Welcome to the Annual Magazine of the IEEE Signal Processing Society SSN Chapter. This publication showcases exciting research, projects, and innovations from our vibrant community of students and professionals.',
   },
   {
